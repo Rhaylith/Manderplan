@@ -1,0 +1,2941 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{B1D9B0E9-1DE7-4F08-B445-4D25A45AB8E7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>Masterplan</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Utils">
+      <HintPath>.\MasterplanReferences\Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapAreasPage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>MapAreasPage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\InitiativeMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\EncounterSelectionPage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>EncounterSelectionPage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\EncounterBuilder.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\ElfName.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TileCategory.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Tile.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Plot.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreaturePowerCategory.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DefenceType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ActionType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DamageCategory.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DamageDegree.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PowerUseType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreaturePower.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PowerAction.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PowerAttack.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\HitPointGauge.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\FilterPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>FilterPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantFinishPage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>VariantFinishPage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PlayerBackground.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Race.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Class.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Theme.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ParagonPath.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EpicDestiny.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\LevelData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Feature.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\WeaponCategory.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\WeaponType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Weapon.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\RitualCategory.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Ritual.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureLore.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Disease.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Poison.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\HeroRoleType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\IToken.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Hero.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Background.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\CompendiumImport.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\RoomBuilder.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\DisplaySize.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\ExoticName.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\AI.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Extensibility\IAddIn.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\HTML.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Project.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PartyGoals.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\EncounterExporter.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Goal.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\FiveByFiveData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\FiveByFiveColumn.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Preferences.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\FiveByFiveItem.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapViewMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapDisplayType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\CreatureViewMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapGridMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\SkillChallenge.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\SkillType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\SkillChallengeData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\SkillChallengeResult.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Library.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterSlotType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterSlot.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\DwarfName.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\TokenEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\TokenListEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\DraggedTokenEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\TokenLinkEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\TokenEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\CreateTokenLinkEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\DraggedTokenEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\TokenLinkEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Note.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Encyclopedia.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\IEncyclopediaItem.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\TextHelper.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncyclopediaEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncyclopediaLink.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\DiceStatistics.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncyclopediaImage.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncyclopediaGroup.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\DiceExpression.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterTemplateGroup.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\FiveByFive.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\CardEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterTemplate.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\CardListEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\CardEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\CardListEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureToken.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CustomTokenType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\OverlayStyle.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterTemplateSlot.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CustomToken.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TerrainPowerType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TerrainPower.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterLog.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ThreatType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\IEncounterLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\RoleType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\StartRoundLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\RoleFlag.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\IRole.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\StartTurnLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapView.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>MapView.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Minion.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DamageLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ComplexRole.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\QuestType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\StateLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Quest.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\DemographicsSource.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\DemographicsMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EffectLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PowerLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Screenshot.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\SkillLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\DiceGraphPanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Tools\MapPrinting.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\SkillChallengeLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\BlankMap.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Extensibility\IPage.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MoveLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\AttachmentType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PauseLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ResumeLogEntry.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Attachment.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\InitiativePanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterReport.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapElementPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>MapElementPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\RoundLog.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TurnLog.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ReportType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\BreakdownType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ReportTable.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\DicePanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>DicePanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ReportRow.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\LevelRangePanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>LevelRangePanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CardCategory.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantRolePage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>VariantRolePage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\ListMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterDeck.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureTemplateType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\DemographicsPanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureTemplate.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\NPCBuilder.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\CalendarPanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Tools\GoalBuilder.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TitlePanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>TitlePanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\Book.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\BreakdownPanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Events\HeroEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\HeroEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapWizard.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\EncounterPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>EncounterPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\EncounterTemplateWizard.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\AdviceData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapTypePage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>MapTypePage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapLibrariesPage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>MapLibrariesPage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\DeckGrid.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantWizard.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\CompendiumSearch.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\KeywordSearchCompletedEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\KeywordSearchCompletedEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\KeywordSearchWithFiltersCompletedEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\KeywordSearchWithFiltersCompletedEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\ViewAllCompletedEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\ViewAllCompletedEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\GetFilterSelectCompletedEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Compendium\GetFilterSelectCompletedEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileView.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileSize.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\PlayerViewMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\CompendiumHelper.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DamageType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DamageModifier.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DamageModifierTemplate.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\AutoBuildData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Artifact.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ArtifactConcordance.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Extensibility\ExtensibilityManager.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\MapSketchEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\MapSketchEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\MapAutoBuildType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\Orientation.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\Direction.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\MapBuilderData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\Endpoint.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\DamageExpressionType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Statistics.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\CreatureEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\CreatureEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PlotPointState.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PlotPointColour.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PlotPoint.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\MapBuilder.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MagicItemRarity.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Conditions.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\MapAreaEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MagicItem.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\MapAreaEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MagicItemSection.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\MovementEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CardMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\MovementEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Parcel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MapSketch.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MapSketchPoint.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Map.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TileData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MapArea.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MapElement.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\IIssue.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DifficultyIssue.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureIssue.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\SkillIssue.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ParcelIssue.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TreasureIssue.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Encounter.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterNote.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterWave.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\EncounterCard.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Ability.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CustomCreature.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\LibraryHelpPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>LibraryHelpPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\OngoingType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DurationType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\EncounterGauge.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>EncounterGauge.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\OngoingCondition.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\Treasure.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\CreatureHelper.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\HeroData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\HeroGroup.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\PowerSource.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\PrimaryAbility.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\ClassData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\RaceData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Sourcebook.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Properties\Resources.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Extensibility\IApplication.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TokenLink.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CombatState.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MonsterTheme.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PowerType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ThemePowerData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureState.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TilePanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Data\CombatData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Aura.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\SkillChallengePanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>SkillChallengePanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\InfoPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>InfoPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\FiveByFivePanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\RegionalMapPanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\KeyAbilitiesPanel.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\CardDeck.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantTemplatesPage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>VariantTemplatesPage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantBasePage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>VariantBasePage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\EncounterTemplatePage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>EncounterTemplatePage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapSizePage.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>MapSizePage.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Properties\Settings.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\OverviewType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\Potion.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\SearchType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Session.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\QuestPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>QuestPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\HalflingName.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Party.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\ICreature.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\NPC.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Program.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DetailsField.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Creature.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Calendar.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MonthInfo.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\DayInfo.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CalendarEvent.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Satellite.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Skills.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CalendarDate.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Generators\DelveBuilder.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TrapType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\WelcomePanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>WelcomePanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Trap.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TrapSkillData.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TrapAttack.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TrapElementPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>TrapElementPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\IElement.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\TrapElement.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Difficulty.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureSize.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureOrigin.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CreatureType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Regeneration.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\CampaignSettings.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TokenPanel.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>TokenPanel.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\PlotViewMode.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\PlotViewLinkStyle.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Experience.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Controls\PlotView.Designer.cs">
+      <AutoGen>true</AutoGen>
+      <DependentUpon>PlotView.resx</DependentUpon>
+      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\Workspace.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Extensibility\ICommand.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\TileEventArgs.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Events\TileEventHandler.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\RegionalMap.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\MapLocation.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\IPlayerOption.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PlayerPowerType.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PlayerPower.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerCallback.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\PlayerPowerSection.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Tier.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Data\Feat.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\Tools\AppImport.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Masterplan\UI\AttackRollForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PlotPointForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DeckListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\InitiativeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OngoingDamageForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MonthForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DamageModifierTemplateForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SkillChallengeSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncyclopediaEntryForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapPrintingForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EffectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CombatForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PausedCombatListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncounterNoteForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DamageTypesForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionLevelForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionPoisonForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionRitualForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ParcelListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionThemeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TerrainPowerForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ParcelForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureProfileForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MonsterThemeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CategoryListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MonsterThemeSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureAbilityForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CalendarForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncyclopediaEntryDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionClassForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CategoryForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureTemplateStatsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OddsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\InfoForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\LevelAdjustmentForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PasswordSetForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PartyForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionInformationForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\GoalForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureSkillsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DisplayNameForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ArtifactConcordanceForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureMultipleSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\AuraForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CustomCreatureListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ArtifactBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\HealForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CampaignSettingsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureTemplateDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DamageModListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapActionForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MagicItemBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ArtifactProfileForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\QuickReferenceForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\GroupHealthForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SkillChallengeDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SkillChallengeSkillForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ParcelSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\BackgroundForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TokenLinkListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncounterBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DamageForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CustomOverlayForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ProjectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapCountermeasureForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\RegenerationForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncyclopediaGroupForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SkillChallengeBreakdownForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapAreaForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MergeLibrariesForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionBackgroundForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapAttackForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapAreaSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PlayerViewForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EffectListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PasswordCheckForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerInfoForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MagicItemDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TerrainPowerSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionDiseaseLevelForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ArtifactDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\GoalListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\LibrarySelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\HeroSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\GroupInitiativeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureTemplateSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MainForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\AutoBuildForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\HeroForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\LevelForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CustomTokenForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\HandoutForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DateForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CalendarListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureClassForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\HeroIPlay4eForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\RegionalMapListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapLocationSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\RoleForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureTemplateBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TreasureListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OverviewForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DayForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerStatisticsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\HeroListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\LibraryListForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SeasonForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureSkillForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SatelliteForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TerrainPowerDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileBreakdownForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionPowerSectionForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerAttackForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MiniChecklistForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DemographicsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CompendiumForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileLibrarySelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionDiseaseForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\RegionalMapSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerBrowserForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionRaceForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DieRollerForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EndedEffectsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionFeatureForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\RegionalMapForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\RechargeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CalendarEventForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionEpicDestinyForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MonsterThemePowerForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileSizeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureStatsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MapLocationForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ThemeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CreatureTemplateProfileForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\LibraryForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncyclopediaEntrySelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\ArtifactSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PremadeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CombatantSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MagicItemSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DeckViewForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\AboutBox.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\FiveByFiveForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CustomCreatureForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MagicItemProfileForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapSkillForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TileChecklistForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DamageModifierForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CompendiumItemForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionFeatForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\NPCForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\MagicItemSectionForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TokenLinkForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\CombatDataForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SkillChallengeBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapSelectForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\RandomCreatureForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\SavingThrowForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionPowerForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerActionForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionWeaponForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionParagonPathForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\HeroDetailsForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncyclopediaImageForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\DeckBuilderForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\TrapProfileForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\IssuesForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\OptionCreatureLoreForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\PowerRangeForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Masterplan\UI\EncounterReportForm.cs">
+      <AutoGen>false</AutoGen>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Masterplan\UI\AttackRollForm.resx">
+      <DependentUpon>AttackRollForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PlotPointForm.resx">
+      <DependentUpon>PlotPointForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapListForm.resx">
+      <DependentUpon>MapListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DeckListForm.resx">
+      <DependentUpon>DeckListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\InitiativeForm.resx">
+      <DependentUpon>InitiativeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OngoingDamageForm.resx">
+      <DependentUpon>OngoingDamageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MonthForm.resx">
+      <DependentUpon>MonthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DamageModifierTemplateForm.resx">
+      <DependentUpon>DamageModifierTemplateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SkillChallengeSelectForm.resx">
+      <DependentUpon>SkillChallengeSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncyclopediaEntryForm.resx">
+      <DependentUpon>EncyclopediaEntryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapPrintingForm.resx">
+      <DependentUpon>MapPrintingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EffectForm.resx">
+      <DependentUpon>EffectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CombatForm.resx">
+      <DependentUpon>CombatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PausedCombatListForm.resx">
+      <DependentUpon>PausedCombatListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncounterNoteForm.resx">
+      <DependentUpon>EncounterNoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DamageTypesForm.resx">
+      <DependentUpon>DamageTypesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionLevelForm.resx">
+      <DependentUpon>OptionLevelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionPoisonForm.resx">
+      <DependentUpon>OptionPoisonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionRitualForm.resx">
+      <DependentUpon>OptionRitualForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ParcelListForm.resx">
+      <DependentUpon>ParcelListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionThemeForm.resx">
+      <DependentUpon>OptionThemeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TerrainPowerForm.resx">
+      <DependentUpon>TerrainPowerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ParcelForm.resx">
+      <DependentUpon>ParcelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureProfileForm.resx">
+      <DependentUpon>CreatureProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MonsterThemeForm.resx">
+      <DependentUpon>MonsterThemeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CategoryListForm.resx">
+      <DependentUpon>CategoryListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MonsterThemeSelectForm.resx">
+      <DependentUpon>MonsterThemeSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureAbilityForm.resx">
+      <DependentUpon>CreatureAbilityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapBuilderForm.resx">
+      <DependentUpon>MapBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CalendarForm.resx">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapBuilderForm.resx">
+      <DependentUpon>TrapBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncyclopediaEntryDetailsForm.resx">
+      <DependentUpon>EncyclopediaEntryDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionClassForm.resx">
+      <DependentUpon>OptionClassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CategoryForm.resx">
+      <DependentUpon>CategoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureTemplateStatsForm.resx">
+      <DependentUpon>CreatureTemplateStatsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OddsForm.resx">
+      <DependentUpon>OddsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\InfoForm.resx">
+      <DependentUpon>InfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\LevelAdjustmentForm.resx">
+      <DependentUpon>LevelAdjustmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PasswordSetForm.resx">
+      <DependentUpon>PasswordSetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PartyForm.resx">
+      <DependentUpon>PartyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionInformationForm.resx">
+      <DependentUpon>OptionInformationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\GoalForm.resx">
+      <DependentUpon>GoalForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureSkillsForm.resx">
+      <DependentUpon>CreatureSkillsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerDetailsForm.resx">
+      <DependentUpon>PowerDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DisplayNameForm.resx">
+      <DependentUpon>DisplayNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ArtifactConcordanceForm.resx">
+      <DependentUpon>ArtifactConcordanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureMultipleSelectForm.resx">
+      <DependentUpon>CreatureMultipleSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\AuraForm.resx">
+      <DependentUpon>AuraForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CustomCreatureListForm.resx">
+      <DependentUpon>CustomCreatureListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ArtifactBuilderForm.resx">
+      <DependentUpon>ArtifactBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\HealForm.resx">
+      <DependentUpon>HealForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CampaignSettingsForm.resx">
+      <DependentUpon>CampaignSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureTemplateDetailsForm.resx">
+      <DependentUpon>CreatureTemplateDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DamageModListForm.resx">
+      <DependentUpon>DamageModListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapActionForm.resx">
+      <DependentUpon>TrapActionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MagicItemBuilderForm.resx">
+      <DependentUpon>MagicItemBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ArtifactProfileForm.resx">
+      <DependentUpon>ArtifactProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureSelectForm.resx">
+      <DependentUpon>CreatureSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapDetailsForm.resx">
+      <DependentUpon>TrapDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\QuickReferenceForm.resx">
+      <DependentUpon>QuickReferenceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\GroupHealthForm.resx">
+      <DependentUpon>GroupHealthForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SkillChallengeDetailsForm.resx">
+      <DependentUpon>SkillChallengeDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SkillChallengeSkillForm.resx">
+      <DependentUpon>SkillChallengeSkillForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ParcelSelectForm.resx">
+      <DependentUpon>ParcelSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\BackgroundForm.resx">
+      <DependentUpon>BackgroundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TileForm.resx">
+      <DependentUpon>TileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TokenLinkListForm.resx">
+      <DependentUpon>TokenLinkListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncounterBuilderForm.resx">
+      <DependentUpon>EncounterBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DamageForm.resx">
+      <DependentUpon>DamageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CustomOverlayForm.resx">
+      <DependentUpon>CustomOverlayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ProjectForm.resx">
+      <DependentUpon>ProjectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapCountermeasureForm.resx">
+      <DependentUpon>TrapCountermeasureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\RegenerationForm.resx">
+      <DependentUpon>RegenerationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncyclopediaGroupForm.resx">
+      <DependentUpon>EncyclopediaGroupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SkillChallengeBreakdownForm.resx">
+      <DependentUpon>SkillChallengeBreakdownForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapAreaForm.resx">
+      <DependentUpon>MapAreaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MergeLibrariesForm.resx">
+      <DependentUpon>MergeLibrariesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionBackgroundForm.resx">
+      <DependentUpon>OptionBackgroundForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapAttackForm.resx">
+      <DependentUpon>TrapAttackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapAreaSelectForm.resx">
+      <DependentUpon>MapAreaSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PlayerViewForm.resx">
+      <DependentUpon>PlayerViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EffectListForm.resx">
+      <DependentUpon>EffectListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureBuilderForm.resx">
+      <DependentUpon>CreatureBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PasswordCheckForm.resx">
+      <DependentUpon>PasswordCheckForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerInfoForm.resx">
+      <DependentUpon>PowerInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MagicItemDetailsForm.resx">
+      <DependentUpon>MagicItemDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TerrainPowerSelectForm.resx">
+      <DependentUpon>TerrainPowerSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionDiseaseLevelForm.resx">
+      <DependentUpon>OptionDiseaseLevelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ArtifactDetailsForm.resx">
+      <DependentUpon>ArtifactDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\GoalListForm.resx">
+      <DependentUpon>GoalListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\LibrarySelectForm.resx">
+      <DependentUpon>LibrarySelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\HeroSelectForm.resx">
+      <DependentUpon>HeroSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\GroupInitiativeForm.resx">
+      <DependentUpon>GroupInitiativeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureTemplateSelectForm.resx">
+      <DependentUpon>CreatureTemplateSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureDetailsForm.resx">
+      <DependentUpon>CreatureDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\AutoBuildForm.resx">
+      <DependentUpon>AutoBuildForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\HeroForm.resx">
+      <DependentUpon>HeroForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\LevelForm.resx">
+      <DependentUpon>LevelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CustomTokenForm.resx">
+      <DependentUpon>CustomTokenForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\HandoutForm.resx">
+      <DependentUpon>HandoutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DateForm.resx">
+      <DependentUpon>DateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DetailsForm.resx">
+      <DependentUpon>DetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CalendarListForm.resx">
+      <DependentUpon>CalendarListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureClassForm.resx">
+      <DependentUpon>CreatureClassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\HeroIPlay4eForm.resx">
+      <DependentUpon>HeroIPlay4eForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\RegionalMapListForm.resx">
+      <DependentUpon>RegionalMapListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapLocationSelectForm.resx">
+      <DependentUpon>MapLocationSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\RoleForm.resx">
+      <DependentUpon>RoleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureTemplateBuilderForm.resx">
+      <DependentUpon>CreatureTemplateBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TreasureListForm.resx">
+      <DependentUpon>TreasureListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OverviewForm.resx">
+      <DependentUpon>OverviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DayForm.resx">
+      <DependentUpon>DayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerStatisticsForm.resx">
+      <DependentUpon>PowerStatisticsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\HeroListForm.resx">
+      <DependentUpon>HeroListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\LibraryListForm.resx">
+      <DependentUpon>LibraryListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerForm.resx">
+      <DependentUpon>PowerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SeasonForm.resx">
+      <DependentUpon>SeasonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureSkillForm.resx">
+      <DependentUpon>CreatureSkillForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SatelliteForm.resx">
+      <DependentUpon>SatelliteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TerrainPowerDetailsForm.resx">
+      <DependentUpon>TerrainPowerDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TileBreakdownForm.resx">
+      <DependentUpon>TileBreakdownForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionPowerSectionForm.resx">
+      <DependentUpon>OptionPowerSectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerAttackForm.resx">
+      <DependentUpon>PowerAttackForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MiniChecklistForm.resx">
+      <DependentUpon>MiniChecklistForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TileSelectForm.resx">
+      <DependentUpon>TileSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DemographicsForm.resx">
+      <DependentUpon>DemographicsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CompendiumForm.resx">
+      <DependentUpon>CompendiumForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TileLibrarySelectForm.resx">
+      <DependentUpon>TileLibrarySelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapSelectForm.resx">
+      <DependentUpon>MapSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionDiseaseForm.resx">
+      <DependentUpon>OptionDiseaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\RegionalMapSelectForm.resx">
+      <DependentUpon>RegionalMapSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerBrowserForm.resx">
+      <DependentUpon>PowerBrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionRaceForm.resx">
+      <DependentUpon>OptionRaceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DieRollerForm.resx">
+      <DependentUpon>DieRollerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EndedEffectsForm.resx">
+      <DependentUpon>EndedEffectsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionFeatureForm.resx">
+      <DependentUpon>OptionFeatureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\RegionalMapForm.resx">
+      <DependentUpon>RegionalMapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\RechargeForm.resx">
+      <DependentUpon>RechargeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CalendarEventForm.resx">
+      <DependentUpon>CalendarEventForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionEpicDestinyForm.resx">
+      <DependentUpon>OptionEpicDestinyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MonsterThemePowerForm.resx">
+      <DependentUpon>MonsterThemePowerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TileSizeForm.resx">
+      <DependentUpon>TileSizeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureStatsForm.resx">
+      <DependentUpon>CreatureStatsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MapLocationForm.resx">
+      <DependentUpon>MapLocationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ThemeForm.resx">
+      <DependentUpon>ThemeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CreatureTemplateProfileForm.resx">
+      <DependentUpon>CreatureTemplateProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\LibraryForm.resx">
+      <DependentUpon>LibraryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncyclopediaEntrySelectForm.resx">
+      <DependentUpon>EncyclopediaEntrySelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\ArtifactSelectForm.resx">
+      <DependentUpon>ArtifactSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PremadeForm.resx">
+      <DependentUpon>PremadeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CombatantSelectForm.resx">
+      <DependentUpon>CombatantSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MagicItemSelectForm.resx">
+      <DependentUpon>MagicItemSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DeckViewForm.resx">
+      <DependentUpon>DeckViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\FiveByFiveForm.resx">
+      <DependentUpon>FiveByFiveForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CustomCreatureForm.resx">
+      <DependentUpon>CustomCreatureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerBuilderForm.resx">
+      <DependentUpon>PowerBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MagicItemProfileForm.resx">
+      <DependentUpon>MagicItemProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapSkillForm.resx">
+      <DependentUpon>TrapSkillForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TileChecklistForm.resx">
+      <DependentUpon>TileChecklistForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DamageModifierForm.resx">
+      <DependentUpon>DamageModifierForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CompendiumItemForm.resx">
+      <DependentUpon>CompendiumItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionFeatForm.resx">
+      <DependentUpon>OptionFeatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\NPCForm.resx">
+      <DependentUpon>NPCForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\MagicItemSectionForm.resx">
+      <DependentUpon>MagicItemSectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TokenLinkForm.resx">
+      <DependentUpon>TokenLinkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\CombatDataForm.resx">
+      <DependentUpon>CombatDataForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SkillChallengeBuilderForm.resx">
+      <DependentUpon>SkillChallengeBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapSelectForm.resx">
+      <DependentUpon>TrapSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\RandomCreatureForm.resx">
+      <DependentUpon>RandomCreatureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\SavingThrowForm.resx">
+      <DependentUpon>SavingThrowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionPowerForm.resx">
+      <DependentUpon>OptionPowerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerActionForm.resx">
+      <DependentUpon>PowerActionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionWeaponForm.resx">
+      <DependentUpon>OptionWeaponForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionParagonPathForm.resx">
+      <DependentUpon>OptionParagonPathForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\HeroDetailsForm.resx">
+      <DependentUpon>HeroDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncyclopediaImageForm.resx">
+      <DependentUpon>EncyclopediaImageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\DeckBuilderForm.resx">
+      <DependentUpon>DeckBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\TrapProfileForm.resx">
+      <DependentUpon>TrapProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\IssuesForm.resx">
+      <DependentUpon>IssuesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\OptionCreatureLoreForm.resx">
+      <DependentUpon>OptionCreatureLoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\PowerRangeForm.resx">
+      <DependentUpon>PowerRangeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\UI\EncounterReportForm.resx">
+      <DependentUpon>EncounterReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\MapAreasPage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapAreasPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\EncounterSelectionPage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EncounterSelectionPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\FilterPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FilterPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\VariantFinishPage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>VariantFinishPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\MapView.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapView.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\MapElementPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapElementPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\DicePanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DicePanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\LevelRangePanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LevelRangePanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\VariantRolePage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>VariantRolePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\TitlePanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TitlePanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\EncounterPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EncounterPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\MapTypePage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapTypePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\MapLibrariesPage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapLibrariesPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\LibraryHelpPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LibraryHelpPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\EncounterGauge.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EncounterGauge.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\SkillChallengePanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SkillChallengePanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\InfoPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>InfoPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\VariantTemplatesPage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>VariantTemplatesPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\VariantBasePage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>VariantBasePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\EncounterTemplatePage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EncounterTemplatePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Wizards\MapSizePage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MapSizePage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\QuestPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>QuestPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\WelcomePanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WelcomePanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\TrapElementPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TrapElementPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\TokenPanel.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TokenPanel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan\Controls\PlotView.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PlotView.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masterplan.Scroll.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
