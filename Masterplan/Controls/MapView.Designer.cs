@@ -1419,7 +1419,7 @@ namespace Masterplan.Controls
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return null;
+//			return pair;
 			foreach (CustomToken customToken in this.fEncounter.CustomTokens)
 			{
 				if (customToken.Type != CustomTokenType.Token)
@@ -2029,12 +2029,11 @@ namespace Masterplan.Controls
 									}
 									else if (!modifierKeys && !flag)
 									{
-										this.fDraggedToken = new MapView.DraggedToken()
-										{
-											Token = tokenAt.First,
-											Start = tokenAt.Second.Location,
-											Location = this.fDraggedToken.Start
-										};
+                                        this.fDraggedToken = new MapView.DraggedToken();
+                                        this.fDraggedToken.Token = tokenAt.First;
+                                        this.fDraggedToken.Start = tokenAt.Second.Location;
+                                        this.fDraggedToken.Location = this.fDraggedToken.Start;
+
 										MapView.DraggedToken size = this.fDraggedToken;
 										int x = squareAtPoint.X - tokenAt.Second.Location.X;
 										int y = squareAtPoint.Y;
