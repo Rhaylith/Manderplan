@@ -282,7 +282,7 @@ namespace Masterplan.UI
 		{
 			TitlePanel titlePanel = new TitlePanel()
 			{
-				Title = "Masterplan",
+				Title = "Manderplan",
 				Zooming = true,
 				Mode = TitlePanel.TitlePanelMode.PlayerView,
 				BackColor = Color.Black,

@@ -1021,6 +1021,12 @@ namespace Masterplan.Controls
 					});
 				}
 				Rectangle rectangle = new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
+                CompositingMode compositingMode = g.CompositingMode;
+                g.CompositingMode = CompositingMode.SourceCopy;
+
+                InterpolationMode interpolationMode = g.InterpolationMode;
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
+
 				switch (rotation % 4)
 				{
 					case 0:
@@ -1063,6 +1069,9 @@ namespace Masterplan.Controls
 						break;
 					}
 				}
+
+                g.CompositingMode = compositingMode;
+                g.InterpolationMode = interpolationMode;
 			}
 			catch (Exception exception)
 			{
@@ -2723,7 +2732,7 @@ namespace Masterplan.Controls
 					this.draw_tile(e.Graphics, item, tile.Rotations, item1, true);
 				}
 			}
-			foreach (TileData tileDatum in this.fMap.Tiles)
+            foreach (TileData tileDatum in this.fMap.Tiles)
 			{
 				if (this.fDraggedTiles != null && this.fDraggedTiles.Tiles.Contains(tileDatum) || !this.fLayoutData.Tiles.ContainsKey(tileDatum))
 				{
