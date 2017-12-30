@@ -2375,10 +2375,8 @@ namespace Masterplan.Controls
 					{
 						int x1 = this.fScrollingData.Start.X - squareAtPoint.X;
 						int y2 = this.fScrollingData.Start.Y - squareAtPoint.Y;
-						ref Rectangle rectanglePointer = ref this.fViewpoint;
-						rectanglePointer.X = rectanglePointer.X + x1;
-						ref Rectangle rectanglePointer1 = ref this.fViewpoint;
-						rectanglePointer1.Y = rectanglePointer1.Y + y2;
+						this.fViewpoint.X = this.fViewpoint.X + x1;
+						this.fViewpoint.Y = this.fViewpoint.Y + y2;
 						this.fLayoutData = null;
 						base.Invalidate();
 					}
