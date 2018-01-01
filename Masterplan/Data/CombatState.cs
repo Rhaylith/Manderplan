@@ -2,6 +2,7 @@ using Masterplan;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace Masterplan.Data
 {

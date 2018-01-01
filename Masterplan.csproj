@@ -31,15 +31,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Utils">
-      <HintPath>.\MasterplanReferences\Utils.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
+    <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -48,10 +47,6 @@
       <AutoGen>true</AutoGen>
       <DependentUpon>MapAreasPage.resx</DependentUpon>
       <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\UI\InitiativeMode.cs">
-      <AutoGen>false</AutoGen>
-      <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Wizards\EncounterSelectionPage.Designer.cs">
       <AutoGen>true</AutoGen>
@@ -2936,6 +2931,12 @@
       <LastGenOutput>PlotView.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan.Scroll.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Utils\Utils.csproj">
+      <Project>{be09b7a1-3f37-4ff8-a5d9-e4b6e131d933}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

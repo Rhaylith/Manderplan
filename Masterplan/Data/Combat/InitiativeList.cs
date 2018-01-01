@@ -18,6 +18,7 @@ namespace Masterplan.Data.Combat
         }
     }
 
+    [Serializable]
     public class InitiativeList
     {
         LinkedList<CombatData> playerList = new LinkedList<CombatData>();
