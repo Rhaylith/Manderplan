@@ -1,8 +1,0 @@
-C:\dev\csharp\Masterplan\Utils\bin\Debug\Utils.dll
-C:\dev\csharp\Masterplan\Utils\bin\Debug\Utils.pdb
-C:\dev\csharp\Masterplan\Utils\obj\Debug\Utils.csprojResolveAssemblyReference.cache
-C:\dev\csharp\Masterplan\Utils\obj\Debug\Utils.Forms.ProgressScreen.resources
-C:\dev\csharp\Masterplan\Utils\obj\Debug\Utils.Wizards.WizardForm.resources
-C:\dev\csharp\Masterplan\Utils\obj\Debug\Utils.csproj.GenerateResource.Cache
-C:\dev\csharp\Masterplan\Utils\obj\Debug\Utils.dll
-C:\dev\csharp\Masterplan\Utils\obj\Debug\Utils.pdb
