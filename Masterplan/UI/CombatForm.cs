@@ -1,6 +1,7 @@
 using Masterplan;
 using Masterplan.Controls;
 using Masterplan.Data;
+using Masterplan.Data.Combat;
 using Masterplan.Events;
 using Masterplan.Extensibility;
 using Masterplan.Properties;
@@ -22,6 +23,8 @@ namespace Masterplan.UI
 {
 	internal class CombatForm : Form
 	{
+        private CombatState combatState;
+
 		private Encounter fEncounter;
 
 		private int fPartyLevel = Session.Project.Party.Level;
@@ -522,6 +525,7 @@ namespace Masterplan.UI
 			this.fLeft.LineAlignment = StringAlignment.Center;
 			this.fRight.Alignment = StringAlignment.Far;
 			this.fRight.LineAlignment = StringAlignment.Center;
+            this.combatState = cs;
 			this.fEncounter = cs.Encounter.Copy() as Encounter;
 			this.fPartyLevel = cs.PartyLevel;
 			this.fRemovedCreatureXP = cs.RemovedCreatureXP;
@@ -1611,6 +1615,12 @@ namespace Masterplan.UI
 				CombatDataForm combatDataForm = new CombatDataForm(creatureToken.Data, data.Card, this.fEncounter, this.fCurrentActor, this.fCurrentRound, true);
 				if (combatDataForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
+                    if (combatDataForm.InitBox.Value != creatureToken.Data.Initiative)
+                    {
+                        // initiative changed
+                        this.combatState.InitiativeList.UpdateInitiative(creatureToken.Data, (int)combatDataForm.InitBox.Value);
+                    }
+
 					data.CombatData[num] = combatDataForm.Data;
 					if (damage != combatDataForm.Data.Damage)
 					{
@@ -1666,7 +1676,13 @@ namespace Masterplan.UI
 					CombatDataForm combatDataForm1 = new CombatDataForm(combatData, null, this.fEncounter, this.fCurrentActor, this.fCurrentRound, false);
 					if (combatDataForm1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 					{
-						hero.CombatData = combatDataForm1.Data;
+                        if (combatDataForm1.InitBox.Value != combatData.Initiative)
+                        {
+                            // initiative changed
+                            this.combatState.InitiativeList.UpdateInitiative(combatData, (int)combatDataForm1.InitBox.Value);
+                        }
+
+                        hero.CombatData = combatDataForm1.Data;
 						if (damage1 != combatDataForm1.Data.Damage)
 						{
 							damage1 = combatDataForm1.Data.Damage - damage1;
@@ -1866,26 +1882,6 @@ namespace Masterplan.UI
 				strs.Add("</HTML>");
 			}
 			return HTML.Concatenate(strs);
-		}
-
-		private int find_max_init()
-		{
-			List<int> _initiatives = this.get_initiatives();
-			if (_initiatives.Count == 0)
-			{
-				return 0;
-			}
-			return _initiatives[0];
-		}
-
-		private int find_min_init()
-		{
-			List<int> _initiatives = this.get_initiatives();
-			if (_initiatives.Count == 0)
-			{
-				return 0;
-			}
-			return _initiatives[_initiatives.Count - 1];
 		}
 
 		private ListViewItem get_combatant(Guid id)
@@ -2106,48 +2102,7 @@ namespace Masterplan.UI
 
 		private List<int> get_initiatives()
 		{
-			List<int> nums = new List<int>();
-			foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
-			{
-				foreach (CombatData combatDatum in allSlot.CombatData)
-				{
-					if (allSlot.GetState(combatDatum) == CreatureState.Defeated)
-					{
-						continue;
-					}
-					int initiative = combatDatum.Initiative;
-					if (initiative == -2147483648 || nums.Contains(initiative))
-					{
-						continue;
-					}
-					nums.Add(initiative);
-				}
-			}
-			foreach (Hero hero in Session.Project.Heroes)
-			{
-				int num = hero.CombatData.Initiative;
-				if (num == -2147483648 || nums.Contains(num))
-				{
-					continue;
-				}
-				nums.Add(num);
-			}
-			foreach (CombatData value in this.fTrapData.Values)
-			{
-				if (value.Delaying)
-				{
-					continue;
-				}
-				int initiative1 = value.Initiative;
-				if (initiative1 == -2147483648 || nums.Contains(initiative1))
-				{
-					continue;
-				}
-				nums.Add(initiative1);
-			}
-			nums.Sort();
-			nums.Reverse();
-			return nums;
+            return this.combatState.InitiativeList.GetAsList();
 		}
 
 		private Point get_location(IToken token)
@@ -2169,34 +2124,8 @@ namespace Masterplan.UI
 
 		private CombatData get_next_actor(CombatData current_actor)
 		{
-			int num = (current_actor != null ? current_actor.Initiative : this.InitiativePanel.CurrentInitiative);
-			if (!this.get_initiatives().Contains(num))
-			{
-				num = this.next_init(num);
-			}
-			CombatData item = null;
-			List<CombatData> _combatants = this.get_combatants(num, true);
-			int num1 = _combatants.IndexOf(current_actor);
-			if (num1 == -1)
-			{
-				item = _combatants[0];
-			}
-			else if (num1 != _combatants.Count - 1)
-			{
-				item = _combatants[num1 + 1];
-			}
-			else
-			{
-				num = this.next_init(num);
-				_combatants = this.get_combatants(num, false);
-				item = _combatants[0];
-			}
-			bool _state = this.get_state(item) == CreatureState.Defeated;
-			if (_state || (item == null ? false : item.Delaying))
-			{
-				item = this.get_next_actor(item);
-			}
-			return item;
+            this.combatState.InitiativeList.AdvanceNextTurn();
+            return this.combatState.InitiativeList.CurrentActor;
 		}
 
 		private CreatureState get_state(CombatData cd)
@@ -5059,23 +4988,6 @@ namespace Masterplan.UI
 			this.toggle_visibility(this.MapView.SelectedTokens);
 		}
 
-		private int next_init(int current_init)
-		{
-			List<int> _initiatives = this.get_initiatives();
-			if (!_initiatives.Contains(current_init))
-			{
-				_initiatives.Add(current_init);
-			}
-			_initiatives.Sort();
-			_initiatives.Reverse();
-			int num = _initiatives.IndexOf(current_init) + 1;
-			if (num == _initiatives.Count)
-			{
-				num = 0;
-			}
-			return _initiatives[num];
-		}
-
 		private void NextInitBtn_Click(object sender, EventArgs e)
 		{
 			try
@@ -6236,184 +6148,22 @@ namespace Masterplan.UI
 
 		private void roll_initiative()
 		{
-			List<Pair<List<CombatData>, int>> pairs = new List<Pair<List<CombatData>, int>>();
-			Dictionary<string, List<CombatData>> strs = new Dictionary<string, List<CombatData>>();
-			foreach (Hero hero in Session.Project.Heroes)
+            this.combatState.InitiativeList.RollInitiative(this.fEncounter, this.fTrapData);
+			if (this.combatState.InitiativeList.ManualInitiativeDictionary.Count != 0)
 			{
-				if (hero.CombatData.Initiative != -2147483648)
-				{
-					continue;
-				}
-				switch (Session.Preferences.HeroInitiativeMode)
-				{
-					case InitiativeMode.AutoIndividual:
-					{
-						List<CombatData> combatDatas = new List<CombatData>()
-						{
-							hero.CombatData
-						};
-						pairs.Add(new Pair<List<CombatData>, int>(combatDatas, hero.InitBonus));
-						continue;
-					}
-					case InitiativeMode.ManualIndividual:
-					{
-						strs[hero.Name] = new List<CombatData>()
-						{
-							hero.CombatData
-						};
-						continue;
-					}
-					default:
-					{
-						continue;
-					}
-				}
+				(new GroupInitiativeForm(this.combatState.InitiativeList.ManualInitiativeDictionary, this.fEncounter)).ShowDialog();
 			}
-			foreach (EncounterSlot slot in this.fEncounter.Slots)
-			{
-				switch (Session.Preferences.InitiativeMode)
-				{
-					case InitiativeMode.AutoGroup:
-					{
-						List<CombatData> combatDatas1 = new List<CombatData>();
-						foreach (CombatData combatDatum in slot.CombatData)
-						{
-							if (combatDatum.Initiative != -2147483648)
-							{
-								continue;
-							}
-							combatDatas1.Add(combatDatum);
-						}
-						if (combatDatas1.Count == 0)
-						{
-							continue;
-						}
-						pairs.Add(new Pair<List<CombatData>, int>(combatDatas1, slot.Card.Initiative));
-						continue;
-					}
-					case InitiativeMode.AutoIndividual:
-					{
-						List<CombatData>.Enumerator enumerator = slot.CombatData.GetEnumerator();
-						try
-						{
-							while (enumerator.MoveNext())
-							{
-								CombatData current = enumerator.Current;
-								if (current.Initiative != -2147483648)
-								{
-									continue;
-								}
-								List<CombatData> combatDatas2 = new List<CombatData>()
-								{
-									current
-								};
-								pairs.Add(new Pair<List<CombatData>, int>(combatDatas2, slot.Card.Initiative));
-							}
-							continue;
-						}
-						finally
-						{
-							((IDisposable)enumerator).Dispose();
-						}
-						break;
-					}
-					case InitiativeMode.ManualIndividual:
-					{
-						List<CombatData>.Enumerator enumerator1 = slot.CombatData.GetEnumerator();
-						try
-						{
-							while (enumerator1.MoveNext())
-							{
-								CombatData current1 = enumerator1.Current;
-								if (current1.Initiative != -2147483648)
-								{
-									continue;
-								}
-								strs[current1.DisplayName] = new List<CombatData>()
-								{
-									current1
-								};
-							}
-							continue;
-						}
-						finally
-						{
-							((IDisposable)enumerator1).Dispose();
-						}
-						break;
-					}
-					case InitiativeMode.ManualGroup:
-					{
-						List<CombatData> combatDatas3 = new List<CombatData>();
-						foreach (CombatData combatDatum1 in slot.CombatData)
-						{
-							if (combatDatum1.Initiative != -2147483648)
-							{
-								continue;
-							}
-							combatDatas3.Add(combatDatum1);
-						}
-						if (combatDatas3.Count == 0)
-						{
-							continue;
-						}
-						strs[slot.Card.Title] = combatDatas3;
-						continue;
-					}
-					default:
-					{
-						continue;
-					}
-				}
-			}
-			foreach (Trap trap in this.fEncounter.Traps)
-			{
-				if (trap.Initiative == -2147483648)
-				{
-					continue;
-				}
-				CombatData item = this.fTrapData[trap.ID];
-				if (item.Initiative != -2147483648)
-				{
-					continue;
-				}
-				switch (Session.Preferences.TrapInitiativeMode)
-				{
-					case InitiativeMode.AutoIndividual:
-					{
-						List<CombatData> combatDatas4 = new List<CombatData>()
-						{
-							item
-						};
-						pairs.Add(new Pair<List<CombatData>, int>(combatDatas4, trap.Initiative));
-						continue;
-					}
-					case InitiativeMode.ManualIndividual:
-					{
-						strs[trap.Name] = new List<CombatData>()
-						{
-							item
-						};
-						continue;
-					}
-					default:
-					{
-						continue;
-					}
-				}
-			}
-			foreach (Pair<List<CombatData>, int> pair in pairs)
-			{
-				int num = Session.Dice(1, 20) + pair.Second;
-				foreach (CombatData first in pair.First)
-				{
-					first.Initiative = num;
-				}
-			}
-			if (strs.Count != 0)
-			{
-				(new GroupInitiativeForm(strs, this.fEncounter)).ShowDialog();
-			}
+
+            foreach(var combatDatas in this.combatState.InitiativeList.ManualInitiativeDictionary.Values)
+            {
+                foreach(var data in combatDatas)
+                {
+                    if (data.Initiative != Int32.MinValue)
+                    {
+                        this.combatState.InitiativeList.UpdateInitiative(data, data.Initiative);
+                    }
+                }
+            }
 			this.InitiativePanel.InitiativeScores = this.get_initiatives();
 		}
 
@@ -6479,15 +6229,9 @@ namespace Masterplan.UI
 					{
 						continue;
 					}
-					data.Delaying = !data.Delaying;
-					if (!data.Delaying)
-					{
-						data.Initiative = this.InitiativePanel.CurrentInitiative;
-					}
-					else
-					{
-						this.InitiativePanel.InitiativeScores = this.get_initiatives();
-					}
+					
+                    this.combatState.InitiativeList.ToggleDelay(data);
+                    this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
 				}
 				this.update_list();
 			}
@@ -6658,31 +6402,24 @@ namespace Masterplan.UI
 		private void start_combat()
 		{
 			this.roll_initiative();
-			List<int> _initiatives = this.get_initiatives();
-			if (_initiatives.Count != 0)
+            this.combatState.InitiativeList.StartEncounter();
+            this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
+			if (this.fCurrentActor != null)
 			{
-				List<CombatData> _combatants = this.get_combatants(_initiatives[0], false);
-				if (_combatants.Count != 0)
-				{
-					this.fCurrentActor = _combatants[0];
-				}
-				if (this.fCurrentActor != null)
-				{
-					this.fCombatStarted = true;
-					this.InitiativePanel.CurrentInitiative = this.fCurrentActor.Initiative;
-					this.select_current_actor();
-					this.update_list();
-					this.update_maps();
-					this.update_statusbar();
-					this.update_preview_panel();
-					this.highlight_current_actor();
-					this.fLog.Active = true;
-					this.fLog.AddStartRoundEntry(this.fCurrentRound);
-					this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
-					this.update_log();
-				}
-			}
-		}
+                this.fCombatStarted = true;
+                this.InitiativePanel.CurrentInitiative = this.fCurrentActor.Initiative;
+                this.select_current_actor();
+                this.update_list();
+                this.update_maps();
+                this.update_statusbar();
+                this.update_preview_panel();
+                this.highlight_current_actor();
+                this.fLog.Active = true;
+                this.fLog.AddStartRoundEntry(this.fCurrentRound);
+                this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
+                this.update_log();
+            }
+        }
 
 		private void TemplateList_ItemDrag(object sender, ItemDragEventArgs e)
 		{

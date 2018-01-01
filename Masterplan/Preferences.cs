@@ -33,11 +33,11 @@ namespace Masterplan
 
 		private List<Guid> fTileLibraries = new List<Guid>();
 
-		private Masterplan.UI.InitiativeMode fInitiativeMode;
+		private Data.Combat.InitiativeMode fInitiativeMode;
 
-		private Masterplan.UI.InitiativeMode fHeroInitiativeMode = Masterplan.UI.InitiativeMode.ManualIndividual;
+		private Data.Combat.InitiativeMode fHeroInitiativeMode = Data.Combat.InitiativeMode.ManualIndividual;
 
-		private Masterplan.UI.InitiativeMode fTrapInitiativeMode = Masterplan.UI.InitiativeMode.AutoIndividual;
+		private Data.Combat.InitiativeMode fTrapInitiativeMode = Data.Combat.InitiativeMode.AutoIndividual;
 
 		private bool fCreatureAutoRemove = true;
 
@@ -267,7 +267,7 @@ namespace Masterplan
 			}
 		}
 
-		public Masterplan.UI.InitiativeMode HeroInitiativeMode
+		public Data.Combat.InitiativeMode HeroInitiativeMode
 		{
 			get
 			{
@@ -279,7 +279,7 @@ namespace Masterplan
 			}
 		}
 
-		public Masterplan.UI.InitiativeMode InitiativeMode
+		public Data.Combat.InitiativeMode InitiativeMode
 		{
 			get
 			{
@@ -543,7 +543,7 @@ namespace Masterplan
 			}
 		}
 
-		public Masterplan.UI.InitiativeMode TrapInitiativeMode
+		public Data.Combat.InitiativeMode TrapInitiativeMode
 		{
 			get
 			{

@@ -20,7 +20,7 @@ namespace Masterplan.UI
 
 		private Label InitLbl;
 
-		private NumericUpDown InitBox;
+		public NumericUpDown InitBox;
 
 		private Label DamageLbl;
 

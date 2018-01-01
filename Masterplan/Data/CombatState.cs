@@ -34,6 +34,8 @@ namespace Masterplan.Data
 
 		private EncounterLog fLog = new EncounterLog();
 
+        public Combat.InitiativeList InitiativeList = new Combat.InitiativeList();
+
 		public Guid CurrentActor
 		{
 			get
