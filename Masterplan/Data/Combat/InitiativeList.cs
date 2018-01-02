@@ -31,6 +31,11 @@ namespace Masterplan.Data.Combat
             get { return this.CurrentPlayerNode.Value; }
         }
 
+        public void AdvanceToPrevTurn()
+        {
+            this.CurrentPlayerNode = this.CurrentPlayerNode.Previous == null ? this.playerList.Last : this.CurrentPlayerNode.Previous;
+        }
+
         public void AdvanceNextTurn()
         {
             this.CurrentPlayerNode = this.CurrentPlayerNode.Next == null ? this.playerList.First : this.CurrentPlayerNode.Next;

@@ -132,6 +132,7 @@ namespace Masterplan.UI
 		private Panel PreviewPanel;
 
 		private ToolStripButton NextInitBtn;
+        private ToolStripButton PrevInitBtn;
 
 		private ToolStripMenuItem ShowMap;
 
@@ -798,7 +799,8 @@ namespace Masterplan.UI
 				this.DamageBtn.Enabled = flag;
 				this.HealBtn.Enabled = flag;
 				this.EffectMenu.Enabled = flag;
-				this.NextInitBtn.Text = (this.fCombatStarted ? "Next Turn" : "Start Encounter");
+                this.PrevInitBtn.Text = "Prev Turn";
+                this.NextInitBtn.Text = (this.fCombatStarted ? "Next Turn" : "Start Encounter");
 				this.DelayBtn.Visible = this.fCombatStarted;
 				this.DelayBtn.Enabled = flag;
 				this.DelayBtn.Checked = flag1;
@@ -1932,68 +1934,6 @@ namespace Masterplan.UI
 			return listViewItem;
 		}
 
-		private List<CombatData> get_combatants(int init, bool include_defeated)
-		{
-			Dictionary<int, List<CombatData>> nums = new Dictionary<int, List<CombatData>>();
-			foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
-			{
-				int initiative = allSlot.Card.Initiative;
-				if (!nums.ContainsKey(initiative))
-				{
-					nums[initiative] = new List<CombatData>();
-				}
-				foreach (CombatData combatDatum in allSlot.CombatData)
-				{
-					if (allSlot.GetState(combatDatum) == CreatureState.Defeated && !include_defeated || combatDatum.Initiative != init)
-					{
-						continue;
-					}
-					nums[initiative].Add(combatDatum);
-				}
-			}
-			foreach (Hero hero in Session.Project.Heroes)
-			{
-				if (!nums.ContainsKey(hero.InitBonus))
-				{
-					nums[hero.InitBonus] = new List<CombatData>();
-				}
-				CombatData combatData = hero.CombatData;
-				if (combatData.Initiative != init)
-				{
-					continue;
-				}
-				nums[hero.InitBonus].Add(combatData);
-			}
-			foreach (Trap trap in this.fEncounter.Traps)
-			{
-				if (trap.Initiative == -2147483648 || !this.fTrapData.ContainsKey(trap.ID))
-				{
-					continue;
-				}
-				if (!nums.ContainsKey(trap.Initiative))
-				{
-					nums[trap.Initiative] = new List<CombatData>();
-				}
-				CombatData item = this.fTrapData[trap.ID];
-				if (item.Initiative != init)
-				{
-					continue;
-				}
-				nums[trap.Initiative].Add(item);
-			}
-			List<int> nums1 = new List<int>();
-			nums1.AddRange(nums.Keys);
-			nums1.Sort();
-			nums1.Reverse();
-			List<CombatData> combatDatas = new List<CombatData>();
-			foreach (int num in nums1)
-			{
-				nums[num].Sort();
-				combatDatas.AddRange(nums[num]);
-			}
-			return combatDatas;
-		}
-
 		private string get_conditions(CombatData cd)
 		{
 			string str = "";
@@ -2882,6 +2822,7 @@ namespace Masterplan.UI
 			this.EffectMenu = new ToolStripDropDownButton();
 			this.effectToolStripMenuItem = new ToolStripMenuItem();
 			this.toolStripSeparator18 = new ToolStripSeparator();
+            this.PrevInitBtn = new ToolStripButton();
 			this.NextInitBtn = new ToolStripButton();
 			this.DelayBtn = new ToolStripButton();
 			this.toolStripSeparator1 = new ToolStripSeparator();
@@ -3057,7 +2998,7 @@ namespace Masterplan.UI
 			this.MainPanel.SuspendLayout();
 			base.SuspendLayout();
 			ToolStripItemCollection items = this.Toolbar.Items;
-			ToolStripItem[] detailsBtn = new ToolStripItem[] { this.DetailsBtn, this.DamageBtn, this.HealBtn, this.EffectMenu, this.toolStripSeparator18, this.NextInitBtn, this.DelayBtn, this.toolStripSeparator1, this.CombatantsBtn, this.MapMenu, this.PlayerViewMapMenu, this.PlayerViewNoMapMenu, this.ToolsMenu, this.OptionsMenu };
+			ToolStripItem[] detailsBtn = new ToolStripItem[] { this.DetailsBtn, this.DamageBtn, this.HealBtn, this.EffectMenu, this.toolStripSeparator18, this.PrevInitBtn, this.NextInitBtn, this.DelayBtn, this.toolStripSeparator1, this.CombatantsBtn, this.MapMenu, this.PlayerViewMapMenu, this.PlayerViewNoMapMenu, this.ToolsMenu, this.OptionsMenu };
 			items.AddRange(detailsBtn);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
@@ -3098,7 +3039,16 @@ namespace Masterplan.UI
 			this.effectToolStripMenuItem.Text = "[effect]";
 			this.toolStripSeparator18.Name = "toolStripSeparator18";
 			this.toolStripSeparator18.Size = new System.Drawing.Size(6, 25);
-			this.NextInitBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
+
+            this.PrevInitBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.PrevInitBtn.Image = (Image)componentResourceManager.GetObject("PrevInitBtn.Image");
+            this.PrevInitBtn.ImageTransparentColor = Color.Magenta;
+            this.PrevInitBtn.Name = "PrevInitBtn";
+            this.PrevInitBtn.Size = new System.Drawing.Size(63, 22);
+            this.PrevInitBtn.Text = "Prev Turn";
+            this.PrevInitBtn.Click += new EventHandler(this.PrevInitBtn_Click);
+
+            this.NextInitBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			this.NextInitBtn.Image = (Image)componentResourceManager.GetObject("NextInitBtn.Image");
 			this.NextInitBtn.ImageTransparentColor = Color.Magenta;
 			this.NextInitBtn.Name = "NextInitBtn";
@@ -4988,7 +4938,45 @@ namespace Masterplan.UI
 			this.toggle_visibility(this.MapView.SelectedTokens);
 		}
 
-		private void NextInitBtn_Click(object sender, EventArgs e)
+        private void RunBeginningOFTurnUpdates()
+        {
+            this.handle_regen();
+            this.handle_ended_effects(true);
+            this.handle_ongoing_damage();
+            this.handle_recharge();
+        }
+
+        private void UpdateUIForNewTurn()
+        {
+            this.InitiativePanel.CurrentInitiative = this.fCurrentActor.Initiative;
+            this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
+            if (this.fCurrentActor != null && !this.TwoColumnPreview)
+            {
+                this.select_current_actor();
+            }
+            this.update_list();
+            this.update_log();
+            this.update_preview_panel();
+            this.highlight_current_actor();
+        }
+
+        private void PrevInitBtn_Click(object sender, EventArgs e)
+        {
+            this.combatState.InitiativeList.AdvanceToPrevTurn();
+            this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
+
+            if (this.fCurrentActor.Initiative < this.InitiativePanel.CurrentInitiative)
+            {
+                this.fCurrentRound--;
+                this.RoundLbl.Text = string.Concat("Round: ", this.fCurrentRound);
+                this.fLog.AddStartRoundEntry(this.fCurrentRound);
+            }
+
+            //Don't call RunBeginningOfTurnUpates, since we're backing up to this turn and don't want to run beginning of turn stuff again.
+            this.UpdateUIForNewTurn();
+        }
+
+        private void NextInitBtn_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -5002,25 +4990,15 @@ namespace Masterplan.UI
 					this.handle_saves();
 					this.fCurrentActor = this.get_next_actor(this.fCurrentActor);
 					this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
-					if (this.fCurrentActor.Initiative > this.InitiativePanel.CurrentInitiative)
-					{
-						this.fCurrentRound++;
-						this.RoundLbl.Text = string.Concat("Round: ", this.fCurrentRound);
-						this.fLog.AddStartRoundEntry(this.fCurrentRound);
-					}
-					this.InitiativePanel.CurrentInitiative = this.fCurrentActor.Initiative;
-					this.handle_regen();
-					this.handle_ended_effects(true);
-					this.handle_ongoing_damage();
-					this.handle_recharge();
-					if (this.fCurrentActor != null && !this.TwoColumnPreview)
-					{
-						this.select_current_actor();
-					}
-					this.update_list();
-					this.update_log();
-					this.update_preview_panel();
-					this.highlight_current_actor();
+                    if (this.fCurrentActor.Initiative > this.InitiativePanel.CurrentInitiative)
+                    {
+                        this.fCurrentRound++;
+                        this.RoundLbl.Text = string.Concat("Round: ", this.fCurrentRound);
+                        this.fLog.AddStartRoundEntry(this.fCurrentRound);
+                    }
+
+                    this.RunBeginningOFTurnUpdates();
+                    this.UpdateUIForNewTurn();
 				}
 			}
 			catch (Exception exception)
