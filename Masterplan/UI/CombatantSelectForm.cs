@@ -32,7 +32,7 @@ namespace Masterplan.UI
 			}
 		}
 
-		public CombatantSelectForm(Encounter enc, Dictionary<Guid, CombatData> traps)
+		public CombatantSelectForm(Encounter enc)
 		{
 			this.InitializeComponent();
 			foreach (EncounterSlot slot in enc.Slots)
@@ -50,10 +50,10 @@ namespace Masterplan.UI
 				combatData.Tag = hero.CombatData;
 				combatData.Group = this.CombatantList.Groups[0];
 			}
-			foreach (CombatData value in traps.Values)
+			foreach (Trap trap in enc.Traps)
 			{
-				ListViewItem listViewItem = this.CombatantList.Items.Add(value.DisplayName);
-				listViewItem.Tag = value;
+				ListViewItem listViewItem = this.CombatantList.Items.Add(trap.CombatData.DisplayName);
+				listViewItem.Tag = trap.CombatData;
 				listViewItem.Group = this.CombatantList.Groups[2];
 			}
 			Application.Idle += new EventHandler(this.Application_Idle);

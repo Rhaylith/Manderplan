@@ -29,8 +29,6 @@ namespace Masterplan.UI
 
 		private int fPartyLevel = Session.Project.Party.Level;
 
-		private Dictionary<Guid, CombatData> fTrapData;
-
 		private bool fCombatStarted;
 
 		private CombatData fCurrentActor;
@@ -562,26 +560,13 @@ namespace Masterplan.UI
 				d.CombatData.ID = d.ID;
 				d.CombatData.DisplayName = d.Name;
 			}
-			if (cs.TrapData == null)
-			{
-				this.fTrapData = new Dictionary<Guid, CombatData>();
-			}
-			else
-			{
-				this.fTrapData = cs.TrapData;
-			}
 			foreach (Trap trap in this.fEncounter.Traps)
 			{
-				if (this.fTrapData.ContainsKey(trap.ID))
+				if (trap.CombatData != null)
 				{
 					continue;
 				}
-				CombatData combatDatum = new CombatData()
-				{
-					DisplayName = trap.Name,
-					ID = trap.ID
-				};
-				this.fTrapData[trap.ID] = combatDatum;
+                trap.CombatData = new CombatData() { DisplayName = trap.Name, ID = trap.ID };
 			}
 			if (this.fEncounter.MapID == Guid.Empty)
 			{
@@ -639,24 +624,29 @@ namespace Masterplan.UI
 			{
 				this.fCombatStarted = true;
 				Hero hero2 = Session.Project.FindHero(cs.CurrentActor);
-				if (hero2 != null)
-				{
-					this.fCurrentActor = hero2.CombatData;
-				}
-				else if (!this.fTrapData.ContainsKey(cs.CurrentActor))
-				{
-					CombatData combatDatum1 = this.fEncounter.FindCombatData(cs.CurrentActor);
-					if (combatDatum1 != null)
-					{
-						this.fCurrentActor = combatDatum1;
-					}
-				}
-				else
-				{
-					this.fCurrentActor = this.fTrapData[cs.CurrentActor];
+                if (hero2 != null)
+                {
+                    this.fCurrentActor = hero2.CombatData;
+                }
+                else
+                {
+                    Trap trap = this.fEncounter.FindTrap(cs.CurrentActor);
+                    if (trap != null)
+                    {
+                        this.fCurrentActor = trap.CombatData;
+                    }
+                    else
+                    {
+                        CombatData combatDatum1 = this.fEncounter.FindCombatData(cs.CurrentActor);
+                        if (combatDatum1 != null)
+                        {
+                            this.fCurrentActor = combatDatum1;
+                        }
+                    }
 				}
 			}
-			this.CombatList.ListViewItemSorter = new CombatForm.InitiativeSorter(this.fTrapData, this.fEncounter);
+
+			this.CombatList.ListViewItemSorter = new CombatForm.InitiativeSorter(this.fEncounter);
 			this.set_map(cs.TokenLinks, cs.Viewpoint, cs.Sketches);
 			this.MapMenu.Visible = this.fEncounter.MapID != Guid.Empty;
 			this.InitiativePanel.InitiativeScores = this.get_initiatives();
@@ -819,7 +809,7 @@ namespace Masterplan.UI
 				{
 					if (oc.DurationCreatureID == Guid.Empty)
 					{
-						CombatantSelectForm combatantSelectForm = new CombatantSelectForm(this.fEncounter, this.fTrapData);
+						CombatantSelectForm combatantSelectForm = new CombatantSelectForm(this.fEncounter);
 						if (combatantSelectForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 						{
 							if (combatantSelectForm.SelectedCombatant == null)
@@ -981,9 +971,9 @@ namespace Masterplan.UI
 					}
 					foreach (Trap trap in encounterBuilderForm.Encounter.Traps)
 					{
-						if (trap.Initiative != -2147483648)
+						if (trap.Initiative != Int32.MinValue)
 						{
-							this.fTrapData[trap.ID] = new CombatData();
+							trap.CombatData = new CombatData();
 							if (this.fCombatStarted)
 							{
 								this.roll_initiative();
@@ -2121,9 +2111,9 @@ namespace Masterplan.UI
 					pairs.Add(new Pair<CombatData, OngoingCondition>(combatData, ongoingCondition));
 				}
 			}
-			foreach (Guid key in this.fTrapData.Keys)
+			foreach (Trap trap in this.fEncounter.Traps)
 			{
-				CombatData item = this.fTrapData[key];
+                CombatData item = trap.CombatData;
 				foreach (OngoingCondition condition1 in item.Conditions)
 				{
 					if (condition1.Duration != durationType || condition1.DurationRound > this.fCurrentRound || !(this.fCurrentActor.ID == condition1.DurationCreatureID))
@@ -2781,9 +2771,10 @@ namespace Masterplan.UI
 		private string html_trap()
 		{
 			CombatData item = null;
-			if (this.fTrapData.ContainsKey(this.SelectedTrap.ID))
+            Trap trap = this.fEncounter.FindTrap(this.SelectedTrap.ID);
+			if (trap != null)
 			{
-				item = this.fTrapData[this.SelectedTrap.ID];
+                item = trap.CombatData;
 				if (this.TwoColumnPreview && item == this.fCurrentActor)
 				{
 					return "";
@@ -3949,9 +3940,9 @@ namespace Masterplan.UI
 				if (listViewItem.Tag is Trap)
 				{
 					Trap trap = listViewItem.Tag as Trap;
-					if (trap.Initiative != -2147483648)
+					if (trap.Initiative != Int32.MinValue)
 					{
-						data = this.fTrapData[trap.ID];
+                        data = trap.CombatData;
 						displayName = data.DisplayName;
 						if (!Session.Preferences.PlayerViewCreatureLabels)
 						{
@@ -5120,7 +5111,6 @@ namespace Masterplan.UI
 					combatState.CurrentRound = this.fCurrentRound;
 					combatState.PartyLevel = this.fPartyLevel;
 					combatState.HeroData = guids;
-					combatState.TrapData = this.fTrapData;
 					combatState.TokenLinks = this.MapView.TokenLinks;
 					combatState.RemovedCreatureXP = this.fRemovedCreatureXP;
 					combatState.Viewpoint = this.MapView.Viewpoint;
@@ -5661,10 +5651,6 @@ namespace Masterplan.UI
 					}
 					if (combatData == null)
 					{
-						if (this.fTrapData.ContainsKey(guid8))
-						{
-							combatData = this.fTrapData[guid8];
-						}
 						Trap trap1 = this.fEncounter.FindTrap(guid8);
 						if (trap1 != null)
 						{
@@ -6126,7 +6112,7 @@ namespace Masterplan.UI
 
 		private void roll_initiative()
 		{
-            this.combatState.InitiativeList.RollInitiative(this.fEncounter, this.fTrapData);
+            this.combatState.InitiativeList.RollInitiative(this.fEncounter);
 			if (this.combatState.InitiativeList.ManualInitiativeDictionary.Count != 0)
 			{
 				(new GroupInitiativeForm(this.combatState.InitiativeList.ManualInitiativeDictionary, this.fEncounter)).ShowDialog();
@@ -6833,15 +6819,15 @@ namespace Masterplan.UI
 				ListViewItem item = this.CombatList.Items.Add(trap.Name);
 				item.Tag = trap;
 				this.add_icon(item, Color.White);
-				if (trap.Initiative == -2147483648)
+				if (trap.Initiative == Int32.MinValue)
 				{
 					item.SubItems.Add("-");
 					item.Group = this.CombatList.Groups[num2];
 				}
 				else
 				{
-					CombatData item1 = this.fTrapData[trap.ID];
-					if (item1 == null || item1.Initiative == -2147483648)
+					CombatData item1 = trap.CombatData;
+					if (item1 == null || item1.Initiative == Int32.MinValue)
 					{
 						item.SubItems.Add("-");
 						item.Group = this.CombatList.Groups[num5];
@@ -7290,13 +7276,10 @@ namespace Masterplan.UI
 
 		private class InitiativeSorter : IComparer, IComparer<ListViewItem>
 		{
-			private Dictionary<Guid, CombatData> fTrapData;
-
 			private Encounter fEncounter;
 
-			public InitiativeSorter(Dictionary<Guid, CombatData> trap_data, Encounter enc)
+			public InitiativeSorter(Encounter enc)
 			{
-				this.fTrapData = trap_data;
 				this.fEncounter = enc;
 			}
 
@@ -7381,7 +7364,7 @@ namespace Masterplan.UI
 					else
 					{
 						Trap tag = lvi.Tag as Trap;
-						initiative = (!this.fTrapData.ContainsKey(tag.ID) ? -2147483648 : this.fTrapData[tag.ID].Initiative);
+						initiative = (tag.CombatData == null ? Int32.MinValue : tag.CombatData.Initiative);
 					}
 				}
 				catch (Exception exception)

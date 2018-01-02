@@ -38,6 +38,8 @@ namespace Masterplan.Data
 
 		private string fURL = "";
 
+        public CombatData CombatData = null;
+
 		public TrapAttack Attack
 		{
 			get

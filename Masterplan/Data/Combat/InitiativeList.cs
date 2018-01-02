@@ -58,7 +58,7 @@ namespace Masterplan.Data.Combat
             return playerList.Select(player => player.Initiative).ToList();
         }
 
-        public void Reset(Encounter encounter, Dictionary<Guid, CombatData> trapData)
+        public void Reset(Encounter encounter)
         {
             List<int> nums = new List<int>();
             foreach (EncounterSlot allSlot in encounter.AllSlots)
@@ -86,8 +86,9 @@ namespace Masterplan.Data.Combat
                 }
                 playerList.AddLast(hero.CombatData);
             }
-            foreach (CombatData value in trapData.Values)
+            foreach (Trap trap in encounter.Traps)
             {
+                CombatData value = trap.CombatData;
                 if (value.Delaying)
                 {
                     continue;
@@ -104,7 +105,7 @@ namespace Masterplan.Data.Combat
             this.CurrentPlayerNode = this.playerList.First;
         }
 
-        public void RollInitiative(Encounter encounter, Dictionary<Guid, CombatData> trapData)
+        public void RollInitiative(Encounter encounter)
         {
             List<Pair<List<CombatData>, int>> pairs = new List<Pair<List<CombatData>, int>>();
 
@@ -238,11 +239,11 @@ namespace Masterplan.Data.Combat
             }
             foreach (Trap trap in encounter.Traps)
             {
-                if (trap.Initiative == -2147483648)
+                if (trap.Initiative == Int32.MinValue)
                 {
                     continue;
                 }
-                CombatData item = trapData[trap.ID];
+                CombatData item = trap.CombatData;
                 if (item.Initiative != Int32.MinValue)
                 {
                     continue;
@@ -281,7 +282,7 @@ namespace Masterplan.Data.Combat
                 }
             }
 
-            this.Reset(encounter, trapData);
+            this.Reset(encounter);
         }
 
         public void StartEncounter()
