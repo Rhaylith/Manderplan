@@ -1,5 +1,7 @@
 using Masterplan;
 using Masterplan.Controls;
+using Masterplan.Commands;
+using Masterplan.Commands.Combat;
 using Masterplan.Data;
 using Masterplan.Data.Combat;
 using Masterplan.Events;
@@ -128,6 +130,8 @@ namespace Masterplan.UI
 		private WebBrowser Preview;
 
 		private Panel PreviewPanel;
+
+        private ToolStripButton UndoBtn;
 
 		private ToolStripButton NextInitBtn;
         private ToolStripButton PrevInitBtn;
@@ -680,9 +684,13 @@ namespace Masterplan.UI
 			this.update_preview_panel();
 			this.update_maps();
 			this.update_statusbar();
-		}
 
-		private void add_condition_hint(ListViewItem lvi)
+            CommandManager.GetInstance().RegisterListener(typeof(InitiativeAdvanceCommand), this.InitiativeAdvancedHandler);
+            CommandManager.GetInstance().RegisterListener(typeof(InitiativePreviousCommand), this.InitiativeAdvancedHandler);
+            CommandManager.GetInstance().RegisterListener(typeof(HealEntitiesCommand), this.HealCommandCallback);
+        }
+
+        private void add_condition_hint(ListViewItem lvi)
 		{
 			if (lvi.ImageIndex == -1)
 			{
@@ -714,16 +722,17 @@ namespace Masterplan.UI
 			lvi.ImageIndex = this.CombatList.SmallImageList.Images.Count - 1;
 		}
 
+    // TODO:  Fix This
 		private void add_in_command_clicked(object sender, EventArgs e)
 		{
-			try
-			{
-				((sender as ToolStripMenuItem).Tag as ICommand).Execute();
-			}
-			catch (Exception exception)
-			{
-				LogSystem.Trace(exception);
-			}
+			//try
+			//{
+			//	((sender as ToolStripMenuItem).Tag as ICommand).Execute();
+			//}
+			//catch (Exception exception)
+			//{
+			//	LogSystem.Trace(exception);
+			//}
 		}
 
 		private void add_initiative_hint(ListViewItem lvi)
@@ -789,6 +798,7 @@ namespace Masterplan.UI
 				this.DamageBtn.Enabled = flag;
 				this.HealBtn.Enabled = flag;
 				this.EffectMenu.Enabled = flag;
+                this.UndoBtn.Text = "Undo";
                 this.PrevInitBtn.Text = "Prev Turn";
                 this.NextInitBtn.Text = (this.fCombatStarted ? "Next Turn" : "Start Encounter");
 				this.DelayBtn.Visible = this.fCombatStarted;
@@ -1518,7 +1528,15 @@ namespace Masterplan.UI
 			}
 		}
 
-		private void do_heal(List<IToken> tokens)
+        private void HealCommandCallback()
+        {
+            this.update_list();
+            this.update_log();
+            this.update_preview_panel();
+            this.update_maps();
+        }
+
+        private void do_heal(List<IToken> tokens)
 		{
 			List<Pair<CombatData, EncounterCard>> pairs = new List<Pair<CombatData, EncounterCard>>();
 			foreach (IToken token in tokens)
@@ -1547,26 +1565,24 @@ namespace Masterplan.UI
 			{
 				_state[pair1.First] = this.get_state(pair1.First);
 			}
-			if ((new HealForm(pairs)).ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            HealForm form = new HealForm(pairs);
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
-				foreach (Pair<CombatData, EncounterCard> pair2 in pairs)
-				{
-					int damage = pair2.First.Damage - combatDatas[pair2.First];
-					if (damage != 0)
-					{
-						this.fLog.AddDamageEntry(pair2.First.ID, damage, null);
-					}
-					CreatureState creatureState = this.get_state(pair2.First);
-					if (creatureState == _state[pair2.First])
-					{
-						continue;
-					}
-					this.fLog.AddStateEntry(pair2.First.ID, creatureState);
-				}
-				this.update_list();
-				this.update_log();
-				this.update_preview_panel();
-				this.update_maps();
+                CommandManager.GetInstance().ExecuteCommand(form.HealCommand);
+				//foreach (Pair<CombatData, EncounterCard> pair2 in pairs)
+				//{
+				//	int damage = pair2.First.Damage - combatDatas[pair2.First];
+				//	if (damage != 0)
+				//	{
+				//		this.fLog.AddDamageEntry(pair2.First.ID, damage, null);
+				//	}
+				//	CreatureState creatureState = this.get_state(pair2.First);
+				//	if (creatureState == _state[pair2.First])
+				//	{
+				//		continue;
+				//	}
+				//	this.fLog.AddStateEntry(pair2.First.ID, creatureState);
+				//}
 			}
 		}
 
@@ -2813,6 +2829,7 @@ namespace Masterplan.UI
 			this.EffectMenu = new ToolStripDropDownButton();
 			this.effectToolStripMenuItem = new ToolStripMenuItem();
 			this.toolStripSeparator18 = new ToolStripSeparator();
+            this.UndoBtn = new ToolStripButton();
             this.PrevInitBtn = new ToolStripButton();
 			this.NextInitBtn = new ToolStripButton();
 			this.DelayBtn = new ToolStripButton();
@@ -2989,7 +3006,7 @@ namespace Masterplan.UI
 			this.MainPanel.SuspendLayout();
 			base.SuspendLayout();
 			ToolStripItemCollection items = this.Toolbar.Items;
-			ToolStripItem[] detailsBtn = new ToolStripItem[] { this.DetailsBtn, this.DamageBtn, this.HealBtn, this.EffectMenu, this.toolStripSeparator18, this.PrevInitBtn, this.NextInitBtn, this.DelayBtn, this.toolStripSeparator1, this.CombatantsBtn, this.MapMenu, this.PlayerViewMapMenu, this.PlayerViewNoMapMenu, this.ToolsMenu, this.OptionsMenu };
+			ToolStripItem[] detailsBtn = new ToolStripItem[] { this.DetailsBtn, this.DamageBtn, this.HealBtn, this.EffectMenu, this.toolStripSeparator18, this.UndoBtn, this.PrevInitBtn, this.NextInitBtn, this.DelayBtn, this.toolStripSeparator1, this.CombatantsBtn, this.MapMenu, this.PlayerViewMapMenu, this.PlayerViewNoMapMenu, this.ToolsMenu, this.OptionsMenu };
 			items.AddRange(detailsBtn);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
@@ -3030,6 +3047,14 @@ namespace Masterplan.UI
 			this.effectToolStripMenuItem.Text = "[effect]";
 			this.toolStripSeparator18.Name = "toolStripSeparator18";
 			this.toolStripSeparator18.Size = new System.Drawing.Size(6, 25);
+
+            this.UndoBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.UndoBtn.Image = (Image)componentResourceManager.GetObject("UndoBtn.Image");
+            this.UndoBtn.ImageTransparentColor = Color.Magenta;
+            this.UndoBtn.Name = "UndoBtn";
+            this.UndoBtn.Size = new System.Drawing.Size(63, 22);
+            this.UndoBtn.Text = "Undo";
+            this.UndoBtn.Click += new EventHandler(this.UndoBtn_Click);
 
             this.PrevInitBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
             this.PrevInitBtn.Image = (Image)componentResourceManager.GetObject("PrevInitBtn.Image");
@@ -4951,20 +4976,32 @@ namespace Masterplan.UI
             this.highlight_current_actor();
         }
 
+        private void UndoBtn_Click(object sender, EventArgs e)
+        {
+            CommandManager.GetInstance().UndoLastCommand();
+        }
+
         private void PrevInitBtn_Click(object sender, EventArgs e)
         {
-            this.combatState.InitiativeList.AdvanceToPrevTurn();
-            this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
+            InitiativePreviousCommand command = new InitiativePreviousCommand(this.combatState.InitiativeList);
+            CommandManager.GetInstance().ExecuteCommand(command);
+        }
 
-            if (this.fCurrentActor.Initiative < this.InitiativePanel.CurrentInitiative)
+        private void InitiativeAdvancedHandler()
+        {
+            this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
+            this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
+            if (this.fCurrentActor.Initiative > this.InitiativePanel.CurrentInitiative)
             {
-                this.fCurrentRound--;
+                this.fCurrentRound++;
                 this.RoundLbl.Text = string.Concat("Round: ", this.fCurrentRound);
                 this.fLog.AddStartRoundEntry(this.fCurrentRound);
             }
 
-            //Don't call RunBeginningOfTurnUpates, since we're backing up to this turn and don't want to run beginning of turn stuff again.
+            // TODO: Beginning of Turn updates should be turned into a nested command and not run during previous
+            this.RunBeginningOFTurnUpdates();
             this.UpdateUIForNewTurn();
+
         }
 
         private void NextInitBtn_Click(object sender, EventArgs e)
@@ -4977,19 +5014,12 @@ namespace Masterplan.UI
 				}
 				else if (this.get_initiatives().Count != 0)
 				{
+                    //TODO this needs to go into the command!
 					this.handle_ended_effects(false);
 					this.handle_saves();
-					this.fCurrentActor = this.get_next_actor(this.fCurrentActor);
-					this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
-                    if (this.fCurrentActor.Initiative > this.InitiativePanel.CurrentInitiative)
-                    {
-                        this.fCurrentRound++;
-                        this.RoundLbl.Text = string.Concat("Round: ", this.fCurrentRound);
-                        this.fLog.AddStartRoundEntry(this.fCurrentRound);
-                    }
 
-                    this.RunBeginningOFTurnUpdates();
-                    this.UpdateUIForNewTurn();
+                    InitiativeAdvanceCommand command = new InitiativeAdvanceCommand(this.combatState.InitiativeList);
+                    CommandManager.GetInstance().ExecuteCommand(command);                    
 				}
 			}
 			catch (Exception exception)
@@ -6474,18 +6504,20 @@ namespace Masterplan.UI
 					Tag = addIn
 				};
 				this.ToolsAddIns.DropDownItems.Add(toolStripMenuItem);
-				foreach (ICommand combatCommand in addIn.CombatCommands)
-				{
-					ToolStripMenuItem toolStripMenuItem1 = new ToolStripMenuItem(combatCommand.Name)
-					{
-						ToolTipText = TextHelper.Wrap(combatCommand.Description),
-						Enabled = combatCommand.Available,
-						Checked = combatCommand.Active
-					};
-					toolStripMenuItem1.Click += new EventHandler(this.add_in_command_clicked);
-					toolStripMenuItem1.Tag = combatCommand;
-					toolStripMenuItem.DropDownItems.Add(toolStripMenuItem1);
-				}
+
+                //TODO:  Fix this
+				//foreach (ICommand combatCommand in addIn.CombatCommands)
+				//{
+				//	ToolStripMenuItem toolStripMenuItem1 = new ToolStripMenuItem(combatCommand.Name)
+				//	{
+				//		ToolTipText = TextHelper.Wrap(combatCommand.Description),
+				//		Enabled = combatCommand.Available,
+				//		Checked = combatCommand.Active
+				//	};
+				//	toolStripMenuItem1.Click += new EventHandler(this.add_in_command_clicked);
+				//	toolStripMenuItem1.Tag = combatCommand;
+				//	toolStripMenuItem.DropDownItems.Add(toolStripMenuItem1);
+				//}
 				if (addIn.Commands.Count != 0)
 				{
 					continue;

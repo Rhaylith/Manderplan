@@ -1,5 +1,6 @@
 using Masterplan;
 using Masterplan.Data;
+using Masterplan.Commands.Combat;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,6 +29,8 @@ namespace Masterplan.UI
 		private Label SurgeLbl;
 
 		private NumericUpDown SurgeBox;
+
+        public HealEntitiesCommand HealCommand { get; set; }
 
 		public HealForm(List<Pair<CombatData, EncounterCard>> tokens)
 		{
@@ -175,41 +178,44 @@ namespace Masterplan.UI
 		{
 			int value = (int)this.SurgeBox.Value;
 			int num = (int)this.HPBox.Value;
-			foreach (Pair<CombatData, EncounterCard> fToken in this.fTokens)
-			{
-				int hP = 0;
-				if (fToken.Second == null)
-				{
-					Hero hero = Session.Project.FindHero(fToken.First.ID);
-					if (hero != null)
-					{
-						hP = hero.HP;
-					}
-				}
-				else
-				{
-					hP = fToken.Second.HP;
-				}
-				int num1 = hP / 4 * value + num;
-				if (!this.TempHPBox.Checked)
-				{
-					if (fToken.First.Damage > hP)
-					{
-						fToken.First.Damage = hP;
-					}
-					CombatData first = fToken.First;
-					first.Damage = first.Damage - num1;
-					if (fToken.First.Damage >= 0)
-					{
-						continue;
-					}
-					fToken.First.Damage = 0;
-				}
-				else
-				{
-					fToken.First.TempHP = Math.Max(num1, fToken.First.TempHP);
-				}
-			}
+
+            HealCommand = new HealEntitiesCommand(this.fTokens, num, this.TempHPBox.Checked);
+
+			//foreach (Pair<CombatData, EncounterCard> fToken in this.fTokens)
+			//{
+			//	int hP = 0;
+			//	if (fToken.Second == null)
+			//	{
+			//		Hero hero = Session.Project.FindHero(fToken.First.ID);
+			//		if (hero != null)
+			//		{
+			//			hP = hero.HP;
+			//		}
+			//	}
+			//	else
+			//	{
+			//		hP = fToken.Second.HP;
+			//	}
+			//	int num1 = hP / 4 * value + num;
+			//	if (!this.TempHPBox.Checked)
+			//	{
+			//		if (fToken.First.Damage > hP)
+			//		{
+			//			fToken.First.Damage = hP;
+			//		}
+			//		CombatData first = fToken.First;
+			//		first.Damage = first.Damage - num1;
+			//		if (fToken.First.Damage >= 0)
+			//		{
+			//			continue;
+			//		}
+			//		fToken.First.Damage = 0;
+			//	}
+			//	else
+			//	{
+			//		fToken.First.TempHP = Math.Max(num1, fToken.First.TempHP);
+			//	}
+			//}
 		}
 	}
 }
