@@ -2062,7 +2062,6 @@ namespace Masterplan.UI
 			this.MapView.DoubleClick += new EventHandler(this.MapView_DoubleClick);
 			this.MapView.SelectedTokensChanged += new EventHandler(this.MapView_SelectedTokensChanged);
 			this.MapView.HoverTokenChanged += new EventHandler(this.MapView_HoverTokenChanged);
-			this.MapView.ItemMoved += new MovementEventHandler(this.MapView_ItemMoved);
 			base.AcceptButton = this.OKBtn;
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -2503,10 +2502,6 @@ namespace Masterplan.UI
 		private void MapView_ItemDropped(object sender, EventArgs e)
 		{
 			this.update_mapthreats();
-		}
-
-		private void MapView_ItemMoved(object sender, MovementEventArgs e)
-		{
 		}
 
 		private void MapView_SelectedTokensChanged(object sender, EventArgs e)

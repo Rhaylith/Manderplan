@@ -1249,7 +1249,7 @@ namespace Masterplan.Controls
 			}
 			using (System.Drawing.Font font = new System.Drawing.Font(this.Font.FontFamily, this.fLayoutData.SquareSize * (float)num / 4f))
 			{
-				int _distance = this.get_distance(start_location, new_location);
+				int _distance = MMath.CalcDistance(start_location, new_location);
 				g.DrawString(_distance.ToString(), font, Brushes.Red, rectangleF1, this.fCentred);
 			}
 			PointF pointF = new PointF(region.X + region.Width / 2f, region.Y + region.Height / 2f);
@@ -1358,13 +1358,6 @@ namespace Masterplan.Controls
 			int x = 1 + (point.X - squareAtPoint.X);
 			int y = 1 + (point.Y - squareAtPoint.Y);
 			return new Rectangle(squareAtPoint, new System.Drawing.Size(x, y));
-		}
-
-		private int get_distance(Point from, Point to)
-		{
-			int num = Math.Abs(from.X - to.X);
-			int num1 = Math.Abs(from.Y - to.Y);
-			return Math.Max(num, num1);
 		}
 
 		private PointF get_point(MapSketchPoint msp)
@@ -1845,7 +1838,8 @@ namespace Masterplan.Controls
 		{
 			if (this.ItemMoved != null)
 			{
-				this.ItemMoved(this, new MovementEventArgs(distance));
+                // TODO:  Fix this
+//				this.ItemMoved(this, new MovementEventArgs(distance));
 			}
 		}
 
@@ -2407,26 +2401,13 @@ namespace Masterplan.Controls
 							{
 								if (this.fDraggedToken != null && this.fDraggedToken.Location != this.fDraggedToken.Start)
 								{
-									int _distance = this.get_distance(this.fDraggedToken.Location, this.fDraggedToken.Start);
-									if (this.fDraggedToken.Token is CreatureToken)
-									{
-										CreatureToken token = this.fDraggedToken.Token as CreatureToken;
-										EncounterSlot encounterSlot = this.fEncounter.FindSlot(token.SlotID);
-										CombatData location = encounterSlot.FindCombatData(this.fDraggedToken.Start);
-										location.Location = this.fDraggedToken.Location;
-									}
-									if (this.fDraggedToken.Token is Hero)
-									{
-										Hero hero = this.fDraggedToken.Token as Hero;
-										hero.CombatData.Location = this.fDraggedToken.Location;
-									}
-									if (this.fDraggedToken.Token is CustomToken)
-									{
-										CustomToken customToken = this.fDraggedToken.Token as CustomToken;
-										customToken.Data.Location = this.fDraggedToken.Location;
-									}
-									this.fDraggedToken = null;
-									this.OnItemMoved(_distance);
+                                    //int _distance = MMath.CalcDistance(this.fDraggedToken.Location, this.fDraggedToken.Start);
+
+                                    // Need to set fDraggedToken to null for....reasons.  OnPaint can get called and then the locations don't match between fDraggedToken and the actual token
+                                    DraggedToken dragResult = this.fDraggedToken;
+                                    this.fDraggedToken = null;
+                                    this.ItemMoved?.Invoke(dragResult.Token, dragResult.Start, dragResult.Location);
+									//this.OnItemMoved(_distance);
 								}
 								if (this.fDraggedToken != null && this.fDraggedToken.LinkedToken != null)
 								{
@@ -2476,7 +2457,7 @@ namespace Masterplan.Controls
 								{
 									if (client != this.fDraggedTiles.Start)
 									{
-										int num = this.get_distance(client, this.fDraggedTiles.Start);
+										int num = MMath.CalcDistance(client, this.fDraggedTiles.Start);
 										foreach (TileData tile in this.fDraggedTiles.Tiles)
 										{
 											Point point = tile.Location;
@@ -3184,8 +3165,7 @@ namespace Masterplan.Controls
 				{
 					CreatureToken creatureToken4 = this.fDraggedToken.Token as CreatureToken;
 					EncounterSlot encounterSlot3 = this.fEncounter.FindSlot(creatureToken4.SlotID);
-					CombatData combatDatum4 = encounterSlot3.FindCombatData(this.fDraggedToken.Start);
-					this.draw_creature(e.Graphics, this.fDraggedToken.Location, encounterSlot3.Card, combatDatum4, true, true, true);
+					this.draw_creature(e.Graphics, this.fDraggedToken.Location, encounterSlot3.Card, creatureToken4.Data, true, true, true);
 				}
 				if (this.fDraggedToken.Token is Hero)
 				{

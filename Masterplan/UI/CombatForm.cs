@@ -685,9 +685,15 @@ namespace Masterplan.UI
 			this.update_maps();
 			this.update_statusbar();
 
+            this.RegisterCommands();
+        }
+
+        private void RegisterCommands()
+        {
             CommandManager.GetInstance().RegisterListener(typeof(InitiativeAdvanceCommand), this.InitiativeAdvancedHandler);
             CommandManager.GetInstance().RegisterListener(typeof(InitiativePreviousCommand), this.InitiativeAdvancedHandler);
             CommandManager.GetInstance().RegisterListener(typeof(HealEntitiesCommand), this.HealCommandCallback);
+            CommandManager.GetInstance().RegisterListener(typeof(MoveTokenCommand), this.OnMoveTokenCommand);
         }
 
         private void add_condition_hint(ListViewItem lvi)
@@ -4851,32 +4857,31 @@ namespace Masterplan.UI
 			}
 		}
 
-		private void MapView_ItemMoved(object sender, MovementEventArgs e)
+        private void OnMoveTokenCommand()
+        {
+            this.update_maps();
+            foreach (IToken selectedToken in this.MapView.SelectedTokens)
+            {
+                Guid empty = Guid.Empty;
+                CreatureToken creatureToken = selectedToken as CreatureToken;
+                if (creatureToken != null)
+                {
+                    empty = creatureToken.Data.ID;
+                }
+                Hero hero = selectedToken as Hero;
+                if (hero != null)
+                {
+                    empty = hero.ID;
+                }
+                //TODO: Fix this
+                //this.fLog.AddMoveEntry(empty, e.Distance, "");
+            }
+            this.update_log();
+        }
+        private void MapView_ItemMoved(IToken token, Point start, Point end)
 		{
-			try
-			{
-				this.update_maps();
-				foreach (IToken selectedToken in this.MapView.SelectedTokens)
-				{
-					Guid empty = Guid.Empty;
-					CreatureToken creatureToken = selectedToken as CreatureToken;
-					if (creatureToken != null)
-					{
-						empty = creatureToken.Data.ID;
-					}
-					Hero hero = selectedToken as Hero;
-					if (hero != null)
-					{
-						empty = hero.ID;
-					}
-					this.fLog.AddMoveEntry(empty, e.Distance, "");
-				}
-				this.update_log();
-			}
-			catch (Exception exception)
-			{
-				LogSystem.Trace(exception);
-			}
+            MoveTokenCommand command = new MoveTokenCommand(token, start, end);
+            CommandManager.GetInstance().ExecuteCommand(command);
 		}
 
 		private void MapView_MouseZoomed(object sender, MouseEventArgs e)

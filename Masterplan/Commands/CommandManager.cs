@@ -27,14 +27,20 @@ namespace Masterplan.Commands
         {
             command.Do();
 
-            // Find any listeners and invoke them
-            Type commandType = command.GetType();
-            if (ListenerMap.ContainsKey(commandType))
-            {
-                ListenerMap[commandType].Invoke();
-            }
+            CallListenersForCommand(command);
 
             _UndoQueue.Push(command);
+        }
+
+        public void UndoLastCommand()
+        {
+            if (_UndoQueue.Count > 0)
+            {
+                ICommand command = _UndoQueue.Pop();
+                command.Undo();
+
+                CallListenersForCommand(command);
+            }
         }
 
         public void RegisterListener(Type command, MessageHandler callback)
@@ -49,22 +55,14 @@ namespace Masterplan.Commands
             }
         }
 
-        public void UndoLastCommand()
+        private void CallListenersForCommand(ICommand command)
         {
-            ICommand command = _UndoQueue.Pop();
-            if (command != null)
+            // Find any listeners and invoke them
+            Type commandType = command.GetType();
+            if (ListenerMap.ContainsKey(commandType))
             {
-                command.Undo();
-
-                // Find any listeners and invoke them
-                Type commandType = command.GetType();
-                if (ListenerMap.ContainsKey(commandType))
-                {
-                    ListenerMap[commandType].Invoke();
-                }
-
+                ListenerMap[commandType].Invoke();
             }
         }
-
     }
 }

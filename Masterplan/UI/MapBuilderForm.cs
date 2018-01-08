@@ -565,7 +565,6 @@ namespace Masterplan.UI
 			this.MapView.TileContext += new EventHandler(this.MapView_TileContext);
 			this.MapView.MouseZoomed += new MouseEventHandler(this.MapView_MouseZoomed);
 			this.MapView.ItemRemoved += new EventHandler(this.MapView_ItemRemoved);
-			this.MapView.ItemMoved += new MovementEventHandler(this.MapView_ItemMoved);
 			this.MapView.AreaActivated += new MapAreaEventHandler(this.MapView_AreaActivated);
 			ToolStripItemCollection items = this.Toolbar.Items;
 			ToolStripItem[] removeBtn = new ToolStripItem[] { this.RemoveBtn, this.RotateLeftBtn, this.RotateRightBtn, this.toolStripSeparator1, this.OrderingBtn, this.at, this.toolStripSeparator3, this.NameLbl, this.NameBox };
@@ -1085,10 +1084,6 @@ namespace Masterplan.UI
 		}
 
 		private void MapView_ItemDropped(object sender, EventArgs e)
-		{
-		}
-
-		private void MapView_ItemMoved(object sender, MovementEventArgs e)
 		{
 		}
 

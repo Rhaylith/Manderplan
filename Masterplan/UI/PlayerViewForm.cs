@@ -171,7 +171,7 @@ namespace Masterplan.UI
 			base.ResumeLayout(false);
 		}
 
-		private void item_moved(object sender, MovementEventArgs e)
+		private void item_moved(IToken token, Point start, Point end)
 		{
 			this.fParentMap.Invalidate();
 		}
