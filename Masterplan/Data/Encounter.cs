@@ -566,5 +566,24 @@ namespace Masterplan.Data
 			}
 			return displayName;
 		}
-	}
+
+        public CreatureState GetState(CombatData cd)
+        {
+            EncounterSlot encounterSlot = this.FindSlot(cd);
+            if (encounterSlot != null)
+            {
+                return encounterSlot.GetState(cd);
+            }
+            Hero hero = Session.Project.FindHero(cd.ID);
+            if (hero != null)
+            {
+                return hero.GetState(cd.Damage);
+            }
+            if (this.FindTrap(cd.ID) != null)
+            {
+                return CreatureState.Active;
+            }
+            return CreatureState.Active;
+        }
+    }
 }

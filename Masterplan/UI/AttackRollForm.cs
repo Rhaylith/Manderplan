@@ -151,7 +151,9 @@ namespace Masterplan.UI
 				{
 					card = null;
 				}
-				DamageForm.DoDamage(tag.First, card, value, damageTypes, false);
+
+                // TODO Fix Damage
+				//DamageForm.DoDamage(tag.First, card, value, damageTypes, false);
 			}
 		}
 

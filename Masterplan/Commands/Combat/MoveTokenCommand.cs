@@ -11,6 +11,7 @@ namespace Masterplan.Commands.Combat
     public class MoveTokenCommand : ICommand
     {
         private IToken _token;
+        private CombatData _data;
         private Point _destLocation;
         private Point _startLocation;
 
@@ -23,28 +24,25 @@ namespace Masterplan.Commands.Combat
             int _distance = MMath.CalcDistance(destLocation, startLocation);
             if (_token is CreatureToken)
             {
-                CreatureToken creature = _token as CreatureToken;
-                creature.Data.Location = destLocation;
+                _data = (_token as CreatureToken).Data;
             }
-            if (_token is Hero)
+            else if (_token is Hero)
             {
-                Hero hero = _token as Hero;
-                hero.CombatData.Location = destLocation;
+                _data = (_token as Hero).CombatData;
             }
-            if (_token is CustomToken)
+            else if (_token is CustomToken)
             {
-                CustomToken customToken = _token as CustomToken;
-                customToken.Data.Location = startLocation;
+                _data = (_token as CustomToken).Data;
             }
         }
         public void Do()
         {
-            (_token as CreatureToken).Data.Location = _destLocation;
+            _data.Location = _destLocation;
         }
 
         public void Undo()
         {
-            (_token as CreatureToken).Data.Location = _startLocation;
+            _data.Location = _startLocation;
         }
     }
 }

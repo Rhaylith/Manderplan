@@ -37,6 +37,7 @@ namespace Masterplan.Commands.Combat
                 }
                 else
                 {
+                    _amount = Math.Min(data_card.First.Damage, _amount);
                     data_card.First.Damage -= _amount;
                 }
             }

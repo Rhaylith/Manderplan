@@ -81,6 +81,8 @@ namespace Masterplan.UI
 
 		private TextBox TypeBox;
 
+        public Masterplan.Commands.Combat.DamageEntityCommand DamageCommand = new Commands.Combat.DamageEntityCommand();
+
 		public List<DamageType> Types
 		{
 			get
@@ -213,7 +215,7 @@ namespace Masterplan.UI
 			this.update_value();
 		}
 
-		internal static void DoDamage(CombatData data, EncounterCard card, int damage, List<DamageType> types, bool halve_damage)
+		internal void DoDamage(CombatData data, EncounterCard card, int damage, List<DamageType> types, bool halve_damage)
 		{
 			int damageModifier = 0;
 			if (card != null)
@@ -221,15 +223,16 @@ namespace Masterplan.UI
 				damageModifier = card.GetDamageModifier(types, data);
 			}
 			int _value = DamageForm.get_value(damage, damageModifier, halve_damage);
-			if (data.TempHP > 0)
-			{
-				int num = Math.Min(data.TempHP, _value);
-				CombatData tempHP = data;
-				tempHP.TempHP = tempHP.TempHP - num;
-				_value -= num;
-			}
-			CombatData combatDatum = data;
-			combatDatum.Damage = combatDatum.Damage + _value;
+            this.DamageCommand.AddTarget(data, _value);
+			//if (data.TempHP > 0)
+			//{
+			//	int num = Math.Min(data.TempHP, _value);
+			//	CombatData tempHP = data;
+			//	tempHP.TempHP = tempHP.TempHP - num;
+			//	_value -= num;
+			//}
+			//CombatData combatDatum = data;
+			//combatDatum.Damage = combatDatum.Damage + _value;
 		}
 
 		private void FireBtn_Click(object sender, EventArgs e)
@@ -593,7 +596,7 @@ namespace Masterplan.UI
 		{
 			foreach (DamageForm.Token fDatum in this.fData)
 			{
-				DamageForm.DoDamage(fDatum.Data, fDatum.Card, (int)this.DmgBox.Value, this.fTypes, this.HalveBtn.Checked);
+				this.DoDamage(fDatum.Data, fDatum.Card, (int)this.DmgBox.Value, this.fTypes, this.HalveBtn.Checked);
 			}
 		}
 

@@ -1,4 +1,6 @@
 using Masterplan;
+using Masterplan.Commands;
+using Masterplan.Commands.Combat;
 using Masterplan.Data;
 using Masterplan.Events;
 using Masterplan.Tools;
@@ -2414,7 +2416,8 @@ namespace Masterplan.Controls
 									TokenLink tokenLink = this.find_link(this.fDraggedToken.Token, this.fDraggedToken.LinkedToken);
 									if (tokenLink != null)
 									{
-										this.fTokenLinks.Remove(tokenLink);
+										//this.fTokenLinks.Remove(tokenLink);
+                                        CommandManager.GetInstance().ExecuteCommand(new AddRemoveLinkCommand(AddRemoveLinkCommand.AddRemoveOption.Remove, this.fTokenLinks, tokenLink));
 									}
 									else if (this.fDraggedToken.Token != this.fDraggedToken.LinkedToken)
 									{
@@ -2426,8 +2429,9 @@ namespace Masterplan.Controls
 										TokenLink tokenLink1 = this.OnCreateTokenLink(tokens);
 										if (tokenLink1 != null)
 										{
-											this.fTokenLinks.Add(tokenLink1);
-										}
+                                            //this.fTokenLinks.Add(tokenLink1);
+                                            CommandManager.GetInstance().ExecuteCommand(new AddRemoveLinkCommand(AddRemoveLinkCommand.AddRemoveOption.Add, this.fTokenLinks, tokenLink1));
+                                        }
 									}
 									this.fDraggedToken = null;
 								}

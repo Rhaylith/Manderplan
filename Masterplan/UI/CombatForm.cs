@@ -693,7 +693,14 @@ namespace Masterplan.UI
             CommandManager.GetInstance().RegisterListener(typeof(InitiativeAdvanceCommand), this.InitiativeAdvancedHandler);
             CommandManager.GetInstance().RegisterListener(typeof(InitiativePreviousCommand), this.InitiativeAdvancedHandler);
             CommandManager.GetInstance().RegisterListener(typeof(HealEntitiesCommand), this.HealCommandCallback);
+            CommandManager.GetInstance().RegisterListener(typeof(DamageEntityCommand), this.DamageCommandCallback);
             CommandManager.GetInstance().RegisterListener(typeof(MoveTokenCommand), this.OnMoveTokenCommand);
+            CommandManager.GetInstance().RegisterListener(typeof(RemoveEffectCommand), this.OnRemoveEffectCommand);
+            CommandManager.GetInstance().RegisterListener(typeof(AddEffectCommand), this.OnRemoveEffectCommand);
+            CommandManager.GetInstance().RegisterListener(typeof(AddRemoveLinkCommand), this.OnAddRemoveLinkCommand);
+            CommandManager.GetInstance().RegisterListener(typeof(RemoveFromMapCommand), this.OnRemoveFromMapCommand);
+            CommandManager.GetInstance().RegisterListener(typeof(RemoveFromCombatCommand), this.OnRemoveFromMapCommand);
+            CommandManager.GetInstance().RegisterListener(typeof(VisibilityToggleCommand), this.HealCommandCallback);
         }
 
         private void add_condition_hint(ListViewItem lvi)
@@ -851,8 +858,8 @@ namespace Masterplan.UI
 					if (creatureToken != null)
 					{
 						CombatData data = creatureToken.Data;
-						data.Conditions.Add(oc.Copy());
-						this.fLog.AddEffectEntry(data.ID, oc.ToString(this.fEncounter, false), true);
+                        // TODO:  Why does this need to be a copy?
+                        CommandManager.GetInstance().ExecuteCommand(new AddEffectCommand(data, oc.Copy()));
 					}
 					Hero hero = token as Hero;
 					if (hero == null)
@@ -860,8 +867,7 @@ namespace Masterplan.UI
 						continue;
 					}
 					CombatData combatData = hero.CombatData;
-					combatData.Conditions.Add(oc.Copy());
-					this.fLog.AddEffectEntry(combatData.ID, oc.ToString(this.fEncounter, false), true);
+                    CommandManager.GetInstance().ExecuteCommand(new AddEffectCommand(combatData, oc.Copy()));
 				}
 				if (add_to_quick_list)
 				{
@@ -887,10 +893,6 @@ namespace Masterplan.UI
 						this.add_quick_effect(empty);
 					}
 				}
-				this.update_list();
-				this.update_log();
-				this.update_preview_panel();
-				this.MapView.MapChanged();
 			}
 			catch (Exception exception)
 			{
@@ -1513,26 +1515,32 @@ namespace Masterplan.UI
 			DamageForm damageForm = new DamageForm(pairs, 0);
 			if (damageForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
-				foreach (Pair<CombatData, EncounterCard> pair2 in pairs)
-				{
-					int damage = pair2.First.Damage - combatDatas[pair2.First];
-					if (damage != 0)
-					{
-						this.fLog.AddDamageEntry(pair2.First.ID, damage, damageForm.Types);
-					}
-					CreatureState creatureState = this.get_state(pair2.First);
-					if (creatureState == _state[pair2.First])
-					{
-						continue;
-					}
-					this.fLog.AddStateEntry(pair2.First.ID, creatureState);
-				}
-				this.update_list();
-				this.update_log();
-				this.update_preview_panel();
-				this.update_maps();
+                CommandManager.GetInstance().ExecuteCommand(damageForm.DamageCommand);
 			}
 		}
+
+        private void DamageCommandCallback()
+        {
+            if (Session.Preferences.CreatureAutoRemove)
+            {
+                foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
+                {
+                    foreach (CombatData combatDatum in allSlot.CombatData)
+                    {
+                        if (allSlot.GetState(combatDatum) == CreatureState.Defeated)
+                        {
+                            CommandManager.GetInstance().ExecuteCommand(new RemoveFromMapCommand(combatDatum));
+                        }
+                    }
+                }
+            }
+
+            // Callback of Damage Command
+            this.update_list();
+            this.update_log();
+            this.update_preview_panel();
+            this.update_maps();
+        }
 
         private void HealCommandCallback()
         {
@@ -3959,9 +3967,11 @@ namespace Masterplan.UI
 					displayName = data.DisplayName;
 					if (!Session.Preferences.PlayerViewCreatureLabels)
 					{
-						EncounterSlot encounterSlot = this.fEncounter.FindSlot(tag.SlotID);
-						ICreature creature = Session.FindCreature(encounterSlot.Card.CreatureID, SearchType.Global);
-						displayName = creature.Category;
+
+                        // TODO:  Why not just read the displayName from the combatData?  Why do this lookup?
+                        //EncounterSlot encounterSlot = this.fEncounter.FindSlot(tag.SlotID);
+                        //ICreature creature = Session.FindCreature(encounterSlot.Card.CreatureID, SearchType.Global);
+                        displayName = data.DisplayName;
 						if (displayName == "")
 						{
 							displayName = "Creature";
@@ -4878,6 +4888,27 @@ namespace Masterplan.UI
             }
             this.update_log();
         }
+
+        private void OnRemoveEffectCommand()
+        {
+            this.update_list();
+            this.update_log();
+            this.update_preview_panel();
+            this.MapView.MapChanged();
+        }
+
+        private void OnAddRemoveLinkCommand()
+        {
+            this.update_maps();
+        }
+
+        private void OnRemoveFromMapCommand()
+        {
+            this.update_list();
+            this.update_preview_panel();
+            this.update_maps();
+        }
+
         private void MapView_ItemMoved(IToken token, Point start, Point end)
 		{
             MoveTokenCommand command = new MoveTokenCommand(token, start, end);
@@ -5731,12 +5762,7 @@ namespace Masterplan.UI
 						if (combatData1 != null && num1 >= 0 && num1 <= combatData1.Conditions.Count - 1)
 						{
 							OngoingCondition item = combatData1.Conditions[num1];
-							combatData1.Conditions.RemoveAt(num1);
-							this.fLog.AddEffectEntry(combatData1.ID, item.ToString(this.fEncounter, false), false);
-							this.update_list();
-							this.update_preview_panel();
-							this.update_log();
-							this.update_maps();
+                            CommandManager.GetInstance().ExecuteCommand(new RemoveEffectCommand(combatData1, item));
 						}
 					}
 				}
@@ -5924,11 +5950,7 @@ namespace Masterplan.UI
 			{
 				return;
 			}
-			data.Conditions.Remove(tag);
-			this.fLog.AddEffectEntry(data.ID, tag.ToString(this.fEncounter, false), false);
-			this.update_list();
-			this.update_log();
-			this.update_preview_panel();
+            CommandManager.GetInstance().ExecuteCommand(new RemoveEffectCommand(data, tag));
 		}
 
 		private void remove_effect_from_map(object sender, EventArgs e)
@@ -5957,15 +5979,12 @@ namespace Masterplan.UI
 			{
 				return;
 			}
-			data.Conditions.Remove(tag);
-			this.fLog.AddEffectEntry(data.ID, tag.ToString(this.fEncounter, false), false);
-			this.update_list();
-			this.update_log();
-			this.update_preview_panel();
+            CommandManager.GetInstance().ExecuteCommand(new RemoveEffectCommand(data, tag));
 		}
 
-		private void remove_effects(IToken token)
+		private List<RemoveEffectCommand> remove_effects(IToken token)
 		{
+            List<RemoveEffectCommand> removeList = new List<RemoveEffectCommand>();
 			Guid empty = Guid.Empty;
 			if (token is CreatureToken)
 			{
@@ -5975,38 +5994,37 @@ namespace Masterplan.UI
 			{
 				empty = (token as Hero).ID;
 			}
-			if (empty == Guid.Empty)
-			{
-				return;
-			}
-			foreach (Hero hero in Session.Project.Heroes)
-			{
-				this.remove_effects(empty, hero.CombatData);
-			}
-			foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
-			{
-				foreach (CombatData combatDatum in allSlot.CombatData)
-				{
-					this.remove_effects(empty, combatDatum);
-				}
-			}
+            if (empty != Guid.Empty)
+            {
+                foreach (Hero hero in Session.Project.Heroes)
+                {
+                    removeList.AddRange(this.remove_effects(empty, hero.CombatData));
+                }
+                foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
+                {
+                    foreach (CombatData combatDatum in allSlot.CombatData)
+                    {
+                        removeList.AddRange(this.remove_effects(empty, combatDatum));
+                    }
+                }
+            }
+
+            return removeList;
 		}
 
-		private void remove_effects(Guid token_id, CombatData data)
+		private List<RemoveEffectCommand> remove_effects(Guid token_id, CombatData data)
 		{
+            List<RemoveEffectCommand> removeList = new List<RemoveEffectCommand>();
 			List<OngoingCondition> ongoingConditions = new List<OngoingCondition>();
 			foreach (OngoingCondition condition in data.Conditions)
 			{
-				if (condition.DurationCreatureID != token_id || condition.Duration != DurationType.BeginningOfTurn && condition.Duration != DurationType.EndOfTurn)
-				{
-					continue;
-				}
-				ongoingConditions.Add(condition);
+                if (condition.DurationCreatureID == token_id && condition.Duration == DurationType.BeginningOfTurn || condition.Duration == DurationType.EndOfTurn)
+                {
+                    removeList.Add(new RemoveEffectCommand(data, condition));
+                }
 			}
-			foreach (OngoingCondition ongoingCondition in ongoingConditions)
-			{
-				data.Conditions.Remove(ongoingCondition);
-			}
+
+            return removeList;
 		}
 
 		private void remove_from_combat(List<IToken> tokens)
@@ -6015,38 +6033,35 @@ namespace Masterplan.UI
 			{
 				foreach (IToken token in tokens)
 				{
-					if (token is CreatureToken)
-					{
-						CreatureToken creatureToken = token as CreatureToken;
-						EncounterSlot encounterSlot = this.fEncounter.FindSlot(creatureToken.SlotID);
-						encounterSlot.CombatData.Remove(creatureToken.Data);
-						this.fRemovedCreatureXP += encounterSlot.Card.XP;
-						this.remove_effects(token);
-						this.remove_links(token);
-					}
-					if (token is Hero)
-					{
-						Hero noPoint = token as Hero;
-						noPoint.CombatData.Initiative = -2147483648;
-						noPoint.CombatData.Location = CombatData.NoPoint;
-						this.remove_effects(token);
-						this.remove_links(token);
-					}
-					if (!(token is CustomToken))
-					{
-						continue;
-					}
-					CustomToken customToken = token as CustomToken;
-					this.fEncounter.CustomTokens.Remove(customToken);
-					if (customToken.Type != CustomTokenType.Token)
-					{
-						continue;
-					}
-					this.remove_links(token);
+                    RemoveFromCombatCommand command = null;
+                    if (token is CreatureToken)
+                    {
+                        command = new RemoveFromCombatCommand(token, (token as CreatureToken).Data, this.fEncounter);
+                        //this.fRemovedCreatureXP += encounterSlot.Card.XP;
+                        command.EffectsToRemove.AddRange(this.remove_effects(token));
+                        command.LinksToRemove.AddRange(this.remove_links(token));
+                    }
+                    else if (token is Hero)
+                    {
+                        command = new RemoveFromCombatCommand(token, (token as Hero).CombatData, this.fEncounter);
+                        command.EffectsToRemove.AddRange(this.remove_effects(token));
+                        command.LinksToRemove.AddRange(this.remove_links(token));
+                    }
+                    else if (token is CustomToken)
+                    {
+                        CustomToken customToken = token as CustomToken;
+                        command = new RemoveFromCombatCommand(token, customToken.Data, this.fEncounter);
+                        if (customToken.Type == CustomTokenType.Token)
+                        {
+                            command.LinksToRemove.AddRange(this.remove_links(token));
+                        }
+                    }
+
+                    if (command != null)
+                    {
+                        CommandManager.GetInstance().ExecuteCommand(command);
+                    }
 				}
-				this.update_list();
-				this.update_preview_panel();
-				this.update_maps();
 			}
 			catch (Exception exception)
 			{
@@ -6060,33 +6075,34 @@ namespace Masterplan.UI
 			{
 				foreach (IToken token in tokens)
 				{
+                    RemoveFromMapCommand command = null;
 					if (token is CreatureToken)
 					{
-						(token as CreatureToken).Data.Location = CombatData.NoPoint;
-						this.remove_effects(token);
-						this.remove_links(token);
+                        command = new RemoveFromMapCommand((token as CreatureToken).Data);
+                        command.EffectsToRemove.AddRange(this.remove_effects(token));
+                        command.LinksToRemove.AddRange(this.remove_links(token));
 					}
-					if (token is Hero)
+					else if (token is Hero)
 					{
-						(token as Hero).CombatData.Location = CombatData.NoPoint;
-						this.remove_effects(token);
-						this.remove_links(token);
+                        command = new RemoveFromMapCommand((token as Hero).CombatData);
+                        command.EffectsToRemove.AddRange(this.remove_effects(token));
+                        command.LinksToRemove.AddRange(this.remove_links(token));
 					}
-					if (!(token is CustomToken))
-					{
-						continue;
-					}
-					CustomToken noPoint = token as CustomToken;
-					noPoint.Data.Location = CombatData.NoPoint;
-					if (noPoint.Type != CustomTokenType.Token)
-					{
-						continue;
-					}
-					this.remove_links(token);
+                    else if (token is CustomToken)
+                    {
+                        CustomToken noPoint = token as CustomToken;
+                        command = new RemoveFromMapCommand(noPoint.Data);
+                        if (noPoint.Type == CustomTokenType.Token)
+                        {
+                            command.LinksToRemove.AddRange(this.remove_links(token));
+                        }
+                    }
+                    
+                    if (command != null)
+                    {
+                        CommandManager.GetInstance().ExecuteCommand(command);
+                    }
 				}
-				this.update_list();
-				this.update_preview_panel();
-				this.update_maps();
 			}
 			catch (Exception exception)
 			{
@@ -6094,8 +6110,9 @@ namespace Masterplan.UI
 			}
 		}
 
-		private void remove_links(IToken token)
+		private List<AddRemoveLinkCommand> remove_links(IToken token)
 		{
+            List<AddRemoveLinkCommand> linksToRemove = new List<AddRemoveLinkCommand>();
 			Point _location = this.get_location(token);
 			List<TokenLink> tokenLinks = new List<TokenLink>();
 			foreach (TokenLink tokenLink in this.MapView.TokenLinks)
@@ -6106,15 +6123,11 @@ namespace Masterplan.UI
 					{
 						continue;
 					}
-					tokenLinks.Add(tokenLink);
+                    linksToRemove.Add(new AddRemoveLinkCommand(AddRemoveLinkCommand.AddRemoveOption.Remove, this.MapView.TokenLinks, tokenLink));
 					break;
 				}
 			}
-			foreach (TokenLink tokenLink1 in tokenLinks)
-			{
-				this.MapView.TokenLinks.Remove(tokenLink1);
-			}
-			this.update_maps();
+            return linksToRemove;
 		}
 
 		private void ReportBtn_Click(object sender, EventArgs e)
@@ -6437,23 +6450,19 @@ namespace Masterplan.UI
 		{
 			try
 			{
+                List<CombatData> combatDatas = new List<CombatData>();
 				foreach (IToken token in tokens)
 				{
 					if (token is CreatureToken)
 					{
-						CreatureToken visible = token as CreatureToken;
-						visible.Data.Visible = !visible.Data.Visible;
+                        combatDatas.Add((token as CreatureToken).Data);
 					}
-					if (!(token is CustomToken))
-					{
-						continue;
-					}
-					CustomToken customToken = token as CustomToken;
-					customToken.Data.Visible = !customToken.Data.Visible;
+                    else if (token is CustomToken)
+                    {
+                        combatDatas.Add((token as CustomToken).Data);
+                    }
 				}
-				this.update_list();
-				this.update_preview_panel();
-				this.update_maps();
+                CommandManager.GetInstance().ExecuteCommand(new VisibilityToggleCommand(combatDatas));
 			}
 			catch (Exception exception)
 			{
@@ -6659,44 +6668,7 @@ namespace Masterplan.UI
 			object obj;
 			object[] tempHP;
 			List<CombatData> combatDatas = new List<CombatData>();
-			if (Session.Preferences.CreatureAutoRemove)
-			{
-				foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
-				{
-					if (allSlot.Card.HP == 0)
-					{
-						continue;
-					}
-					int xP = allSlot.Card.XP;
-					List<CombatData> combatDatas1 = new List<CombatData>();
-					foreach (CombatData combatDatum in allSlot.CombatData)
-					{
-						if (allSlot.GetState(combatDatum) != CreatureState.Defeated)
-						{
-							continue;
-						}
-						combatDatas1.Add(combatDatum);
-						combatDatas.Add(combatDatum);
-					}
-					foreach (CombatData combatData in combatDatas1)
-					{
-						if (combatData == this.fCurrentActor)
-						{
-							Guid d = this.fCurrentActor.ID;
-							this.fCurrentActor = this.get_next_actor(this.fCurrentActor);
-							if (this.fCurrentActor.ID != d)
-							{
-								this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
-								this.update_log();
-							}
-						}
-						CreatureToken creatureToken = new CreatureToken(allSlot.ID, combatData);
-						this.remove_effects(creatureToken);
-						this.remove_links(creatureToken);
-						combatData.Location = CombatData.NoPoint;
-					}
-				}
-			}
+
 			int num = 0;
 			int num1 = 1;
 			int num2 = 2;
