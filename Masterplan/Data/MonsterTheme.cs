@@ -107,7 +107,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return themePowerDatum;
 		}
 
 		public List<ThemePowerData> ListPowers(List<RoleType> creature_roles, PowerType type)

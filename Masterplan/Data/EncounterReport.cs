@@ -127,7 +127,6 @@ namespace Masterplan.Data
 					{
 						((IDisposable)enumerator).Dispose();
 					}
-					break;
 				}
 				case BreakdownType.Controller:
 				{
@@ -407,7 +406,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return roundLog;
 		}
 
 		public int Movement(Guid id, int round)

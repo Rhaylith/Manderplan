@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class IssuesForm : Form
 	{
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		public IssuesForm(Plot plot)
@@ -179,15 +177,6 @@ namespace Masterplan.UI
 					this.add_treasure_issues(point.Name, point.Subplot, treasure_issues);
 				}
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

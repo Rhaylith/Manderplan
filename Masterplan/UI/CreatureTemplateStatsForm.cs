@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private CreatureTemplate fTemplate;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -58,15 +56,6 @@ namespace Masterplan.UI
 			this.FortBox.Value = this.fTemplate.Fortitude;
 			this.RefBox.Value = this.fTemplate.Reflex;
 			this.WillBox.Value = this.fTemplate.Will;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

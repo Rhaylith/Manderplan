@@ -7,8 +7,6 @@ namespace Masterplan.UI
 {
 	internal class OptionDiseaseLevelForm : Form
 	{
-		private IContainer components;
-
 		private TabControl Pages;
 
 		private TabPage DetailsPage;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 		{
 			this.InitializeComponent();
 			this.DetailsBox.Text = level;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class CalendarForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -295,15 +293,6 @@ namespace Masterplan.UI
 				this.update_days();
 				this.DayList.Items[selectedDay - 1].Selected = true;
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EventAddBtn_Click(object sender, EventArgs e)

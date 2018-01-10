@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class PowerInfoForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -43,15 +41,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.NameBox.Text = power.Name;
 			this.KeywordBox.Text = power.Keywords;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

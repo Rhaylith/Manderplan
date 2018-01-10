@@ -26,8 +26,6 @@ namespace Masterplan.UI
 
 		private CreatureBuilderForm.SidebarType fSidebar;
 
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private Panel BtnPnl;
@@ -701,15 +699,6 @@ namespace Masterplan.UI
 			}
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void FileExport_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog saveFileDialog = new SaveFileDialog()
@@ -750,7 +739,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return aura;
 		}
 
 		private string find_common_name(List<ICreature> creatures)
@@ -883,7 +871,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creaturePower;
 		}
 
 		private CreaturePower find_sample_power(Guid id)
@@ -908,7 +895,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creaturePower;
 		}
 
 		private void find_sample_powers()

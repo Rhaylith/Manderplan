@@ -1186,7 +1186,6 @@ namespace Masterplan.Tools
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		private static List<string> get_artifact(Artifact artifact, bool builder)

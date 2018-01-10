@@ -104,7 +104,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return mapLocation;
 		}
 
 		public override string ToString()

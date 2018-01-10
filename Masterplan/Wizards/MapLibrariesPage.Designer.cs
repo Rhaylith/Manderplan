@@ -16,8 +16,6 @@ namespace Masterplan.Wizards
 	{
 		private MapBuilderData fData;
 
-		private IContainer components;
-
 		private Label InfoLbl;
 
 		private ListView LibraryList;
@@ -71,15 +69,6 @@ namespace Masterplan.Wizards
 			{
 				item.Checked = false;
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InfoLinkLbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

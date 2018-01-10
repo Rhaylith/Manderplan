@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private ICreature fCreature;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -70,15 +68,6 @@ namespace Masterplan.UI
 			this.IntBox.Value = this.fCreature.Intelligence.Score;
 			this.WisBox.Value = this.fCreature.Wisdom.Score;
 			this.ChaBox.Value = this.fCreature.Charisma.Score;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private string get_text(int score)

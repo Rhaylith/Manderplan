@@ -15,8 +15,6 @@ namespace Masterplan.UI
 
 		private IRole fRole;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -165,15 +163,6 @@ namespace Masterplan.UI
 				this.TemplateBox.SelectedItem = creatureTemplate2;
 			}
 			this.CatBox.Text = "NPC";
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

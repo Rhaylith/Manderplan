@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class DieRollerForm : Form
 	{
-		private IContainer components;
-
 		private Masterplan.Controls.DicePanel DicePanel;
 
 		public DiceExpression Expression
@@ -29,15 +27,6 @@ namespace Masterplan.UI
 		{
 			this.InitializeComponent();
 			this.DicePanel.UpdateView();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

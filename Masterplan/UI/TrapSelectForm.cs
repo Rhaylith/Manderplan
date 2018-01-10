@@ -13,8 +13,6 @@ namespace Masterplan.UI
 {
 	internal class TrapSelectForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private ListView TrapList;
@@ -64,15 +62,6 @@ namespace Masterplan.UI
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.OKBtn.Enabled = this.Trap != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -13,8 +13,6 @@ namespace Masterplan.Controls
 {
 	internal class EncounterPanel : UserControl
 	{
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private ToolStripButton EditBtn;
@@ -128,15 +126,6 @@ namespace Masterplan.Controls
 			{
 				(new SkillChallengeDetailsForm(this.SelectedChallenge)).ShowDialog();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		public void Edit()

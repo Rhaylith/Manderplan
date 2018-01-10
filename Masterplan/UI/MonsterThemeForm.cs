@@ -15,8 +15,6 @@ namespace Masterplan.UI
 	{
 		private MonsterTheme fTheme;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -112,15 +110,6 @@ namespace Masterplan.UI
 		{
 			this.PowerRemoveBtn.Enabled = this.SelectedPower != null;
 			this.PowerEditBtn.Enabled = this.SelectedPower != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditClassification_Click(object sender, EventArgs e)

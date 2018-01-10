@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class CombatDataForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -155,16 +153,7 @@ namespace Masterplan.UI
 			this.update_hp();
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
-		private void DmgBtn_Click(object sender, EventArgs e)
+        private void DmgBtn_Click(object sender, EventArgs e)
 		{
 			if ((new OngoingDamageForm(this.fData, this.fCard, this.fEncounter)).ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{

@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class GroupInitiativeForm : Form
 	{
-		private IContainer components;
-
 		private Button CloseBtn;
 
 		private Label InfoLbl;
@@ -88,15 +86,6 @@ namespace Masterplan.UI
 					this.update_list();
 				}
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

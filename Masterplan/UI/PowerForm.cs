@@ -17,8 +17,6 @@ namespace Masterplan.UI
 
 		private bool fFunctionalTemplate;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -139,15 +137,6 @@ namespace Masterplan.UI
 			this.fPower.Attack = null;
 			this.update_attack();
 			this.update_advice();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

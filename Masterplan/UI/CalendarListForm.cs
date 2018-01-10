@@ -14,8 +14,6 @@ namespace Masterplan.UI
 {
 	internal class CalendarListForm : Form
 	{
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private ListView CalendarList;
@@ -108,15 +106,6 @@ namespace Masterplan.UI
 		private void CalendarList_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			this.update_calendar_panel();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

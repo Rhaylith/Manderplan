@@ -153,7 +153,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encyclopediaImage;
 		}
 
 		public override string ToString()

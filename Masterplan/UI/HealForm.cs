@@ -14,8 +14,6 @@ namespace Masterplan.UI
 	{
 		private List<Pair<CombatData, EncounterCard>> fTokens;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -41,15 +39,6 @@ namespace Masterplan.UI
 		private void DamageForm_Shown(object sender, EventArgs e)
 		{
 			this.HPBox.Select(0, 1);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

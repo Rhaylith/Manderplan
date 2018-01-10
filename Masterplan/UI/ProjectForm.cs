@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Project fProject;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -55,15 +53,6 @@ namespace Masterplan.UI
 			this.LevelBox.Value = this.fProject.Party.Level;
 			this.LevelBox_ValueChanged(null, null);
 			this.XPBox.Value = this.fProject.Party.XP;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

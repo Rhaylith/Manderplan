@@ -490,7 +490,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return attachment;
 		}
 
 		public Background FindBackground(string title)
@@ -515,7 +514,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return background;
 		}
 
 		public Calendar FindCalendar(Guid calendar_id)
@@ -540,7 +538,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return calendar;
 		}
 
 		public CustomCreature FindCustomCreature(Guid creature_id)
@@ -565,7 +562,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return customCreature;
 		}
 
 		public CustomCreature FindCustomCreature(string creature_name)
@@ -590,7 +586,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return customCreature;
 		}
 
 		public EncounterDeck FindDeck(Guid deck_id)
@@ -615,7 +610,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encounterDeck;
 		}
 
 		public Hero FindHero(Guid hero_id)
@@ -649,7 +643,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return hero;
 		}
 
 		public Hero FindHero(string hero_name)
@@ -683,7 +676,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return hero;
 		}
 
 		public Note FindNote(Guid note_id)
@@ -708,7 +700,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return note;
 		}
 
 		public NPC FindNPC(Guid npc_id)
@@ -733,7 +724,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return nPC;
 		}
 
 		public PlotPoint FindParent(Masterplan.Data.Plot p)
@@ -760,7 +750,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return plotPoint;
 		}
 
 		public Masterplan.Data.Plot FindParent(PlotPoint pp)
@@ -798,7 +787,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return plot;
 		}
 
 		public IPlayerOption FindPlayerOption(Guid option_id)
@@ -823,7 +811,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return playerOption;
 		}
 
 		public RegionalMap FindRegionalMap(Guid map_id)
@@ -848,7 +835,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return regionalMap;
 		}
 
 		public Map FindTacticalMap(Guid map_id)
@@ -873,7 +859,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return map;
 		}
 
 		private void get_all_plots(Masterplan.Data.Plot p, List<Masterplan.Data.Plot> plots)

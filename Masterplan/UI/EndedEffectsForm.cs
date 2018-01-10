@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class EndedEffectsForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Label label1;
@@ -95,15 +93,6 @@ namespace Masterplan.UI
 				}
 				this.ExtendBtn.Text = "End this effect";
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExtendBtn_Click(object sender, EventArgs e)

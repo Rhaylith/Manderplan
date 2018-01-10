@@ -9,8 +9,6 @@ namespace Utils.Forms
 	{
 		private int fActions;
 
-		private IContainer components;
-
 		private Panel SplashPanel;
 
 		private Label ActionLbl;
@@ -85,15 +83,6 @@ namespace Utils.Forms
 			this.Actions = actions;
 			this.ActionLbl.Text = "Loading...";
 			this.SubActionLbl.Text = "";
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

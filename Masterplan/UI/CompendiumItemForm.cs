@@ -15,8 +15,6 @@ namespace Masterplan.UI
 
 		private CompendiumHelper.CompendiumItem fItem;
 
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private System.Windows.Forms.Panel Panel;
@@ -137,15 +135,6 @@ namespace Masterplan.UI
 				}
 			}
 			Session.Libraries.Remove(library);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

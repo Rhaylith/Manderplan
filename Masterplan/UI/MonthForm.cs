@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.MonthInfo fMonthInfo;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -59,15 +57,6 @@ namespace Masterplan.UI
 		{
 			this.LeapPeriodLbl.Enabled = this.LeapModBox.Value != new decimal(0);
 			this.LeapPeriodBox.Enabled = this.LeapModBox.Value != new decimal(0);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

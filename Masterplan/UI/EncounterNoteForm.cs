@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class EncounterNoteForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -45,15 +43,6 @@ namespace Masterplan.UI
 			this.fNote = bg.Copy();
 			this.TitleBox.Text = this.fNote.Title;
 			this.DetailsBox.Text = this.fNote.Contents;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

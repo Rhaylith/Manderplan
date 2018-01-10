@@ -184,13 +184,15 @@ namespace Masterplan.Tools
 		{
 			public string Name;
 
-			public List<CompendiumHelper.CompendiumItem> Creatures;
+#pragma warning disable 0649
+            public List<CompendiumHelper.CompendiumItem> Creatures;
 
 			public List<CompendiumHelper.CompendiumItem> Traps;
 
 			public List<CompendiumHelper.CompendiumItem> MagicItems;
+#pragma warning restore 0649
 
-			public SourceBook()
+            public SourceBook()
 			{
 			}
 		}

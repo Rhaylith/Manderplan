@@ -13,8 +13,6 @@ namespace Masterplan.Controls
 	{
 		private Masterplan.Data.MapElement fMapElement;
 
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private Masterplan.Controls.MapView MapView;
@@ -37,15 +35,6 @@ namespace Masterplan.Controls
 		public MapElementPanel()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

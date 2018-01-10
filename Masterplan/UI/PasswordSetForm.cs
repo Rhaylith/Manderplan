@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class PasswordSetForm : Form
 	{
-		private IContainer components;
-
 		private Label PasswordLbl;
 
 		private Button OKBtn;
@@ -67,15 +65,6 @@ namespace Masterplan.UI
 			Session.Modified = true;
 			base.DialogResult = System.Windows.Forms.DialogResult.Ignore;
 			base.Close();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class TrapCountermeasureForm : Form
 	{
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -50,15 +48,6 @@ namespace Masterplan.UI
 			this.DetailsBox.Text = cm;
 			this.fLevel = level;
 			this.update_advice();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

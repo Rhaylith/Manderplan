@@ -11,8 +11,6 @@ namespace Masterplan.Wizards
 {
 	internal class EncounterTemplatePage : UserControl, IWizardPage
 	{
-		private IContainer components;
-
 		private Label InfoLbl;
 
 		private ListView TemplatesList;
@@ -60,15 +58,6 @@ namespace Masterplan.Wizards
 		public EncounterTemplatePage()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

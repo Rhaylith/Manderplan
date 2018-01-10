@@ -13,8 +13,6 @@ namespace Masterplan.Wizards
 {
 	internal class VariantTemplatesPage : UserControl, IWizardPage
 	{
-		private IContainer components;
-
 		private ListView TemplateList;
 
 		private ColumnHeader NameHdr;
@@ -52,15 +50,6 @@ namespace Masterplan.Wizards
 		public VariantTemplatesPage()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -18,8 +18,6 @@ namespace Masterplan.UI
 
 		private int fCurrentRound = -2147483648;
 
-		private IContainer components;
-
 		private ListView EffectList;
 
 		private ColumnHeader EffectHdr;
@@ -67,15 +65,6 @@ namespace Masterplan.UI
 		{
 			this.RemoveBtn.Enabled = this.SelectedEffect != null;
 			this.EditBtn.Enabled = this.SelectedEffect != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

@@ -205,7 +205,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return monthInfo;
 		}
 
 		public override string ToString()

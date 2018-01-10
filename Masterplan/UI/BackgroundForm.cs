@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Background fBackground;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -45,15 +43,6 @@ namespace Masterplan.UI
 			this.fBackground = bg.Copy();
 			this.TitleBox.Text = this.fBackground.Title;
 			this.DetailsBox.Text = this.fBackground.Details;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

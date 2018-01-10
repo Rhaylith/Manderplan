@@ -48,7 +48,6 @@ namespace Masterplan.Tools
 					disposable.Dispose();
 				}
 			}
-			return xmlNodes;
 		}
 
 		private static void import_power(XmlNode power_node, Creature c)

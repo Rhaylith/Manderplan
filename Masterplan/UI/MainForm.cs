@@ -2017,7 +2017,6 @@ namespace Masterplan.UI
 				LogSystem.Trace(exception);
 				return true;
 			}
-			return flag;
 		}
 
 		private void ClearBtn_Click(object sender, EventArgs e)
@@ -2400,7 +2399,6 @@ namespace Masterplan.UI
 				LogSystem.Trace(exception);
 				return false;
 			}
-			return flag;
 		}
 
 		private void edit_map_area(Map map, MapArea map_area, MapView mapview)
@@ -3435,7 +3433,6 @@ namespace Masterplan.UI
 					{
 						((IDisposable)enumerator).Dispose();
 					}
-					break;
 				}
 				case MainForm.ViewType.Map:
 				{
@@ -3475,7 +3472,6 @@ namespace Masterplan.UI
 					{
 						((IDisposable)enumerator1).Dispose();
 					}
-					break;
 				}
 			}
 			return null;

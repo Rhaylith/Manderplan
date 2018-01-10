@@ -15,8 +15,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Hero fHero;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -221,15 +219,6 @@ namespace Masterplan.UI
 			this.PortraitClear.Enabled = this.fHero.Portrait != null;
 			this.EffectRemoveBtn.Enabled = (this.SelectedEffect != null ? true : this.SelectedToken != null);
 			this.EffectEditBtn.Enabled = (this.SelectedEffect != null ? true : this.SelectedToken != null);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EffectAddBtn_Click(object sender, EventArgs e)

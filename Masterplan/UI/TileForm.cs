@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class TileForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -106,15 +104,6 @@ namespace Masterplan.UI
 		{
 			this.fTile.Image = null;
 			this.image_changed();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void GridBtn_Click(object sender, EventArgs e)

@@ -8,8 +8,6 @@ namespace Masterplan.Wizards
 {
 	internal class VariantFinishPage : UserControl, IWizardPage
 	{
-		private IContainer components;
-
 		private Label InfoLbl;
 
 		public bool AllowBack
@@ -39,15 +37,6 @@ namespace Masterplan.Wizards
 		public VariantFinishPage()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

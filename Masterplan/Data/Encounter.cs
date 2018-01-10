@@ -175,7 +175,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		public IElement Copy()
@@ -243,7 +242,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return combatDatum;
 		}
 
 		public EncounterNote FindNote(string note_title)
@@ -268,7 +266,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encounterNote;
 		}
 
 		public SkillChallenge FindSkillChallenge(Guid challenge_id)
@@ -293,7 +290,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return skillChallenge;
 		}
 
 		public EncounterSlot FindSlot(Guid slot_id)
@@ -318,7 +314,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encounterSlot;
 		}
 
 		public EncounterSlot FindSlot(CombatData data)
@@ -343,7 +338,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encounterSlot;
 		}
 
 		public Trap FindTrap(Guid trap_id)
@@ -368,7 +362,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return trap;
 		}
 
 		public EncounterWave FindWave(EncounterSlot slot)
@@ -393,7 +386,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encounterWave;
 		}
 
 		private Difficulty get_diff(int party_level, int party_size)
@@ -564,7 +556,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return displayName;
 		}
 
         public CreatureState GetState(CombatData cd)

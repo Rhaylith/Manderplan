@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class EncyclopediaGroupForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -56,15 +54,6 @@ namespace Masterplan.UI
 				grayText.ForeColor = SystemColors.GrayText;
 				this.EntryList.CheckBoxes = false;
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

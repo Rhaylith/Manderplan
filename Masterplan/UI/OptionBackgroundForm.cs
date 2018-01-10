@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class OptionBackgroundForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -50,15 +48,6 @@ namespace Masterplan.UI
 			this.SkillBox.Text = this.fBackground.AssociatedSkills;
 			this.FeatBox.Text = this.fBackground.RecommendedFeats;
 			this.DetailsBox.Text = this.fBackground.Details;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

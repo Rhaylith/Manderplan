@@ -17,8 +17,6 @@ namespace Masterplan.UI
 
 		private const string BLOCK = "Block (opaque)";
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -115,15 +113,6 @@ namespace Masterplan.UI
 		{
 			this.RemoveBtn.Enabled = this.fToken.TerrainPower != null;
 			this.SelectBtn.Enabled = Session.TerrainPowers.Count != 0;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

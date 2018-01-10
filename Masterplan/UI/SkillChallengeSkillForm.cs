@@ -16,8 +16,6 @@ namespace Masterplan.UI
 
 		private const string AUTOFAIL = "This skill incurs an automatic failure";
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -112,15 +110,6 @@ namespace Masterplan.UI
 			this.FailureBox.Text = this.fSkillData.Failure;
 			this.SuccessCountBox.Value = this.fSkillData.Results.Successes;
 			this.FailureCountBox.Value = this.fSkillData.Results.Fails;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

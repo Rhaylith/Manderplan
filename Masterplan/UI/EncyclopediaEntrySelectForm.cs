@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class EncyclopediaEntrySelectForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private ListView EntryList;
@@ -79,15 +77,6 @@ namespace Masterplan.UI
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.OKBtn.Enabled = this.EncyclopediaEntry != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

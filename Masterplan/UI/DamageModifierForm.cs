@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private DamageModifier fMod;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -72,15 +70,6 @@ namespace Masterplan.UI
 				this.TypeBox.SelectedIndex = 2;
 				this.ValueBox.Value = this.fMod.Value;
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

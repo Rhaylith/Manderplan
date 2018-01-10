@@ -23,8 +23,6 @@ namespace Masterplan.Controls
 
 		private bool fUpdating;
 
-		private IContainer components;
-
 		private ToolStrip DiceToolbar;
 
 		private ToolStripButton RollBtn;
@@ -143,15 +141,6 @@ namespace Masterplan.Controls
 			{
 				this.add_die(this.SelectedDie.First);
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExpressionBox_TextChanged(object sender, EventArgs e)

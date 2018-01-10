@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class DamageModListForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -150,15 +148,6 @@ namespace Masterplan.UI
 		{
 			this.RemoveDmgBtn.Enabled = (this.SelectedDamageMod != null ? true : this.SelectedDamageModTemplate != null);
 			this.EditDmgBtn.Enabled = (this.SelectedDamageMod != null ? true : this.SelectedDamageModTemplate != null);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditDmgBtn_Click(object sender, EventArgs e)

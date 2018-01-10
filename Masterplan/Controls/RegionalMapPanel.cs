@@ -216,7 +216,6 @@ namespace Masterplan.Controls
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return mapLocation;
 		}
 
 		private PointF get_point(Point pt)

@@ -12,8 +12,6 @@ namespace Masterplan.UI
 	{
 		private List<TokenLink> fLinks;
 
-		private IContainer components;
-
 		private ListView EffectList;
 
 		private ColumnHeader LinkHdr;
@@ -50,15 +48,6 @@ namespace Masterplan.UI
 		{
 			this.RemoveBtn.Enabled = this.SelectedLink != null;
 			this.EditBtn.Enabled = this.SelectedLink != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

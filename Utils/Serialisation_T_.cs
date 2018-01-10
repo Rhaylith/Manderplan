@@ -51,7 +51,7 @@ namespace Utils
 					}
 				}
 			}
-			catch (Exception exception)
+			catch (Exception)
 			{
 				t = default(T);
 			}
@@ -105,7 +105,7 @@ namespace Utils
 					}
 				}
 			}
-			catch (Exception exception2)
+			catch (Exception)
 			{
 				flag = false;
 			}

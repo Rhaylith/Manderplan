@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class MapSelectForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private ListView MapList;
@@ -101,15 +99,6 @@ namespace Masterplan.UI
 				return;
 			}
 			this.OKBtn.Enabled = this.MapList.CheckedItems.Count != 0;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

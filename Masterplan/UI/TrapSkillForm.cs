@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class TrapSkillForm : Form
 	{
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -74,15 +72,6 @@ namespace Masterplan.UI
 			this.DCLbl.Enabled = this.DCBtn.Checked;
 			this.DCBox.Enabled = this.DCBtn.Checked;
 			this.OKBtn.Enabled = (this.SkillBox.Text == "" ? false : this.DetailsBox.Text != "");
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

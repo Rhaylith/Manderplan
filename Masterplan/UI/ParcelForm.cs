@@ -15,8 +15,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Parcel fParcel;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -97,15 +95,6 @@ namespace Masterplan.UI
 			this.fParcel.Name = "";
 			this.fParcel.Details = "";
 			this.set_controls();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

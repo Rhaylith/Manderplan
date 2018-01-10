@@ -1212,7 +1212,6 @@ namespace Masterplan.UI
 					{
 						((IDisposable)enumerator).Dispose();
 					}
-					break;
 				}
 				case TileView.Category:
 				{

@@ -129,7 +129,6 @@ namespace Masterplan.Controls
 					{
 						((IDisposable)enumerator).Dispose();
 					}
-					break;
 				}
 				case DemographicsSource.Traps:
 				{
@@ -164,7 +163,6 @@ namespace Masterplan.Controls
 					{
 						((IDisposable)enumerator1).Dispose();
 					}
-					break;
 				}
 				case DemographicsSource.MagicItems:
 				{
@@ -186,7 +184,6 @@ namespace Masterplan.Controls
 					{
 						((IDisposable)enumerator2).Dispose();
 					}
-					break;
 				}
 				default:
 				{
@@ -308,7 +305,6 @@ namespace Masterplan.Controls
 						{
 							((IDisposable)enumerator).Dispose();
 						}
-						break;
 					}
 					case DemographicsSource.Traps:
 					{
@@ -330,7 +326,6 @@ namespace Masterplan.Controls
 						{
 							((IDisposable)enumerator1).Dispose();
 						}
-						break;
 					}
 					case DemographicsSource.MagicItems:
 					{
@@ -352,7 +347,6 @@ namespace Masterplan.Controls
 						{
 							((IDisposable)enumerator2).Dispose();
 						}
-						break;
 					}
 					default:
 					{
@@ -474,7 +468,6 @@ namespace Masterplan.Controls
 							return;
 						}
 					}
-					break;
 				}
 				case DemographicsMode.Status:
 				{

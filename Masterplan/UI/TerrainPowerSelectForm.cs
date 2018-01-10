@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class TerrainPowerSelectForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private ListView ChallengeList;
@@ -65,15 +63,6 @@ namespace Masterplan.UI
 			string str = HTML.TerrainPower(this.TerrainPower, DisplaySize.Small);
 			this.Browser.Document.OpenNew(true);
 			this.Browser.Document.Write(str);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

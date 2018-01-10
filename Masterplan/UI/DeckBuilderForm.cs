@@ -16,8 +16,6 @@ namespace Masterplan.UI
 	{
 		private EncounterDeck fDeck;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -241,15 +239,6 @@ namespace Masterplan.UI
 			this.update_card_list();
 			this.update_creature_list();
 			System.Windows.Forms.Cursor.Current = Cursors.Default;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void DuplicateBtn_Click(object sender, EventArgs e)

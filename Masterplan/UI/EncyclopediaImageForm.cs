@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class EncyclopediaImageForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -72,15 +70,6 @@ namespace Masterplan.UI
 			this.fImage.Image = System.Drawing.Image.FromFile(openFileDialog.FileName);
 			Program.SetResolution(this.fImage.Image);
 			this.PictureBox.Image = this.fImage.Image;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

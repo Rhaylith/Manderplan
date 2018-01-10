@@ -16,8 +16,6 @@ namespace Masterplan.UI
 
 		private Label fPlaceholder = new Label();
 
-		private IContainer components;
-
 		private Button CloseBtn;
 
 		private ListView CombatantList;
@@ -91,15 +89,6 @@ namespace Masterplan.UI
 			Session.Modified = true;
 			this.update_hp_panel();
 			this.update_list_hp(this.SelectedHero);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FullHealBtn_Click(object sender, EventArgs e)

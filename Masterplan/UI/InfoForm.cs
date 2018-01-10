@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class InfoForm : Form
 	{
-		private IContainer components;
-
 		private Masterplan.Controls.InfoPanel InfoPanel;
 
 		public int Level
@@ -30,15 +28,6 @@ namespace Masterplan.UI
 		{
 			this.InitializeComponent();
 			this.InfoPanel.Level = (Session.Project != null ? Session.Project.Party.Level : 1);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

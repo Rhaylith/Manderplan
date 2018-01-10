@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class CreatureClassForm : Form
 	{
-		private IContainer components;
-
 		private Label OriginLbl;
 
 		private ComboBox OriginBox;
@@ -85,15 +83,6 @@ namespace Masterplan.UI
 			this.OriginBox.SelectedItem = this.fCreature.Origin;
 			this.TypeBox.SelectedItem = this.fCreature.Type;
 			this.KeywordBox.Text = this.fCreature.Keywords;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

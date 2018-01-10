@@ -93,7 +93,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encyclopediaEntry;
 		}
 
 		public EncyclopediaEntry FindEntry(string name)
@@ -118,7 +117,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encyclopediaEntry;
 		}
 
 		public EncyclopediaEntry FindEntryForAttachment(Guid attachment_id)
@@ -143,7 +141,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encyclopediaEntry;
 		}
 
 		public EncyclopediaGroup FindGroup(Guid entry_id)
@@ -168,7 +165,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encyclopediaGroup;
 		}
 
 		public EncyclopediaLink FindLink(Guid entry_id_1, Guid entry_id_2)
@@ -193,7 +189,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encyclopediaLink;
 		}
 
 		public void Import(Encyclopedia enc)

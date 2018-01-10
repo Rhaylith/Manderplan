@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class DateForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -97,15 +95,6 @@ namespace Masterplan.UI
 			}
 			this.YearBox.Value = this.SelectedCalendar.CampaignYear;
 			this.MonthBox.SelectedIndex = 0;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

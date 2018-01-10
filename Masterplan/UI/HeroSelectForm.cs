@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class HeroSelectForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -55,16 +53,7 @@ namespace Masterplan.UI
 			this.NoBtn.Checked = true;
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
-		private void InitializeComponent()
+        private void InitializeComponent()
 		{
 			this.OKBtn = new Button();
 			this.CancelBtn = new Button();

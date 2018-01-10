@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private PlayerPowerSection fSection;
 
-		private IContainer components;
-
 		private Label HeaderLbl;
 
 		private TabControl Pages;
@@ -51,15 +49,6 @@ namespace Masterplan.UI
 			this.fSection = section.Copy();
 			this.HeaderBox.Text = this.fSection.Header;
 			this.DetailsBox.Text = this.fSection.Details;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

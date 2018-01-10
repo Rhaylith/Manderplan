@@ -14,8 +14,6 @@ namespace Masterplan.UI
 
 		private PrinterSettings fSettings = new PrinterSettings();
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.fMapView = mapview;
 			this.OnePageBtn.Checked = true;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

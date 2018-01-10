@@ -13,8 +13,6 @@ namespace Masterplan.Wizards
 	{
 		private AdviceData fData;
 
-		private IContainer components;
-
 		private Label InfoLbl;
 
 		private ListView SlotList;
@@ -55,7 +53,6 @@ namespace Masterplan.Wizards
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return flag;
 			}
 		}
 
@@ -82,15 +79,6 @@ namespace Masterplan.Wizards
 		public EncounterSelectionPage()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

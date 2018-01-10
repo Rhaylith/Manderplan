@@ -16,8 +16,6 @@ namespace Masterplan.UI
 
 		private Encounter fEncounter;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -98,15 +96,6 @@ namespace Masterplan.UI
 			this.NameBox.Text = (this.SelectedCombatant != null ? this.SelectedCombatant.DisplayName : "");
 			this.update_stat_block();
 			this.update_map_area();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

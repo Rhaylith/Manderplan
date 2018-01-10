@@ -8,8 +8,6 @@ namespace Masterplan.Controls
 {
 	internal class LevelRangePanel : UserControl
 	{
-		private IContainer components;
-
 		private Label MinLbl;
 
 		private NumericUpDown MinBox;
@@ -51,15 +49,6 @@ namespace Masterplan.Controls
 		public LevelRangePanel()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

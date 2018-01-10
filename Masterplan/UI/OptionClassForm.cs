@@ -12,8 +12,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Class fClass;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -163,15 +161,6 @@ namespace Masterplan.UI
 			}
 			int level = (ld.Level - 1) / 10;
 			grayText.Group = this.LevelList.Groups[level + 1];
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

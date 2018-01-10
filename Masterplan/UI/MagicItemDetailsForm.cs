@@ -14,8 +14,6 @@ namespace Masterplan.UI
 	{
 		private MagicItem fItem;
 
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		private ToolStrip Toolbar;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.fItem = item.Copy();
 			this.Browser.DocumentText = HTML.MagicItem(this.fItem, DisplaySize.Small, false, true);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExportHTML_Click(object sender, EventArgs e)

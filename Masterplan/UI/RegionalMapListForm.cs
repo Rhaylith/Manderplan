@@ -15,8 +15,6 @@ namespace Masterplan.UI
 {
 	internal class RegionalMapListForm : Form
 	{
-		private IContainer components;
-
 		private ListView MapList;
 
 		private ColumnHeader MapHdr;
@@ -125,15 +123,6 @@ namespace Masterplan.UI
 			this.EditBtn.Enabled = this.SelectedMap != null;
 			this.LocationMenu.Enabled = this.MapPanel.SelectedLocation != null;
 			this.ToolsMenu.Enabled = this.SelectedMap != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

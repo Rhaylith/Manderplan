@@ -16,8 +16,6 @@ namespace Masterplan.UI
 
 		private bool fShowDMInfo;
 
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		private ToolStrip Toolbar;
@@ -57,15 +55,6 @@ namespace Masterplan.UI
 					(new EncyclopediaImageForm(encyclopediaImage)).ShowDialog();
 				}
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void DMBtn_Click(object sender, EventArgs e)

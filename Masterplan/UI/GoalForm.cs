@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Goal fGoal;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -41,15 +39,6 @@ namespace Masterplan.UI
 			this.fGoal = goal.Copy();
 			this.NameBox.Text = this.fGoal.Name;
 			this.DetailsBox.Text = this.fGoal.Details;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

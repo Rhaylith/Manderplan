@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class DeckViewForm : Form
 	{
-		private IContainer components;
-
 		private SplitContainer Splitter;
 
 		private CardDeck DeckView;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 		{
 			this.update_stats();
 			this.DeckView.Focus();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -204,7 +204,6 @@ namespace Masterplan
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return classDatum;
 		}
 
 		public static RaceData GetRace(string name)
@@ -229,7 +228,6 @@ namespace Masterplan
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return raceDatum;
 		}
 	}
 }

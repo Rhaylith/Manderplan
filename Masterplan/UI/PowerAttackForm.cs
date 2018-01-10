@@ -18,8 +18,6 @@ namespace Masterplan.UI
 
 		private IRole fRole;
 
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -82,15 +80,6 @@ namespace Masterplan.UI
 		private void DefenceBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			this.set_suggestion();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

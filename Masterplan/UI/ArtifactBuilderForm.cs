@@ -13,8 +13,6 @@ namespace Masterplan.UI
 {
 	internal class ArtifactBuilderForm : Form
 	{
-		private IContainer components;
-
 		private Panel BtnPnl;
 
 		private Button CancelBtn;
@@ -292,16 +290,7 @@ namespace Masterplan.UI
 			}
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
-		private void FileExport_Click(object sender, EventArgs e)
+        private void FileExport_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog saveFileDialog = new SaveFileDialog()
 			{

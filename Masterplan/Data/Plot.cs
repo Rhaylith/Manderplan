@@ -101,7 +101,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return plotPoint;
 		}
 
 		public PlotPoint FindPointForMapArea(Map map, MapArea area)
@@ -129,7 +128,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return plotPoint;
 		}
 
 		public List<PlotPoint> FindPrerequisites(Guid point_id)

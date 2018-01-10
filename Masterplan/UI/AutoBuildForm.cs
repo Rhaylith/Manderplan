@@ -18,8 +18,6 @@ namespace Masterplan.UI
 
 		private AutoBuildForm.Mode fMode;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -120,15 +118,6 @@ namespace Masterplan.UI
 				this.fData.Categories = categoryListForm.Categories;
 				this.update_cats();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void init_options()

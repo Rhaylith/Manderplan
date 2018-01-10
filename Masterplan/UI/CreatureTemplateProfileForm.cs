@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private CreatureTemplate fTemplate;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -54,15 +52,6 @@ namespace Masterplan.UI
 			this.TypeBox.SelectedItem = this.fTemplate.Type;
 			this.RoleBox.SelectedItem = this.fTemplate.Role;
 			this.LeaderBox.Checked = this.fTemplate.Leader;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

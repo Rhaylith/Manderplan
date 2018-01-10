@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Aura fAura;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -50,15 +48,6 @@ namespace Masterplan.UI
 			this.KeywordBox.Text = this.fAura.Keywords;
 			this.SizeBox.Value = this.fAura.Radius;
 			this.DetailsBox.Text = this.fAura.Description;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

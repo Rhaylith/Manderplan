@@ -607,7 +607,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return artifact1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -665,7 +664,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return creature1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -719,7 +717,6 @@ namespace Masterplan
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return library;
 		}
 
 		public static Library FindLibrary(Creature c)
@@ -1061,7 +1058,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return magicItem1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -1107,7 +1103,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return skillChallenge1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -1153,7 +1148,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return creatureTemplate1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -1199,7 +1193,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return terrainPower1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -1245,7 +1238,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return monsterTheme1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -1291,7 +1283,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return tile1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{
@@ -1337,7 +1328,6 @@ namespace Masterplan
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return trap1;
 			}
 			if ((search_type == SearchType.Project || search_type == SearchType.Global) && Session.Project != null)
 			{

@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class RandomCreatureForm : Form
 	{
-		private IContainer components;
-
 		private Label LevelLbl;
 
 		private NumericUpDown LevelBox;
@@ -46,15 +44,6 @@ namespace Masterplan.UI
 			this.fRole = role;
 			this.LevelBox.Value = level;
 			this.RoleBtn.Text = this.fRole.ToString();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

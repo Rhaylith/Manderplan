@@ -9,23 +9,12 @@ namespace Masterplan.Controls
 {
 	internal class LibraryHelpPanel : UserControl
 	{
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		public LibraryHelpPanel()
 		{
 			this.InitializeComponent();
 			this.Browser.DocumentText = this.get_html();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private string get_html()

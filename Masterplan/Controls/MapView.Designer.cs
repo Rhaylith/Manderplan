@@ -120,8 +120,6 @@ namespace Masterplan.Controls
 
 		private Dictionary<Guid, List<Rectangle>> fSlotRegions = new Dictionary<Guid, List<Rectangle>>();
 
-		private IContainer components;
-
 		public bool AllowDrawing
 		{
 			get
@@ -722,15 +720,6 @@ namespace Masterplan.Controls
 			return true;
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void draw_creature(Graphics g, Point pt, EncounterCard card, CombatData data, bool selected, bool hovered, bool ghost)
 		{
 			ICreature creature = Session.FindCreature(card.CreatureID, SearchType.Global);
@@ -1038,7 +1027,6 @@ namespace Masterplan.Controls
 							g.DrawImage(bitmap, rectangle, 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imageAttribute);
 							break;
 						}
-						break;
 					}
 					case 1:
 					{
@@ -1048,7 +1036,6 @@ namespace Masterplan.Controls
 							g.DrawImage(bitmap1, rectangle, 0, 0, bitmap1.Width, bitmap1.Height, GraphicsUnit.Pixel, imageAttribute);
 							break;
 						}
-						break;
 					}
 					case 2:
 					{
@@ -1058,7 +1045,6 @@ namespace Masterplan.Controls
 							g.DrawImage(bitmap2, rectangle, 0, 0, bitmap2.Width, bitmap2.Height, GraphicsUnit.Pixel, imageAttribute);
 							break;
 						}
-						break;
 					}
 					case 3:
 					{
@@ -1068,7 +1054,6 @@ namespace Masterplan.Controls
 							g.DrawImage(bitmap3, rectangle, 0, 0, bitmap3.Width, bitmap3.Height, GraphicsUnit.Pixel, imageAttribute);
 							break;
 						}
-						break;
 					}
 				}
 
@@ -1302,7 +1287,6 @@ namespace Masterplan.Controls
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return tokenLink;
 		}
 
 		private PointF get_closest_vertex(Point pt)
@@ -2566,7 +2550,6 @@ namespace Masterplan.Controls
 						e.Graphics.FillRectangle(solidBrush, base.ClientRectangle);
 						break;
 					}
-					break;
 				}
 				case MapViewMode.Plain:
 				{
@@ -2582,7 +2565,6 @@ namespace Masterplan.Controls
 						e.Graphics.FillRectangle(linearGradientBrush, base.ClientRectangle);
 						break;
 					}
-					break;
 				}
 				case MapViewMode.PlayerView:
 				{

@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class SavingThrowForm : Form
 	{
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -132,15 +130,6 @@ namespace Masterplan.UI
 			int item = this.fRolls[this.SelectedEffect];
 			this.SavedBtn.Enabled = item != 2147483647;
 			this.NotSavedBtn.Enabled = item != -2147483648;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

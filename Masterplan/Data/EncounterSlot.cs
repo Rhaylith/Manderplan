@@ -131,7 +131,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return combatDatum;
 		}
 
 		public CreatureState GetState(Masterplan.Data.CombatData data)

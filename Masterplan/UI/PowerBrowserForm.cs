@@ -15,8 +15,6 @@ namespace Masterplan.UI
 {
 	internal class PowerBrowserForm : Form
 	{
-		private IContainer components;
-
 		private SplitContainer Splitter;
 
 		private ListView CreatureList;
@@ -159,15 +157,6 @@ namespace Masterplan.UI
 			}
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void FilterPanel_FilterChanged(object sender, EventArgs e)
 		{
 			this.update_creature_list();
@@ -196,7 +185,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creaturePower;
 		}
 
 		private void InitializeComponent()

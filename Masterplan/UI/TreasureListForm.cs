@@ -16,8 +16,6 @@ namespace Masterplan.UI
 	{
 		private Plot fRootPlot;
 
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private SplitContainer Splitter;
@@ -96,15 +94,6 @@ namespace Masterplan.UI
 			this.SelectNone.Enabled = this.ItemList.Items.Count != 0;
 			this.ExportBtn.Enabled = this.ItemList.CheckedItems.Count != 0;
 			this.PagesLbl.Visible = this.ItemList.CheckedItems.Count > 9;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExportBtn_Click(object sender, EventArgs e)

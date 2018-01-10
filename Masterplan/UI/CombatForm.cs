@@ -132,8 +132,9 @@ namespace Masterplan.UI
 		private Panel PreviewPanel;
 
         private ToolStripButton UndoBtn;
+        private ToolStripButton RedoBtn;
 
-		private ToolStripButton NextInitBtn;
+        private ToolStripButton NextInitBtn;
         private ToolStripButton PrevInitBtn;
 
 		private ToolStripMenuItem ShowMap;
@@ -431,7 +432,6 @@ namespace Masterplan.UI
 						disposable.Dispose();
 					}
 				}
-				return webBrowser;
 			}
 		}
 
@@ -812,6 +812,7 @@ namespace Masterplan.UI
 				this.HealBtn.Enabled = flag;
 				this.EffectMenu.Enabled = flag;
                 this.UndoBtn.Text = "Undo";
+                this.RedoBtn.Text = "Redo";
                 this.PrevInitBtn.Text = "Prev Turn";
                 this.NextInitBtn.Text = (this.fCombatStarted ? "Next Turn" : "Start Encounter");
 				this.DelayBtn.Visible = this.fCombatStarted;
@@ -1951,7 +1952,6 @@ namespace Masterplan.UI
 					disposable.Dispose();
 				}
 			}
-			return listViewItem;
 		}
 
 		private string get_conditions(CombatData cd)
@@ -2844,6 +2844,7 @@ namespace Masterplan.UI
 			this.effectToolStripMenuItem = new ToolStripMenuItem();
 			this.toolStripSeparator18 = new ToolStripSeparator();
             this.UndoBtn = new ToolStripButton();
+            this.RedoBtn = new ToolStripButton();
             this.PrevInitBtn = new ToolStripButton();
 			this.NextInitBtn = new ToolStripButton();
 			this.DelayBtn = new ToolStripButton();
@@ -3020,7 +3021,7 @@ namespace Masterplan.UI
 			this.MainPanel.SuspendLayout();
 			base.SuspendLayout();
 			ToolStripItemCollection items = this.Toolbar.Items;
-			ToolStripItem[] detailsBtn = new ToolStripItem[] { this.DetailsBtn, this.DamageBtn, this.HealBtn, this.EffectMenu, this.toolStripSeparator18, this.UndoBtn, this.PrevInitBtn, this.NextInitBtn, this.DelayBtn, this.toolStripSeparator1, this.CombatantsBtn, this.MapMenu, this.PlayerViewMapMenu, this.PlayerViewNoMapMenu, this.ToolsMenu, this.OptionsMenu };
+			ToolStripItem[] detailsBtn = new ToolStripItem[] { this.DetailsBtn, this.DamageBtn, this.HealBtn, this.EffectMenu, this.toolStripSeparator18, this.UndoBtn, this.RedoBtn, this.PrevInitBtn, this.NextInitBtn, this.DelayBtn, this.toolStripSeparator1, this.CombatantsBtn, this.MapMenu, this.PlayerViewMapMenu, this.PlayerViewNoMapMenu, this.ToolsMenu, this.OptionsMenu };
 			items.AddRange(detailsBtn);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
@@ -3069,6 +3070,15 @@ namespace Masterplan.UI
             this.UndoBtn.Size = new System.Drawing.Size(63, 22);
             this.UndoBtn.Text = "Undo";
             this.UndoBtn.Click += new EventHandler(this.UndoBtn_Click);
+
+            this.RedoBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.RedoBtn.Image = (Image)componentResourceManager.GetObject("RedoBtn.Image");
+            this.RedoBtn.ImageTransparentColor = Color.Magenta;
+            this.RedoBtn.Name = "RedoBtn";
+            this.RedoBtn.Size = new System.Drawing.Size(63, 22);
+            this.RedoBtn.Text = "Redo";
+            this.RedoBtn.Click += new EventHandler(this.RedoBtn_Click);
+
 
             this.PrevInitBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
             this.PrevInitBtn.Image = (Image)componentResourceManager.GetObject("PrevInitBtn.Image");
@@ -5015,6 +5025,11 @@ namespace Masterplan.UI
         private void UndoBtn_Click(object sender, EventArgs e)
         {
             CommandManager.GetInstance().UndoLastCommand();
+        }
+
+        private void RedoBtn_Click(object sender, EventArgs e)
+        {
+            CommandManager.GetInstance().RedoNextCommand();
         }
 
         private void PrevInitBtn_Click(object sender, EventArgs e)

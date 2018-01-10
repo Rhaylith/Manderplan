@@ -7,8 +7,6 @@ namespace Masterplan.UI
 {
 	internal class PasswordCheckForm : Form
 	{
-		private IContainer components;
-
 		private Label PasswordLbl;
 
 		private Button OKBtn;
@@ -37,15 +35,6 @@ namespace Masterplan.UI
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.OKBtn.Enabled = this.PasswordBox.Text.ToLower() == this.fPassword;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void HintBtn_Click(object sender, EventArgs e)

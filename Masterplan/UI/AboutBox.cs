@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class AboutBox : Form
 	{
-		private IContainer components;
-
 		private TableLayoutPanel tableLayoutPanel;
 
 		private PictureBox logoPictureBox;
@@ -98,15 +96,6 @@ namespace Masterplan.UI
 			this.labelVersion.Text = string.Format("Version {0}", this.AssemblyVersion);
 			this.labelCompanyName.Text = this.AssemblyCompany;
 			this.textBoxCopyright.Text = this.AssemblyCopyright;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

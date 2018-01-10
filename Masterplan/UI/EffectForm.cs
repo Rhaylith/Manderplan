@@ -40,8 +40,6 @@ namespace Masterplan.UI
 
 		private int fCurrentRound = -2147483648;
 
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -253,15 +251,6 @@ namespace Masterplan.UI
 			this.OKBtn.Enabled = (this.ConditionBox.Text == "" ? false : this.ConditionBox.Text != "(enter effect name)");
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void DurationBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (this.fCondition.DurationCreatureID == Guid.Empty)
@@ -397,7 +386,6 @@ namespace Masterplan.UI
 					disposable.Dispose();
 				}
 			}
-			return obj;
 		}
 
 		private void init(OngoingCondition condition, CombatData current_actor, int current_round)

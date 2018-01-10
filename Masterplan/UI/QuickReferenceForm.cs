@@ -13,8 +13,6 @@ namespace Masterplan.UI
 {
 	internal class QuickReferenceForm : Form
 	{
-		private IContainer components;
-
 		private Label LevelLbl;
 
 		private NumericUpDown LevelBox;
@@ -56,15 +54,6 @@ namespace Masterplan.UI
 				}
 			}
 			this.UpdateView();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

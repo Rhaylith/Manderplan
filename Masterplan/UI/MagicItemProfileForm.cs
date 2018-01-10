@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.MagicItem fItem;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -71,15 +69,6 @@ namespace Masterplan.UI
 			this.LevelBox.Value = this.fItem.Level;
 			this.TypeBox.Text = this.fItem.Type;
 			this.RarityBox.SelectedItem = this.fItem.Rarity;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

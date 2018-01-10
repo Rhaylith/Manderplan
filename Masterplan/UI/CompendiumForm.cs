@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class CompendiumForm : Form
 	{
-		private IContainer components;
-
 		private Button CloseBtn;
 
 		private SplitContainer Splitter;
@@ -70,15 +68,6 @@ namespace Masterplan.UI
 		private void BookList_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			this.update_items();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private Dictionary<string, CompendiumHelper.SourceBook> get_data()

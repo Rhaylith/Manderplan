@@ -641,101 +641,82 @@ namespace Masterplan.Tools.Generators
 			while (height > 0)
 			{
 				callback(null, null);
-				if (true)
-				{
-					int num = Session.Random.Next() % tiles.Count;
-					Tile item = tiles[num];
-					Point point = new Point(0, 0);
-					if (MapBuilder.fMap.Tiles.Count != 0)
-					{
-						int num1 = Session.Random.Next() % MapBuilder.fMap.Tiles.Count;
-						TileData tileDatum = MapBuilder.fMap.Tiles[num1];
-						Tile tile1 = Session.FindTile(tileDatum.TileID, SearchType.Global);
-						List<Rectangle> rectangles = new List<Rectangle>();
-						int x = tileDatum.Location.X;
-						Size size = item.Size;
-						int width = x - (size.Width - 1);
-						int x1 = tileDatum.Location.X + (tile1.Size.Width - 1);
-						int y = tileDatum.Location.Y - (item.Size.Height - 1);
-						int y1 = tileDatum.Location.Y + (tile1.Size.Height - 1);
-						for (int i = width; i <= x1; i++)
-						{
-							int y2 = tileDatum.Location.Y - item.Size.Height;
-							int width1 = item.Size.Width;
-							Size size1 = item.Size;
-							Rectangle rectangle = new Rectangle(i, y2, width1, size1.Height);
-							rectangles.Add(rectangle);
-						}
-						for (int j = width; j <= x1; j++)
-						{
-							int num2 = tileDatum.Location.Y + tile1.Size.Height;
-							int width2 = item.Size.Width;
-							size = item.Size;
-							Rectangle rectangle1 = new Rectangle(j, num2, width2, size.Height);
-							rectangles.Add(rectangle1);
-						}
-						for (int k = y; k <= y1; k++)
-						{
-							int x2 = tileDatum.Location.X;
-							size = tile1.Size;
-							int width3 = x2 - size.Width;
-							int num3 = item.Size.Width;
-							size = item.Size;
-							Rectangle rectangle2 = new Rectangle(width3, k, num3, size.Height);
-							rectangles.Add(rectangle2);
-						}
-						for (int l = y; l <= y1; l++)
-						{
-							int x3 = tileDatum.Location.X;
-							size = tile1.Size;
-							int width4 = x3 + size.Width;
-							int num4 = item.Size.Width;
-							size = item.Size;
-							Rectangle rectangle3 = new Rectangle(width4, l, num4, size.Height);
-							rectangles.Add(rectangle3);
-						}
-						List<Rectangle> rectangles1 = new List<Rectangle>();
-						foreach (Rectangle rectangle4 in rectangles)
-						{
-							if (!MapBuilder.check_rect_is_empty(rectangle4))
-							{
-								continue;
-							}
-							rectangles1.Add(rectangle4);
-						}
-						if (rectangles1.Count == 0)
-						{
-							continue;
-						}
-						int num5 = Session.Random.Next() % rectangles1.Count;
-						point = rectangles1[num5].Location;
-					}
-					TileData tileDatum1 = new TileData()
-					{
-						TileID = item.ID,
-						Location = point
-					};
-					MapBuilder.fMap.Tiles.Add(tileDatum1);
-					height -= item.Area;
-				}
-				else
-				{
-					Tile tile2 = null;
-					if (tile2 == null)
-					{
-						continue;
-					}
-					Point point1 = new Point(0, 0);
-					TileData tileDatum2 = new TileData()
-					{
-						TileID = tile2.ID,
-						Location = point1
-					};
-					MapBuilder.fMap.Tiles.Add(tileDatum2);
-					height -= tile2.Area;
-				}
-			}
-			int num6 = 0;
+                int num = Session.Random.Next() % tiles.Count;
+                Tile item = tiles[num];
+                Point point = new Point(0, 0);
+                if (MapBuilder.fMap.Tiles.Count != 0)
+                {
+                    int num1 = Session.Random.Next() % MapBuilder.fMap.Tiles.Count;
+                    TileData tileDatum = MapBuilder.fMap.Tiles[num1];
+                    Tile tile1 = Session.FindTile(tileDatum.TileID, SearchType.Global);
+                    List<Rectangle> rectangles = new List<Rectangle>();
+                    int x = tileDatum.Location.X;
+                    Size size = item.Size;
+                    int width = x - (size.Width - 1);
+                    int x1 = tileDatum.Location.X + (tile1.Size.Width - 1);
+                    int y = tileDatum.Location.Y - (item.Size.Height - 1);
+                    int y1 = tileDatum.Location.Y + (tile1.Size.Height - 1);
+                    for (int i = width; i <= x1; i++)
+                    {
+                        int y2 = tileDatum.Location.Y - item.Size.Height;
+                        int width1 = item.Size.Width;
+                        Size size1 = item.Size;
+                        Rectangle rectangle = new Rectangle(i, y2, width1, size1.Height);
+                        rectangles.Add(rectangle);
+                    }
+                    for (int j = width; j <= x1; j++)
+                    {
+                        int num2 = tileDatum.Location.Y + tile1.Size.Height;
+                        int width2 = item.Size.Width;
+                        size = item.Size;
+                        Rectangle rectangle1 = new Rectangle(j, num2, width2, size.Height);
+                        rectangles.Add(rectangle1);
+                    }
+                    for (int k = y; k <= y1; k++)
+                    {
+                        int x2 = tileDatum.Location.X;
+                        size = tile1.Size;
+                        int width3 = x2 - size.Width;
+                        int num3 = item.Size.Width;
+                        size = item.Size;
+                        Rectangle rectangle2 = new Rectangle(width3, k, num3, size.Height);
+                        rectangles.Add(rectangle2);
+                    }
+                    for (int l = y; l <= y1; l++)
+                    {
+                        int x3 = tileDatum.Location.X;
+                        size = tile1.Size;
+                        int width4 = x3 + size.Width;
+                        int num4 = item.Size.Width;
+                        size = item.Size;
+                        Rectangle rectangle3 = new Rectangle(width4, l, num4, size.Height);
+                        rectangles.Add(rectangle3);
+                    }
+                    List<Rectangle> rectangles1 = new List<Rectangle>();
+                    foreach (Rectangle rectangle4 in rectangles)
+                    {
+                        if (!MapBuilder.check_rect_is_empty(rectangle4))
+                        {
+                            continue;
+                        }
+                        rectangles1.Add(rectangle4);
+                    }
+                    if (rectangles1.Count == 0)
+                    {
+                        continue;
+                    }
+                    int num5 = Session.Random.Next() % rectangles1.Count;
+                    point = rectangles1[num5].Location;
+                }
+                TileData tileDatum1 = new TileData()
+                {
+                    TileID = item.ID,
+                    Location = point
+                };
+                MapBuilder.fMap.Tiles.Add(tileDatum1);
+                height -= item.Area;
+            }
+            int num6 = 0;
 			int num7 = 0;
 			int num8 = 0;
 			int num9 = 0;
@@ -813,7 +794,6 @@ namespace Masterplan.Tools.Generators
 							flag = false;
 							break;
 						}
-						break;
 					}
 					case 3:
 					case 4:
@@ -832,7 +812,6 @@ namespace Masterplan.Tools.Generators
 							flag = false;
 							break;
 						}
-						break;
 					}
 					case 8:
 					{
@@ -850,7 +829,6 @@ namespace Masterplan.Tools.Generators
 							flag = false;
 							break;
 						}
-						break;
 					}
 					case 9:
 					{
@@ -865,7 +843,6 @@ namespace Masterplan.Tools.Generators
 							flag = false;
 							break;
 						}
-						break;
 					}
 				}
 				if (!flag)
@@ -1019,7 +996,6 @@ namespace Masterplan.Tools.Generators
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		private static Endpoint get_endpoint(Tile t, TileData td, Direction dir)
@@ -1144,7 +1120,6 @@ namespace Masterplan.Tools.Generators
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return tileDatum;
 		}
 	}
 }

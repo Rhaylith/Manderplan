@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class SkillChallengeDetailsForm : Form
 	{
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		private ToolStrip Toolbar;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.fChallenge = sc.Copy() as SkillChallenge;
 			this.Browser.DocumentText = HTML.SkillChallenge(this.fChallenge, false, true, DisplaySize.Small);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExportHTML_Click(object sender, EventArgs e)

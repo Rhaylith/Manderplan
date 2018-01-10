@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class PausedCombatListForm : Form
 	{
-		private IContainer components;
-
 		private SplitContainer Splitter;
 
 		private ListView EncounterList;
@@ -54,15 +52,6 @@ namespace Masterplan.UI
 		{
 			this.RunBtn.Enabled = this.SelectedCombat != null;
 			this.RemoveBtn.Enabled = this.SelectedCombat != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EncounterList_SelectedIndexChanged(object sender, EventArgs e)

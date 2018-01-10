@@ -118,7 +118,6 @@ namespace Masterplan
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		public bool Contains(RaceData rd)
@@ -142,7 +141,6 @@ namespace Masterplan
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		public int Count(PowerSource power_source)

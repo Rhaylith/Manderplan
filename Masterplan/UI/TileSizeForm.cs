@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class TileSizeForm : Form
 	{
-		private IContainer components;
-
 		private Label WidthLbl;
 
 		private NumericUpDown WidthBox;
@@ -50,15 +48,6 @@ namespace Masterplan.UI
 			height /= this.fTiles.Count;
 			this.WidthBox.Value = width;
 			this.HeightBox.Value = height;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

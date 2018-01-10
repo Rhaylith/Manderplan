@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Feature fFeature;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -40,15 +38,6 @@ namespace Masterplan.UI
 			this.fFeature = feature.Copy();
 			this.NameBox.Text = this.fFeature.Name;
 			this.DetailsBox.Text = this.fFeature.Details;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

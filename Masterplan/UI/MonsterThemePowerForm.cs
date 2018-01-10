@@ -12,8 +12,6 @@ namespace Masterplan.UI
 	{
 		private ThemePowerData fPower;
 
-		private IContainer components;
-
 		private Label TypeLbl;
 
 		private ComboBox TypeBox;
@@ -66,15 +64,6 @@ namespace Masterplan.UI
 		{
 			List<RoleType> _roles = this.get_roles();
 			this.OKBtn.Enabled = _roles.Count != 0;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private List<RoleType> get_roles()

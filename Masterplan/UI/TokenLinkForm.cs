@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class TokenLinkForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -40,15 +38,6 @@ namespace Masterplan.UI
 			this.LinkTextBox.Items.Add("Sanctioned");
 			this.fLink = link.Copy();
 			this.LinkTextBox.Text = this.fLink.Text;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

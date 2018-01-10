@@ -10,8 +10,6 @@ namespace Masterplan.Wizards
 {
 	internal class VariantRolePage : UserControl, IWizardPage
 	{
-		private IContainer components;
-
 		private Label InfoLbl;
 
 		private ComboBox RoleBox;
@@ -45,15 +43,6 @@ namespace Masterplan.Wizards
 		public VariantRolePage()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

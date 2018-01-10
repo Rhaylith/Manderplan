@@ -612,7 +612,6 @@ namespace Masterplan.Data
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return flag;
 			}
 		}
 
@@ -2190,7 +2189,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creaturePower;
 		}
 
 		public int GetDamageModifier(DamageType type, CombatData data)

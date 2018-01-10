@@ -10,8 +10,6 @@ namespace Masterplan.Controls
 {
 	internal class InfoPanel : UserControl
 	{
-		private IContainer components;
-
 		private NumericUpDown LevelBox;
 
 		private Label LevelLbl;
@@ -62,15 +60,6 @@ namespace Masterplan.Controls
 				};
 				dieRollerForm.ShowDialog();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

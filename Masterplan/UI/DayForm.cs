@@ -10,8 +10,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.DayInfo fDayInfo;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -34,15 +32,6 @@ namespace Masterplan.UI
 			this.fDayInfo = day.Copy();
 			this.NameBox.Text = this.fDayInfo.Name;
 			this.NameBox.SelectAll();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private TerrainPower fPower;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -110,15 +108,6 @@ namespace Masterplan.UI
 			this.HitBox.Text = this.fPower.Hit;
 			this.MissBox.Text = this.fPower.Miss;
 			this.EffectBox.Text = this.fPower.Effect;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class DamageModifierTemplateForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -82,15 +80,6 @@ namespace Masterplan.UI
 			this.HeroicBox.Value = Math.Abs(this.fMod.HeroicValue);
 			this.ParagonBox.Value = Math.Abs(this.fMod.ParagonValue);
 			this.EpicBox.Value = Math.Abs(this.fMod.EpicValue);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

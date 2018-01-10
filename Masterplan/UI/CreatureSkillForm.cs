@@ -7,8 +7,6 @@ namespace Masterplan.UI
 {
 	internal class CreatureSkillForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -65,15 +63,6 @@ namespace Masterplan.UI
 			this.TrainedBox.Checked = trained;
 			this.MiscBox.Value = misc_bonus;
 			this.update_total();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

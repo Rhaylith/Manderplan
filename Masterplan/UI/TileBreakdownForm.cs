@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class TileBreakdownForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private ListView TileList;
@@ -91,15 +89,6 @@ namespace Masterplan.UI
 				this.TileList.LargeImageList.Images.Add(bitmap);
 				count.ImageIndex = this.TileList.LargeImageList.Images.Count - 1;
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

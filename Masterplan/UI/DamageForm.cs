@@ -15,8 +15,6 @@ namespace Masterplan.UI
 
 		private List<DamageType> fTypes = new List<DamageType>();
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -164,15 +162,6 @@ namespace Masterplan.UI
 		private void DamageForm_Shown(object sender, EventArgs e)
 		{
 			this.DmgBox.Select(0, 1);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void Dmg1_Click(object sender, EventArgs e)

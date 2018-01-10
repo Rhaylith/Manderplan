@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class OngoingDamageForm : Form
 	{
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -43,15 +41,6 @@ namespace Masterplan.UI
 			this.fEncounter = enc;
 			this.Text = string.Concat("Ongoing Damage: ", this.fData.DisplayName);
 			this.update_list();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private DamageModifier find_damage_modifier(DamageType type)

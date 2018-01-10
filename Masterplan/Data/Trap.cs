@@ -406,7 +406,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return trapAttack;
 		}
 
 		public TrapSkillData FindSkill(string skillname)
@@ -431,7 +430,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return trapSkillDatum;
 		}
 
 		public TrapSkillData FindSkill(Guid id)
@@ -456,7 +454,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return trapSkillDatum;
 		}
 
 		public override string ToString()

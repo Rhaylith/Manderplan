@@ -7,8 +7,6 @@ namespace Masterplan.UI
 {
 	internal class LevelForm : Form
 	{
-		private IContainer components;
-
 		private Label LevelLbl;
 
 		private Button OKBtn;
@@ -35,16 +33,7 @@ namespace Masterplan.UI
 			this.LevelBox.Value = score;
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
-		private void InitializeComponent()
+        private void InitializeComponent()
 		{
 			this.LevelLbl = new Label();
 			this.OKBtn = new Button();

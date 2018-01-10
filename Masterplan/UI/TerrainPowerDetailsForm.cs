@@ -14,8 +14,6 @@ namespace Masterplan.UI
 	{
 		private TerrainPower fTerrainPower;
 
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		private ToolStrip Toolbar;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.fTerrainPower = tp.Copy();
 			this.Browser.DocumentText = HTML.TerrainPower(this.fTerrainPower, DisplaySize.Small);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExportHTML_Click(object sender, EventArgs e)

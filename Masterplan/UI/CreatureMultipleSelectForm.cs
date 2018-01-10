@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class CreatureMultipleSelectForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private ListView CreatureList;
@@ -111,15 +109,6 @@ namespace Masterplan.UI
 		{
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private void DragLbl_DragDrop(object sender, DragEventArgs e)
 		{
 			if (this.has_creature(e.Data))
@@ -158,7 +147,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creature;
 		}
 
 		private bool has_creature(IDataObject data)

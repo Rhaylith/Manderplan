@@ -12,8 +12,6 @@ namespace Masterplan.Controls
 {
 	internal class SkillChallengePanel : UserControl
 	{
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private ToolStripButton EditBtn;
@@ -112,15 +110,6 @@ namespace Masterplan.Controls
 				this.fChallenge.Level = this.fPartyLevel;
 				this.update_view();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		public void Edit()

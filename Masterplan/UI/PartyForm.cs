@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class PartyForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -38,15 +36,6 @@ namespace Masterplan.UI
 			this.fParty = p;
 			this.SizeBox.Value = this.fParty.Size;
 			this.LevelBox.Value = this.fParty.Level;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

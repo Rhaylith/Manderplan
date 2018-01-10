@@ -20,8 +20,6 @@ namespace Masterplan.UI
 
 		private List<string> fExamples = new List<string>();
 
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private Panel BtnPnl;
@@ -172,15 +170,6 @@ namespace Masterplan.UI
 				{
 				}
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

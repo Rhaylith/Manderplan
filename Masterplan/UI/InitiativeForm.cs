@@ -7,8 +7,6 @@ namespace Masterplan.UI
 {
 	internal class InitiativeForm : Form
 	{
-		private IContainer components;
-
 		private Label InitLbl;
 
 		private Button OKBtn;
@@ -45,15 +43,6 @@ namespace Masterplan.UI
 				score = bonus + 1;
 			}
 			this.InitBox.Value = score;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

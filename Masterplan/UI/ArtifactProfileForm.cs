@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Artifact fArtifact;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -43,15 +41,6 @@ namespace Masterplan.UI
 			}
 			this.NameBox.Text = this.fArtifact.Name;
 			this.TierBox.SelectedItem = this.fArtifact.Tier;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

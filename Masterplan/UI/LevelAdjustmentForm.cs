@@ -11,8 +11,6 @@ namespace Masterplan.UI
 
 		private const string LEVEL_DOWN = "Less difficult";
 
-		private IContainer components;
-
 		private Label LevelLbl;
 
 		private Button OKBtn;
@@ -46,15 +44,6 @@ namespace Masterplan.UI
 			this.DirectionBox.Items.Add("More difficult");
 			this.DirectionBox.Items.Add("Less difficult");
 			this.DirectionBox.SelectedIndex = 0;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

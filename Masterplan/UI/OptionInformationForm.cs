@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class OptionInformationForm : Form
 	{
-		private IContainer components;
-
 		private Label DCLbl;
 
 		private TabControl Pages;
@@ -40,15 +38,6 @@ namespace Masterplan.UI
 			this.fInfo = info;
 			this.DCBox.Value = this.fInfo.First;
 			this.DetailsBox.Text = this.fInfo.Second;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class OptionCreatureLoreForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -97,15 +95,6 @@ namespace Masterplan.UI
 		{
 			this.RemoveBtn.Enabled = this.SelectedInformation != null;
 			this.EditBtn.Enabled = this.SelectedInformation != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FeatureEditBtn_Click(object sender, EventArgs e)

@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class MapLocationForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -65,15 +63,6 @@ namespace Masterplan.UI
 			this.fLocation = loc;
 			this.NameBox.Text = this.fLocation.Name;
 			this.CatBox.Text = this.fLocation.Category;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

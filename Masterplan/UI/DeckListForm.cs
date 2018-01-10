@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class DeckListForm : Form
 	{
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private ListView DeckList;
@@ -82,15 +80,6 @@ namespace Masterplan.UI
 			this.EditBtn.Enabled = this.SelectedDeck != null;
 			this.ViewBtn.Enabled = (this.SelectedDeck == null ? false : this.SelectedDeck.Cards.Count != 0);
 			this.RunBtn.Enabled = (this.SelectedDeck == null ? false : this.SelectedDeck.Cards.Count != 0);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

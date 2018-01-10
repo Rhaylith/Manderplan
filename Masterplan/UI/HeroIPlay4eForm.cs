@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class HeroIPlay4eForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -42,16 +40,7 @@ namespace Masterplan.UI
 			}
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
-		private void InitializeComponent()
+        private void InitializeComponent()
 		{
 			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(HeroIPlay4eForm));
 			this.OKBtn = new Button();

@@ -11,6 +11,7 @@ namespace Masterplan.Commands
 
         private Dictionary<Type, MessageHandler> ListenerMap = new Dictionary<Type, MessageHandler>();
         private UndoQueue _UndoQueue = new UndoQueue();
+        private UndoQueue _RedoQueue = new UndoQueue();
         private static CommandManager _instance = null;
         private CommandManager() { }
 
@@ -25,11 +26,8 @@ namespace Masterplan.Commands
 
         public void ExecuteCommand(ICommand command)
         {
-            command.Do();
-
-            CallListenersForCommand(command);
-
-            _UndoQueue.Push(command);
+            RunCommand(command);
+            _RedoQueue.Clear();
         }
 
         public void UndoLastCommand()
@@ -38,8 +36,18 @@ namespace Masterplan.Commands
             {
                 ICommand command = _UndoQueue.Pop();
                 command.Undo();
+                _RedoQueue.Push(command);
 
                 CallListenersForCommand(command);
+            }
+        }
+
+        public void RedoNextCommand()
+        {
+            if (_RedoQueue.Count > 0)
+            {
+                ICommand command = _RedoQueue.Pop();
+                RunCommand(command);
             }
         }
 
@@ -53,6 +61,13 @@ namespace Masterplan.Commands
             {
                 ListenerMap.Add(command, callback);
             }
+        }
+
+        private void RunCommand(ICommand command)
+        {
+            command.Do();
+            CallListenersForCommand(command);
+            _UndoQueue.Push(command);
         }
 
         private void CallListenersForCommand(ICommand command)

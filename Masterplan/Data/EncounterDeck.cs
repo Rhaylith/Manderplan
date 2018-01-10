@@ -140,7 +140,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		public bool DrawEncounter(Encounter enc)

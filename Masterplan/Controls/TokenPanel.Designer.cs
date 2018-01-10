@@ -11,8 +11,6 @@ namespace Masterplan.Controls
 {
 	internal class TokenPanel : UserControl
 	{
-		private IContainer components;
-
 		private PictureBox ImageBox;
 
 		private ToolStrip PictureToolbar;
@@ -80,15 +78,6 @@ namespace Masterplan.Controls
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.ImageClear.Enabled = this.fImage != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ImageClear_Click(object sender, EventArgs e)

@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class CreatureSkillsForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -118,15 +116,6 @@ namespace Masterplan.UI
 			this.TrainedBtn.Enabled = this.SelectedSkill != null;
 			this.TrainedBtn.Checked = (this.SelectedSkill == null ? false : this.SelectedSkill.Trained);
 			this.EditSkillBtn.Enabled = this.SelectedSkill != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditSkillBtn_Click(object sender, EventArgs e)

@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class DemographicsForm : Form
 	{
-		private IContainer components;
-
 		private DemographicsPanel BreakdownPanel;
 
 		private ToolStrip Toolbar;
@@ -37,15 +35,6 @@ namespace Masterplan.UI
 			this.LevelBtn.Checked = this.BreakdownPanel.Mode == DemographicsMode.Level;
 			this.RoleBtn.Checked = this.BreakdownPanel.Mode == DemographicsMode.Role;
 			this.StatusBtn.Checked = this.BreakdownPanel.Mode == DemographicsMode.Status;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

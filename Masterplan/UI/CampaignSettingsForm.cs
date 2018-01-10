@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class CampaignSettingsForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -47,15 +45,6 @@ namespace Masterplan.UI
 			this.AttackBox.Value = this.fSettings.AttackBonus;
 			this.ACBox.Value = this.fSettings.ACBonus;
 			this.DefenceBox.Value = this.fSettings.NADBonus;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

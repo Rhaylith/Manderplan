@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class OptionRitualForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -151,15 +149,6 @@ namespace Masterplan.UI
 					return;
 				}
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

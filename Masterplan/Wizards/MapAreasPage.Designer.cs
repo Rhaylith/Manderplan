@@ -9,8 +9,6 @@ namespace Masterplan.Wizards
 {
 	internal class MapAreasPage : UserControl, IWizardPage
 	{
-		private IContainer components;
-
 		private Label MaxInfoLbl;
 
 		private Label MaxAreasLbl;
@@ -52,15 +50,6 @@ namespace Masterplan.Wizards
 		public MapAreasPage()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

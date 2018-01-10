@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class DamageTypesForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -44,15 +42,6 @@ namespace Masterplan.UI
 				listViewItem.Checked = this.fTypes.Contains(value);
 				listViewItem.Tag = value;
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

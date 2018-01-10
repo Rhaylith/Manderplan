@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class MapAreaForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -113,15 +111,6 @@ namespace Masterplan.UI
 			width += this.MapView.Viewpoint.Width;
 			height += this.MapView.Viewpoint.Height;
 			this.MapView.Viewpoint = new Rectangle(x, y, width, height);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

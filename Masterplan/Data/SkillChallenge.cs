@@ -236,7 +236,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return skillChallengeDatum;
 		}
 
 		public Difficulty GetDifficulty(int party_level, int party_size)

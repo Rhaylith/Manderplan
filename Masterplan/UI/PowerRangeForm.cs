@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class PowerRangeForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -40,15 +38,6 @@ namespace Masterplan.UI
 			this.RangeBox.Items.Add("Area Burst N within N");
 			this.RangeBox.Items.Add("Personal");
 			this.RangeBox.Text = power.Range;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

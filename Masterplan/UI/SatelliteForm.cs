@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class SatelliteForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -47,15 +45,6 @@ namespace Masterplan.UI
 			this.NameBox.Text = this.fSatellite.Name;
 			this.PeriodBox.Value = this.fSatellite.Period;
 			this.OffsetBox.Value = this.fSatellite.Offset;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

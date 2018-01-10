@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class GoalListForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -127,16 +125,7 @@ namespace Masterplan.UI
 			this.update_goal();
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
-		private void EditBtn_Click(object sender, EventArgs e)
+        private void EditBtn_Click(object sender, EventArgs e)
 		{
 			if (this.SelectedGoal != null)
 			{
@@ -190,7 +179,6 @@ namespace Masterplan.UI
 					disposable.Dispose();
 				}
 			}
-			return treeNode;
 		}
 
 		private void GoalListForm_FormClosing(object sender, FormClosingEventArgs e)

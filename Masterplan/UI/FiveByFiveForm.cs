@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class FiveByFiveForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -42,15 +40,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.f5x5 = five_by_five.Copy();
 			this.FiveByFivePanel.Data = this.f5x5;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FiveByFiveForm_FormClosing(object sender, FormClosingEventArgs e)

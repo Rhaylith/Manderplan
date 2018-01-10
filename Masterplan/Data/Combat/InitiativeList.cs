@@ -186,7 +186,6 @@ namespace Masterplan.Data.Combat
                             {
                                 ((IDisposable)enumerator).Dispose();
                             }
-                            break;
                         }
                     case InitiativeMode.ManualIndividual:
                         {
@@ -211,7 +210,6 @@ namespace Masterplan.Data.Combat
                             {
                                 ((IDisposable)enumerator1).Dispose();
                             }
-                            break;
                         }
                     case InitiativeMode.ManualGroup:
                         {

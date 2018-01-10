@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class PowerDetailsForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -80,15 +78,6 @@ namespace Masterplan.UI
 			head.Add("</BODY>");
 			head.Add("</HTML>");
 			this.Browser.DocumentText = HTML.Concatenate(head);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

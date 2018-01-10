@@ -291,7 +291,6 @@ namespace Masterplan.Tools
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return aura;
 		}
 
 		public static Dictionary<string, int> ParseSkills(string source)

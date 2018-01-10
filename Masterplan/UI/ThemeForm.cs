@@ -14,8 +14,6 @@ namespace Masterplan.UI
 	{
 		private EncounterCard fCard;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -101,15 +99,6 @@ namespace Masterplan.UI
 				Session.Modified = true;
 				this.update_selected_theme(monsterThemeForm.Theme, true);
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

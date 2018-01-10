@@ -21,8 +21,6 @@ namespace Masterplan.UI
 
 		private List<Pair<CombatData, int>> fRolls = new List<Pair<CombatData, int>>();
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private WebBrowser PowerBrowser;
@@ -161,15 +159,6 @@ namespace Masterplan.UI
 		{
 			int value = (int)this.DamageBox.Value / 2;
 			this.MissValueLbl.Text = value.ToString();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()
@@ -433,7 +422,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		private void RollDamageBtn_Click(object sender, EventArgs e)

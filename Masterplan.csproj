@@ -37,6 +37,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Masterplan\Commands\Combat\AddEffectCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\AddRemoveLinkCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\DamageEntityCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\HealEntitiesCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\InitiativeAdvanceCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\InitiativePreviousCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\MoveTokenCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\RemoveEffectCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\RemoveFromCombatCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\RemoveFromMapCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\VisibilityToggleCommand.cs" />
+    <Compile Include="Masterplan\Commands\CommandManager.cs" />
+    <Compile Include="Masterplan\Commands\ICommand.cs" />
+    <Compile Include="Masterplan\Commands\UndoQueue.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -2938,5 +2952,6 @@
       <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

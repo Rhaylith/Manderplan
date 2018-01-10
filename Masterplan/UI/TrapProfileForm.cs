@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Trap fTrap;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -71,15 +69,6 @@ namespace Masterplan.UI
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.InitBox.Enabled = this.HasInitBox.Checked;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

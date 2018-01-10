@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private PowerAction fAction;
 
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -126,15 +124,6 @@ namespace Masterplan.UI
 			this.TriggerBox.Enabled = !@checked;
 			this.SustainLbl.Enabled = !@checked;
 			this.SustainBox.Enabled = !@checked;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

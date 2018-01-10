@@ -19,8 +19,6 @@ namespace Masterplan.UI
 
 		private int fNAD;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -123,15 +121,6 @@ namespace Masterplan.UI
 			this.FortBox.Value = this.fNAD;
 			this.RefBox.Value = this.fNAD;
 			this.WillBox.Value = this.fNAD;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FortRecBtn_Click(object sender, EventArgs e)

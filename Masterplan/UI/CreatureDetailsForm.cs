@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class CreatureDetailsForm : Form
 	{
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		private ToolStrip Toolbar;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.fCard = card;
 			this.Browser.DocumentText = HTML.StatBlock(this.fCard, null, null, true, false, true, CardMode.View, DisplaySize.Small);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExportHTML_Click(object sender, EventArgs e)

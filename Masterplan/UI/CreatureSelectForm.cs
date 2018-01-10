@@ -19,8 +19,6 @@ namespace Masterplan.UI
 
 		private int fLevel = 1;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private ListView CreatureList;
@@ -86,15 +84,6 @@ namespace Masterplan.UI
 			string str = HTML.StatBlock(this.Creature, null, null, true, false, true, CardMode.View, DisplaySize.Small);
 			this.Browser.Document.OpenNew(true);
 			this.Browser.Document.Write(str);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

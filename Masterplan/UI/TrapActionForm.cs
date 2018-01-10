@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class TrapActionForm : Form
 	{
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -58,15 +56,6 @@ namespace Masterplan.UI
 
 		private void Application_Idle(object sender, EventArgs e)
 		{
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

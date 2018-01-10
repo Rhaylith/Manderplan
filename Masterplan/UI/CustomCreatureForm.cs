@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class CustomCreatureForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -360,15 +358,6 @@ namespace Masterplan.UI
 			{
 				this.update_details();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditDmgBtn_Click(object sender, EventArgs e)

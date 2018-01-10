@@ -15,8 +15,6 @@ namespace Masterplan.Wizards
 	{
 		private VariantData fData;
 
-		private IContainer components;
-
 		private Label InfoLbl;
 
 		private ListView CreatureList;
@@ -89,15 +87,6 @@ namespace Masterplan.Wizards
 				EncounterCard encounterCard = new EncounterCard(this.SelectedCreature.ID);
 				(new CreatureDetailsForm(encounterCard)).ShowDialog();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

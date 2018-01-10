@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class OptionParagonPathForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -81,15 +79,6 @@ namespace Masterplan.UI
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.LevelEditBtn.Enabled = this.SelectedLevel != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FeatureEditBtn_Click(object sender, EventArgs e)

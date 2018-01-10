@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Weapon fWeapon;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -124,15 +122,6 @@ namespace Masterplan.UI
 			this.GroupBox.Text = this.fWeapon.Group;
 			this.PropertiesBox.Text = this.fWeapon.Properties;
 			this.DetailsBox.Text = this.fWeapon.Description;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

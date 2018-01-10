@@ -13,8 +13,6 @@ namespace Masterplan.UI
 {
 	internal class PremadeForm : Form
 	{
-		private IContainer components;
-
 		private ListView AdventureList;
 
 		private Button OKBtn;
@@ -71,15 +69,6 @@ namespace Masterplan.UI
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.OKBtn.Enabled = this.SelectedAdventure != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void download_completed(object sender, AsyncCompletedEventArgs e)

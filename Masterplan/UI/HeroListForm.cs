@@ -15,8 +15,6 @@ namespace Masterplan.UI
 {
 	internal class HeroListForm : Form
 	{
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private ListView HeroList;
@@ -229,15 +227,6 @@ namespace Masterplan.UI
 			this.ActiveBtn.Checked = (this.SelectedHero == null ? false : Session.Project.Heroes.Contains(this.SelectedHero));
 			this.StatBlockBtn.Enabled = this.SelectedHero != null;
 			this.EntryBtn.Enabled = this.SelectedHero != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void edit_hero()

@@ -26,8 +26,6 @@ namespace Masterplan.Controls
 
 		private bool fSuppressEvents;
 
-		private IContainer components;
-
 		private CheckBox FilterLevelToggle;
 
 		private CheckBox FilterModToggle;
@@ -595,21 +593,11 @@ namespace Masterplan.Controls
 				}
 				return true;
 			}
-			return flag;
 		}
 
 		public void Collapse()
 		{
 			this.open_close_editor(false);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void DropdownOptionChanged(object sender, EventArgs e)

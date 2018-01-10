@@ -60,7 +60,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return goals;
 		}
 
 		public List<Goal> FindList(Goal goal)

@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class TrapAttackForm : Form
 	{
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -114,15 +112,6 @@ namespace Masterplan.UI
 				this.fAttack.Attack = powerAttackForm.Attack;
 				this.AttackBtn.Text = this.fAttack.Attack.ToString();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -52,7 +52,6 @@ namespace Utils
 					disposable.Dispose();
 				}
 			}
-			return xmlNodes;
 		}
 
 		public static List<XmlNode> FindChildrenWithAttribute(XmlNode parent, string attribute_name, string attribute_value)
@@ -95,7 +94,6 @@ namespace Utils
 					disposable.Dispose();
 				}
 			}
-			return xmlNodes;
 		}
 
 		public static string GetAttribute(XmlNode node, string name)
@@ -124,7 +122,6 @@ namespace Utils
 					disposable.Dispose();
 				}
 			}
-			return value;
 		}
 
 		public static bool GetBoolAttribute(XmlNode node, string name)

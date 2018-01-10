@@ -13,8 +13,6 @@ namespace Masterplan.UI
 {
 	internal class OverviewForm : Form
 	{
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private ListView ItemList;
@@ -119,16 +117,7 @@ namespace Masterplan.UI
 			this.update_list();
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
-		private void EncounterBtn_Click(object sender, EventArgs e)
+        private void EncounterBtn_Click(object sender, EventArgs e)
 		{
 			this.fType = OverviewType.Encounters;
 			this.update_list();
@@ -441,7 +430,6 @@ namespace Masterplan.UI
 					{
 						((IDisposable)enumerator).Dispose();
 					}
-					break;
 				}
 				case OverviewType.Traps:
 				{
@@ -488,7 +476,6 @@ namespace Masterplan.UI
 					{
 						((IDisposable)enumerator3).Dispose();
 					}
-					break;
 				}
 				case OverviewType.SkillChallenges:
 				{
@@ -535,7 +522,6 @@ namespace Masterplan.UI
 					{
 						((IDisposable)enumerator5).Dispose();
 					}
-					break;
 				}
 				case OverviewType.Treasure:
 				{
@@ -568,7 +554,6 @@ namespace Masterplan.UI
 					{
 						((IDisposable)enumerator7).Dispose();
 					}
-					break;
 				}
 			}
 			if (this.ItemList.Items.Count == 0)

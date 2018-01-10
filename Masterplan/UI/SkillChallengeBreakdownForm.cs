@@ -9,23 +9,12 @@ namespace Masterplan.UI
 {
 	internal class SkillChallengeBreakdownForm : Form
 	{
-		private IContainer components;
-
 		private KeyAbilitiesPanel AbilitiesPanel;
 
 		public SkillChallengeBreakdownForm(SkillChallenge sc)
 		{
 			this.InitializeComponent();
 			this.AbilitiesPanel.Analyse(sc);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

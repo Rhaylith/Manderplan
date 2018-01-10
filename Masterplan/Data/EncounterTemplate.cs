@@ -78,7 +78,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return encounterTemplateSlot;
 		}
 	}
 }

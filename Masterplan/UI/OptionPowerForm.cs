@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class OptionPowerForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -140,15 +138,6 @@ namespace Masterplan.UI
 				PlayerPowerSection item = this.fPower.Sections[num - 1];
 				this.SectionRightBtn.Enabled = (this.SelectedSection == null ? false : this.SelectedSection.Indent <= item.Indent);
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

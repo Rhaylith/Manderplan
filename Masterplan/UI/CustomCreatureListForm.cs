@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class CustomCreatureListForm : Form
 	{
-		private IContainer components;
-
 		private ToolStrip Toolbar;
 
 		private ListView CreatureList;
@@ -166,21 +164,11 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		private void CustomCreatureListForm_Shown(object sender, EventArgs e)
 		{
 			this.CreatureList.Invalidate();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

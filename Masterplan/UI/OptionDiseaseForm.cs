@@ -12,8 +12,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Disease fDisease;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -109,15 +107,6 @@ namespace Masterplan.UI
 			this.EditBtn.Enabled = this.SelectedLevel != null;
 			this.UpBtn.Enabled = (this.SelectedLevel == null ? false : this.fDisease.Levels[0] != this.SelectedLevel);
 			this.DownBtn.Enabled = (this.SelectedLevel == null ? false : this.fDisease.Levels[this.fDisease.Levels.Count - 1] != this.SelectedLevel);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void DownBtn_Click(object sender, EventArgs e)

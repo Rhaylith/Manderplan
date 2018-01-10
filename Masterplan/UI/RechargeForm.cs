@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class RechargeForm : Form
 	{
-		private IContainer components;
-
 		private Button CancelBtn;
 
 		private Button OKBtn;
@@ -92,15 +90,6 @@ namespace Masterplan.UI
 			this.NotSavedBtn.Enabled = item != -2147483648;
 		}
 
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
-
 		private int get_minimum(string recharge_str)
 		{
 			int num = 2147483647;
@@ -149,7 +138,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creaturePower;
 		}
 
 		private void InitializeComponent()

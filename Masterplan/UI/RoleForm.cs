@@ -10,8 +10,6 @@ namespace Masterplan.UI
 {
 	internal class RoleForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -115,15 +113,6 @@ namespace Masterplan.UI
 			this.HasRoleBox.Enabled = this.MinionBtn.Checked;
 			this.MinionRoleLbl.Enabled = (!this.MinionBtn.Checked ? false : this.HasRoleBox.Checked);
 			this.MinionRoleBox.Enabled = (!this.MinionBtn.Checked ? false : this.HasRoleBox.Checked);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

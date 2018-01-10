@@ -17,8 +17,6 @@ namespace Masterplan.UI
 
 		private int fCreatures;
 
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		public PowerStatisticsForm(List<CreaturePower> powers, int creatures)
@@ -45,15 +43,6 @@ namespace Masterplan.UI
 				num++;
 			}
 			return num;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private Dictionary<string, double> get_category_breakdown()

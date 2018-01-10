@@ -16,8 +16,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.SkillChallenge fChallenge;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -214,15 +212,6 @@ namespace Masterplan.UI
 		private void CompBox_ValueChanged(object sender, EventArgs e)
 		{
 			this.update_view();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void EditBtn_Click(object sender, EventArgs e)

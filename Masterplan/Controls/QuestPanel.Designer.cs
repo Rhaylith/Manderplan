@@ -15,8 +15,6 @@ namespace Masterplan.Controls
 
 		private bool fUpdating;
 
-		private IContainer components;
-
 		private Label TypeLbl;
 
 		private ComboBox TypeBox;
@@ -55,15 +53,6 @@ namespace Masterplan.Controls
 			{
 				this.TypeBox.Items.Add(value);
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

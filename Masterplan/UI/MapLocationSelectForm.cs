@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class MapLocationSelectForm : Form
 	{
-		private IContainer components;
-
 		private Label MapLbl;
 
 		private ComboBox MapBox;
@@ -84,15 +82,6 @@ namespace Masterplan.UI
 		private void AreaBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			this.show_map();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

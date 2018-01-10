@@ -128,7 +128,6 @@ namespace Masterplan.Data
 				{
 					((IDisposable)enumerator).Dispose();
 				}
-				return flag;
 			}
 		}
 
@@ -235,7 +234,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return artifact;
 		}
 
 		public Artifact FindArtifact(string item_name)
@@ -260,7 +258,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return artifact;
 		}
 
 		public Creature FindCreature(Guid creature_id)
@@ -285,7 +282,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creature;
 		}
 
 		public Creature FindCreature(string creature_name)
@@ -310,7 +306,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creature;
 		}
 
 		public Creature FindCreature(string creature_name, int level)
@@ -335,7 +330,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creature;
 		}
 
 		public MagicItem FindMagicItem(Guid item_id)
@@ -360,7 +354,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return magicItem;
 		}
 
 		public MagicItem FindMagicItem(string item_name)
@@ -385,7 +378,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return magicItem;
 		}
 
 		public MagicItem FindMagicItem(string item_name, int level)
@@ -410,7 +402,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return magicItem;
 		}
 
 		public SkillChallenge FindSkillChallenge(Guid sc_id)
@@ -435,7 +426,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return skillChallenge;
 		}
 
 		public CreatureTemplate FindTemplate(Guid template_id)
@@ -460,7 +450,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return creatureTemplate;
 		}
 
 		public TerrainPower FindTerrainPower(Guid item_id)
@@ -485,7 +474,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return terrainPower;
 		}
 
 		public TerrainPower FindTerrainPower(string item_name)
@@ -510,7 +498,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return terrainPower;
 		}
 
 		public MonsterTheme FindTheme(Guid theme_id)
@@ -535,7 +522,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return monsterTheme;
 		}
 
 		public Tile FindTile(Guid tile_id)
@@ -560,7 +546,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return tile;
 		}
 
 		public Trap FindTrap(Guid trap_id)
@@ -585,7 +570,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return trap;
 		}
 
 		public Trap FindTrap(string trap_name)
@@ -610,7 +594,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return trap;
 		}
 
 		public Trap FindTrap(string trap_name, int level, string role_string)
@@ -635,7 +618,6 @@ namespace Masterplan.Data
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return trap;
 		}
 
 		public void Import(Library lib)

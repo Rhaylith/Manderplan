@@ -8,8 +8,6 @@ namespace Masterplan.UI
 {
 	internal class RegenerationForm : Form
 	{
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -40,15 +38,6 @@ namespace Masterplan.UI
 			this.fRegeneration = regen.Copy();
 			this.ValueBox.Value = this.fRegeneration.Value;
 			this.DetailsBox.Text = this.fRegeneration.Details;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

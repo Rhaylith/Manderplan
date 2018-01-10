@@ -12,8 +12,6 @@ namespace Masterplan.UI
 {
 	internal class ArtifactDetailsForm : Form
 	{
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		private ToolStrip Toolbar;
@@ -31,15 +29,6 @@ namespace Masterplan.UI
 			this.InitializeComponent();
 			this.fArtifact = artifact.Copy();
 			this.Browser.DocumentText = HTML.Artifact(this.fArtifact, DisplaySize.Small, false, true);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExportHTML_Click(object sender, EventArgs e)

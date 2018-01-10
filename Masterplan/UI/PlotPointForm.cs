@@ -25,8 +25,6 @@ namespace Masterplan.UI
 
 		private bool fStartAtElement;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -441,15 +439,6 @@ namespace Masterplan.UI
 		private void DieRollerBtn_Click(object sender, EventArgs e)
 		{
 			(new DieRollerForm()).ShowDialog();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void element_select(object sender, WebBrowserNavigatingEventArgs e)

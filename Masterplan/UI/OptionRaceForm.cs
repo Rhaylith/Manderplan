@@ -11,8 +11,6 @@ namespace Masterplan.UI
 {
 	internal class OptionRaceForm : Form
 	{
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -157,15 +155,6 @@ namespace Masterplan.UI
 			this.FeatureEditBtn.Enabled = this.SelectedFeature != null;
 			this.PowerRemoveBtn.Enabled = this.SelectedPower != null;
 			this.PowerEditBtn.Enabled = this.SelectedPower != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FeatureAddBtn_Click(object sender, EventArgs e)

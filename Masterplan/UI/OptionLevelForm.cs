@@ -12,8 +12,6 @@ namespace Masterplan.UI
 	{
 		private LevelData fLevel;
 
-		private IContainer components;
-
 		private TabControl Pages;
 
 		private Button OKBtn;
@@ -100,15 +98,6 @@ namespace Masterplan.UI
 			this.FeatureEditBtn.Enabled = this.SelectedFeature != null;
 			this.PowerRemoveBtn.Enabled = this.SelectedPower != null;
 			this.PowerEditBtn.Enabled = this.SelectedPower != null;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FeatureAddBtn_Click(object sender, EventArgs e)

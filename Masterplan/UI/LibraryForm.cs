@@ -13,8 +13,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Library fLibrary;
 
-		private IContainer components;
-
 		private Button OKBtn;
 
 		private Button CancelBtn;
@@ -44,15 +42,6 @@ namespace Masterplan.UI
 			infoLbl.Text = string.Concat(strArrays);
 			this.NameBox.Text = this.fLibrary.Name;
 			this.NameBox_TextChanged(null, null);
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -11,8 +11,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.Feat fFeat;
 
-		private IContainer components;
-
 		private Label NameLbl;
 
 		private TextBox NameBox;
@@ -55,15 +53,6 @@ namespace Masterplan.UI
 			this.PrereqBox.Text = this.fFeat.Prerequisites;
 			this.TierBox.SelectedItem = this.fFeat.Tier;
 			this.BenefitBox.Text = this.fFeat.Benefits;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

@@ -16,8 +16,6 @@ namespace Masterplan.UI
 {
 	internal class HandoutForm : Form
 	{
-		private IContainer components;
-
 		private Button CloseBtn;
 
 		private SplitContainer Splitter;
@@ -224,15 +222,6 @@ namespace Masterplan.UI
 			}
 			this.DMInfoBtn.Enabled = flag;
 			this.DMInfoBtn.Checked = this.fShowDMInfo;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void DMInfoBtn_Click(object sender, EventArgs e)

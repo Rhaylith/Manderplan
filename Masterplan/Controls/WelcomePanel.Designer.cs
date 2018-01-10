@@ -24,8 +24,6 @@ namespace Masterplan.Controls
 
 		private const int MAX_LENGTH = 45;
 
-		private IContainer components;
-
 		private Masterplan.Controls.TitlePanel TitlePanel;
 
 		private WebBrowser MenuBrowser;
@@ -57,15 +55,6 @@ namespace Masterplan.Controls
 			{
 				this.DownloadHeadlines("http://www.habitualindolence.net/masterplanblog/feed/");
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void downloaded_headlines(object sender, DownloadStringCompletedEventArgs e)
@@ -520,7 +509,6 @@ namespace Masterplan.Controls
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return flag;
 		}
 
 		private bool show_last_file_option()

@@ -9,8 +9,6 @@ namespace Masterplan.UI
 {
 	internal class OddsForm : Form
 	{
-		private IContainer components;
-
 		private DiceGraphPanel DiceGraph;
 
 		public OddsForm()
@@ -25,15 +23,6 @@ namespace Masterplan.UI
 			this.DiceGraph.Dice = dice;
 			this.DiceGraph.Constant = constant;
 			this.DiceGraph.Title = title;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

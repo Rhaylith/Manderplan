@@ -10,8 +10,6 @@ namespace Utils.Wizards
 {
 	internal class WizardForm : Form
 	{
-		private IContainer components;
-
 		private Button BackBtn;
 
 		private Button NextBtn;
@@ -113,15 +111,6 @@ namespace Utils.Wizards
 				this.fWizard.OnCancel();
 			}
 			base.Close();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FinishBtn_Click(object sender, EventArgs e)

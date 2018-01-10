@@ -310,7 +310,6 @@ namespace Masterplan.UI
 			{
 				((IDisposable)enumerator).Dispose();
 			}
-			return parcels;
 		}
 
 		private void InitializeComponent()

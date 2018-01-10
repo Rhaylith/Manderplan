@@ -11,8 +11,6 @@ namespace Masterplan.Wizards
 	{
 		private MapBuilderData fData;
 
-		private IContainer components;
-
 		private Label InfoLbl;
 
 		private NumericUpDown HeightBox;
@@ -50,15 +48,6 @@ namespace Masterplan.Wizards
 		public MapSizePage()
 		{
 			this.InitializeComponent();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InitializeComponent()

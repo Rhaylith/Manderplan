@@ -16,8 +16,6 @@ namespace Masterplan.Controls
 
 		private int fXP;
 
-		private IContainer components;
-
 		public Masterplan.Data.Party Party
 		{
 			get
@@ -49,15 +47,6 @@ namespace Masterplan.Controls
 			this.InitializeComponent();
 			base.SetStyle(ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
 			base.Height = 20;
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private int get_max_level()

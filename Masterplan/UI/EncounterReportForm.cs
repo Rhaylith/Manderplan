@@ -22,8 +22,6 @@ namespace Masterplan.UI
 
 		private BreakdownType fBreakdownType;
 
-		private IContainer components;
-
 		private WebBrowser Browser;
 
 		private ToolStrip Toolbar;
@@ -101,15 +99,6 @@ namespace Masterplan.UI
 		{
 			this.fBreakdownType = BreakdownType.Individual;
 			this.update_report();
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void ExportBtn_Click(object sender, EventArgs e)

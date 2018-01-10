@@ -15,8 +15,6 @@ namespace Masterplan.UI
 	{
 		private Masterplan.Data.MagicItem fMagicItem;
 
-		private IContainer components;
-
 		private Panel BtnPnl;
 
 		private Button CancelBtn;
@@ -130,15 +128,6 @@ namespace Masterplan.UI
 				this.fMagicItem.Sections[item1] = magicItemSection1;
 				this.update_statblock();
 			}
-		}
-
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && this.components != null)
-			{
-				this.components.Dispose();
-			}
-			base.Dispose(disposing);
 		}
 
 		private void FileExport_Click(object sender, EventArgs e)
