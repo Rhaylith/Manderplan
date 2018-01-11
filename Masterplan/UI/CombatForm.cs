@@ -701,6 +701,7 @@ namespace Masterplan.UI
             CommandManager.GetInstance().RegisterListener(typeof(RemoveFromMapCommand), this.OnRemoveFromMapCommand);
             CommandManager.GetInstance().RegisterListener(typeof(RemoveFromCombatCommand), this.OnRemoveFromMapCommand);
             CommandManager.GetInstance().RegisterListener(typeof(VisibilityToggleCommand), this.HealCommandCallback);
+            CommandManager.GetInstance().RegisterListener(typeof(DelayAction), this.UpdateUIForNewTurn);
 
             // Compound Transactions
             CommandManager.GetInstance().RegisterListener(typeof(BeginningOfTurnUpdates), this.UpdateUIForNewTurn);
@@ -6246,11 +6247,11 @@ namespace Masterplan.UI
 					{
 						continue;
 					}
-					
-                    this.combatState.InitiativeList.ToggleDelay(data);
-                    this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
+
+                    CommandManager.GetInstance().ExecuteCommand(new DelayAction(data, this.combatState));
+                    //this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
 				}
-				this.update_list();
+				//this.update_list();
 			}
 			catch (Exception exception)
 			{

@@ -46,6 +46,32 @@ namespace Masterplan.Data.Combat
             return this.CurrentPlayerNode.Next == null ? this.playerList.First.Value : this.CurrentPlayerNode.Next.Value;
         }
 
+        public CombatData Remove(CombatData data)
+        {
+            var node = this.playerList.Find(data);
+            CombatData returnVal = null;
+            if (node != null)
+            {
+                returnVal = node.Next?.Value;
+                this.playerList.Remove(node);
+            }
+
+            return returnVal;
+        }
+
+        public void AddBefore(CombatData placement, CombatData newData)
+        {
+            LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
+            if (node != null)
+            {
+                this.playerList.AddBefore(node, newData);
+            }
+            else
+            {
+                this.playerList.AddLast(newData);
+            }
+        }
+
         public void ToggleDelay(CombatData entity)
         {
             entity.Delaying = !entity.Delaying;

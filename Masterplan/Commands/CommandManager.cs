@@ -51,6 +51,11 @@ namespace Masterplan.Commands
 
         public void UndoLastCommand()
         {
+            if (_UndoQueue.Count == 0 && this.previousTurns.Count > 0)
+            {
+                this.StartTurn(this.previousTurns.Pop());
+            }
+
             if (_UndoQueue.Count > 0)
             {
                 ICommand command = _UndoQueue.Pop();
@@ -63,6 +68,12 @@ namespace Masterplan.Commands
 
         public void RedoNextCommand()
         {
+            if (this._RedoQueue.Count == 0 && this.futureTurns.Count > 0)
+            {
+                this.previousTurns.Push(this.EndCurrentTurn());
+                this.StartTurn(this.futureTurns.Pop());
+            }
+
             if (_RedoQueue.Count > 0)
             {
                 ICommand command = _RedoQueue.Pop();
@@ -174,7 +185,12 @@ namespace Masterplan.Commands
         {
             this.currentTurn = turn;
             this._UndoQueue = turn.UndoQueue;
-            this._RedoQueue = turn.RedoQueue;
+
+            // Only reset Redoqueue if we're restoring a turn that already has one, otherwise we're just undoing over turn boundaries
+            if (turn.RedoQueue.Count > 0)
+            {
+                this._RedoQueue = turn.RedoQueue;
+            }
         }
     }
 }

@@ -41,6 +41,7 @@
     <Compile Include="Masterplan\Commands\Combat\AddRemoveLinkCommand.cs" />
     <Compile Include="Masterplan\Commands\Combat\BeginningOfTurnUpdates.cs" />
     <Compile Include="Masterplan\Commands\Combat\DamageEntityCommand.cs" />
+    <Compile Include="Masterplan\Commands\Combat\DelayAction.cs" />
     <Compile Include="Masterplan\Commands\Combat\EndTurnCommand.cs" />
     <Compile Include="Masterplan\Commands\Combat\HealEntitiesCommand.cs" />
     <Compile Include="Masterplan\Commands\Combat\InitiativeAdvanceCommand.cs" />
