@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -16,6 +17,15 @@ namespace Masterplan.Commands
         private CommandManager() { }
 
         private CompoundCommand currentCompoundCommand = null;
+
+        private Stack<TurnTransaction> previousTurns = new Stack<TurnTransaction>();
+        private Stack<TurnTransaction> futureTurns = new Stack<TurnTransaction>();
+        private TurnTransaction currentTurn = new TurnTransaction();
+
+        public bool HasFutureTurns
+        {
+            get { return this.futureTurns.Count > 0; }
+        }
 
         public static CommandManager GetInstance()
         {
@@ -89,6 +99,51 @@ namespace Masterplan.Commands
             }
         }
 
+        public void NewTurn()
+        {
+            TurnTransaction turn = this.EndCurrentTurn();
+            this.previousTurns.Push(turn);
+            this.StartTurn(new TurnTransaction());
+        }
+
+        public void BackupOneTurn()
+        {
+            if (this.previousTurns.Count > 0)
+            {
+                while (this._UndoQueue.Count > 0)
+                {
+                    ICommand command = _UndoQueue.Pop();
+                    command.Undo();
+                    this._RedoQueue.Push(command);
+                }
+
+                TurnTransaction turn = this.EndCurrentTurn();
+                this.futureTurns.Push(turn);
+                this.StartTurn(this.previousTurns.Pop());
+            }
+        }
+
+        public void ForwardOneTurn()
+        {
+            Debug.Assert(this.HasFutureTurns);
+            while(this._RedoQueue.Count > 0)
+            {
+                ICommand command = _RedoQueue.Pop();
+                command.Do();
+                this._UndoQueue.Push(command);
+            }
+
+            this.EndCurrentTurn();
+            TurnTransaction turn = this.futureTurns.Pop();
+            this.StartTurn(turn);
+            while(this._RedoQueue.Count > 0)
+            {
+                ICommand command = this._RedoQueue.Pop();
+                command.Do();
+                this._UndoQueue.Push(command);
+            }
+        }
+
         private void RunCommand(ICommand command)
         {
             command.Do();
@@ -104,6 +159,22 @@ namespace Masterplan.Commands
             {
                 ListenerMap[commandType].Invoke();
             }
+        }
+
+        private TurnTransaction EndCurrentTurn()
+        {
+            this.currentTurn.UndoQueue = this._UndoQueue;
+            this.currentTurn.RedoQueue = this._RedoQueue;
+            TurnTransaction turn = this.currentTurn;
+            this.currentTurn = null;
+            return turn;
+        }
+
+        private void StartTurn(TurnTransaction turn)
+        {
+            this.currentTurn = turn;
+            this._UndoQueue = turn.UndoQueue;
+            this._RedoQueue = turn.RedoQueue;
         }
     }
 }

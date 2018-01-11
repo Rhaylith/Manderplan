@@ -5024,8 +5024,9 @@ namespace Masterplan.UI
 
         private void PrevInitBtn_Click(object sender, EventArgs e)
         {
-            InitiativePreviousCommand command = new InitiativePreviousCommand(this.combatState.InitiativeList);
-            CommandManager.GetInstance().ExecuteCommand(command);
+            //InitiativePreviousCommand command = new InitiativePreviousCommand(this.combatState.InitiativeList);
+            CommandManager.GetInstance().BackupOneTurn();
+            this.UpdateUIForNewTurn();
         }
 
         private void InitiativeAdvancedHandler()
@@ -5042,14 +5043,24 @@ namespace Masterplan.UI
 				}
 				else if (this.get_initiatives().Count != 0)
 				{
-                    CommandManager.GetInstance().BeginCompoundCommand<BeginningOfTurnUpdates>();
-                    this.handle_ended_effects(this.fCurrentActor, false);
-					this.handle_saves();
+                    CommandManager cmdManager = CommandManager.GetInstance();
 
-                    CommandManager.GetInstance().ExecuteCommand(new InitiativeAdvanceCommand(this.combatState.InitiativeList));
-                    this.RunBeginningOFTurnUpdates(this.combatState.InitiativeList.PeekNextActor());
-                    CommandManager.GetInstance().EndAndExecuteCompoundCommand();
+                    if (cmdManager.HasFutureTurns)
+                    {
+                        cmdManager.ForwardOneTurn();
+                        this.UpdateUIForNewTurn();
+                    }
+                    else
+                    {
+                        cmdManager.NewTurn();
+                        cmdManager.BeginCompoundCommand<BeginningOfTurnUpdates>();
+                        this.handle_ended_effects(this.fCurrentActor, false);
+                        this.handle_saves();
 
+                        cmdManager.ExecuteCommand(new InitiativeAdvanceCommand(this.combatState.InitiativeList));
+                        this.RunBeginningOFTurnUpdates(this.combatState.InitiativeList.PeekNextActor());
+                        cmdManager.EndAndExecuteCompoundCommand();
+                    }
                 }
             }
 			catch (Exception exception)
