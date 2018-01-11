@@ -14,11 +14,12 @@ namespace Masterplan.Commands.Combat
         }
 
         private List<DamageEntry> _damageTargets = new List<DamageEntry>();
+        private Encounter _encounter;
 
         //private Encounter _encounter;
-        public DamageEntityCommand()
+        public DamageEntityCommand(Encounter enc)
         {
-            //_encounter = enc;
+            _encounter = enc;
         }
 
         public void AddTarget(CombatData entity, int dmgAmount)
@@ -51,6 +52,21 @@ namespace Masterplan.Commands.Combat
                 //CreatureState creatureState = _encounter.GetState(data);
                 //this.fLog.AddStateEntry(pair2.First.ID, creatureState);
             }
+
+            if (Session.Preferences.CreatureAutoRemove)
+            {
+                foreach (EncounterSlot allSlot in _encounter.AllSlots)
+                {
+                    foreach (CombatData combatDatum in allSlot.CombatData)
+                    {
+                        if (allSlot.GetState(combatDatum) == CreatureState.Defeated)
+                        {
+                            CommandManager.GetInstance().ExecuteCommand(new RemoveFromMapCommand(combatDatum));
+                        }
+                    }
+                }
+            }
+
         }
 
         public void Undo()

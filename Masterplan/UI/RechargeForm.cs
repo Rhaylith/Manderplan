@@ -1,5 +1,7 @@
 using Masterplan;
 using Masterplan.Data;
+using Masterplan.Commands;
+using Masterplan.Commands.Combat;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -301,7 +303,7 @@ namespace Masterplan.UI
 			}
 			foreach (Guid guid in guids)
 			{
-				this.fData.UsedPowers.Remove(guid);
+                CommandManager.GetInstance().ExecuteCommand(new UseRechargePowerCommand(this.fData, guid, UseRechargePowerCommand.RechargePowerAction.RechargePower));
 			}
 		}
 

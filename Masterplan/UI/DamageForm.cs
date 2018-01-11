@@ -79,7 +79,7 @@ namespace Masterplan.UI
 
 		private TextBox TypeBox;
 
-        public Masterplan.Commands.Combat.DamageEntityCommand DamageCommand = new Commands.Combat.DamageEntityCommand();
+        public Masterplan.Commands.Combat.DamageEntityCommand DamageCommand;
 
 		public List<DamageType> Types
 		{
@@ -89,9 +89,10 @@ namespace Masterplan.UI
 			}
 		}
 
-		public DamageForm(List<Pair<CombatData, EncounterCard>> tokens, int value)
+		public DamageForm(List<Pair<CombatData, EncounterCard>> tokens, int value, Encounter enc)
 		{
 			this.InitializeComponent();
+            this.DamageCommand = new Commands.Combat.DamageEntityCommand(enc);
 			Application.Idle += new EventHandler(this.Application_Idle);
 			this.fData = new List<DamageForm.Token>();
 			foreach (Pair<CombatData, EncounterCard> token in tokens)

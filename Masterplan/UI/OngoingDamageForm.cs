@@ -1,4 +1,5 @@
 using Masterplan.Data;
+using Masterplan.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -161,16 +162,9 @@ namespace Masterplan.UI
 
 		private void OKBtn_Click(object sender, EventArgs e)
 		{
-			int num = this.fTotalDamage;
-			if (this.fData.TempHP > 0)
-			{
-				int num1 = Math.Min(num, this.fData.TempHP);
-				CombatData tempHP = this.fData;
-				tempHP.TempHP = tempHP.TempHP - num1;
-				num -= num1;
-			}
-			CombatData damage = this.fData;
-			damage.Damage = damage.Damage + num;
+            Commands.Combat.DamageEntityCommand command = new Commands.Combat.DamageEntityCommand(this.fEncounter);
+            command.AddTarget(this.fData, this.fTotalDamage);
+            CommandManager.GetInstance().ExecuteCommand(command);
 		}
 
 		private void update_list()

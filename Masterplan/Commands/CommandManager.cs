@@ -15,6 +15,8 @@ namespace Masterplan.Commands
         private static CommandManager _instance = null;
         private CommandManager() { }
 
+        private CompoundCommand currentCompoundCommand = null;
+
         public static CommandManager GetInstance()
         {
             if (_instance == null)
@@ -26,7 +28,14 @@ namespace Masterplan.Commands
 
         public void ExecuteCommand(ICommand command)
         {
-            RunCommand(command);
+            if (this.currentCompoundCommand != null)
+            {
+                this.currentCompoundCommand.AddCommand(command);
+            }
+            else
+            {
+                RunCommand(command);
+            }
             _RedoQueue.Clear();
         }
 
@@ -63,11 +72,28 @@ namespace Masterplan.Commands
             }
         }
 
+        public void BeginCompoundCommand<T>() where T : CompoundCommand, new()
+        {
+            this.currentCompoundCommand = new T();
+        }
+
+        public void EndAndExecuteCompoundCommand()
+        {
+            if (this.currentCompoundCommand != null)
+            {
+                if (this.currentCompoundCommand.SubCommandCount > 0)
+                {
+                    this.RunCommand(this.currentCompoundCommand);
+                }
+                this.currentCompoundCommand = null;
+            }
+        }
+
         private void RunCommand(ICommand command)
         {
             command.Do();
-            CallListenersForCommand(command);
             _UndoQueue.Push(command);
+            CallListenersForCommand(command);
         }
 
         private void CallListenersForCommand(ICommand command)

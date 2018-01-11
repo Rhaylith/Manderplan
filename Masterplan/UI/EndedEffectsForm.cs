@@ -1,4 +1,6 @@
 using Masterplan.Data;
+using Masterplan.Commands;
+using Masterplan.Commands.Combat;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -225,7 +227,7 @@ namespace Masterplan.UI
 		{
 			foreach (Pair<CombatData, OngoingCondition> fEndedCondition in this.fEndedConditions)
 			{
-				fEndedCondition.First.Conditions.Remove(fEndedCondition.Second);
+                CommandManager.GetInstance().ExecuteCommand(new RemoveEffectCommand(fEndedCondition.First, fEndedCondition.Second));
 			}
 		}
 

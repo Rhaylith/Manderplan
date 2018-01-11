@@ -168,7 +168,12 @@ namespace Masterplan.UI
 			int value = (int)this.SurgeBox.Value;
 			int num = (int)this.HPBox.Value;
 
-            HealCommand = new HealEntitiesCommand(this.fTokens, num, this.TempHPBox.Checked);
+            List<CombatData> combatDatas = new List<CombatData>();
+            foreach(var p in this.fTokens)
+            {
+                combatDatas.Add(p.First);
+            }
+            HealCommand = new HealEntitiesCommand(combatDatas, num, this.TempHPBox.Checked);
 
 			//foreach (Pair<CombatData, EncounterCard> fToken in this.fTokens)
 			//{

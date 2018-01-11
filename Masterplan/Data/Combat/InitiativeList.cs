@@ -41,6 +41,11 @@ namespace Masterplan.Data.Combat
             this.CurrentPlayerNode = this.CurrentPlayerNode.Next == null ? this.playerList.First : this.CurrentPlayerNode.Next;
         }
 
+        public CombatData PeekNextActor()
+        {
+            return this.CurrentPlayerNode.Next == null ? this.playerList.First.Value : this.CurrentPlayerNode.Next.Value;
+        }
+
         public void ToggleDelay(CombatData entity)
         {
             entity.Delaying = !entity.Delaying;

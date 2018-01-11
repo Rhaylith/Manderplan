@@ -1,5 +1,7 @@
 using Masterplan;
 using Masterplan.Data;
+using Masterplan.Commands;
+using Masterplan.Commands.Combat;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -332,7 +334,7 @@ namespace Masterplan.UI
 			}
 			foreach (OngoingCondition ongoingCondition in ongoingConditions)
 			{
-				this.fData.Conditions.Remove(ongoingCondition);
+                CommandManager.GetInstance().ExecuteCommand(new RemoveEffectCommand(this.fData, ongoingCondition));
 			}
 		}
 
@@ -349,7 +351,7 @@ namespace Masterplan.UI
 		{
 			if (this.SelectedEffect != null)
 			{
-				this.fRolls[this.SelectedEffect] = 2147483647;
+				this.fRolls[this.SelectedEffect] = 100;
 				this.update_list();
 			}
 		}

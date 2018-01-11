@@ -701,6 +701,10 @@ namespace Masterplan.UI
             CommandManager.GetInstance().RegisterListener(typeof(RemoveFromMapCommand), this.OnRemoveFromMapCommand);
             CommandManager.GetInstance().RegisterListener(typeof(RemoveFromCombatCommand), this.OnRemoveFromMapCommand);
             CommandManager.GetInstance().RegisterListener(typeof(VisibilityToggleCommand), this.HealCommandCallback);
+
+            // Compound Transactions
+            CommandManager.GetInstance().RegisterListener(typeof(BeginningOfTurnUpdates), this.UpdateUIForNewTurn);
+            CommandManager.GetInstance().RegisterListener(typeof(EndTurnCommand), this.InitiativeAdvancedHandler);
         }
 
         private void add_condition_hint(ListViewItem lvi)
@@ -1513,7 +1517,7 @@ namespace Masterplan.UI
 			{
 				_state[pair1.First] = this.get_state(pair1.First);
 			}
-			DamageForm damageForm = new DamageForm(pairs, 0);
+			DamageForm damageForm = new DamageForm(pairs, 0, this.fEncounter);
 			if (damageForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
                 CommandManager.GetInstance().ExecuteCommand(damageForm.DamageCommand);
@@ -1522,20 +1526,6 @@ namespace Masterplan.UI
 
         private void DamageCommandCallback()
         {
-            if (Session.Preferences.CreatureAutoRemove)
-            {
-                foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
-                {
-                    foreach (CombatData combatDatum in allSlot.CombatData)
-                    {
-                        if (allSlot.GetState(combatDatum) == CreatureState.Defeated)
-                        {
-                            CommandManager.GetInstance().ExecuteCommand(new RemoveFromMapCommand(combatDatum));
-                        }
-                    }
-                }
-            }
-
             // Callback of Damage Command
             this.update_list();
             this.update_log();
@@ -2107,9 +2097,9 @@ namespace Masterplan.UI
 			return CreatureState.Active;
 		}
 
-		private void handle_ended_effects(bool beginning_of_turn)
+		private void handle_ended_effects(CombatData actor, bool beginning_of_turn)
 		{
-			if (this.fCurrentActor == null)
+			if (actor == null)
 			{
 				return;
 			}
@@ -2121,7 +2111,7 @@ namespace Masterplan.UI
 				{
 					foreach (OngoingCondition condition in combatDatum.Conditions)
 					{
-						if (condition.Duration != durationType || condition.DurationRound > this.fCurrentRound || !(this.fCurrentActor.ID == condition.DurationCreatureID))
+						if (condition.Duration != durationType || condition.DurationRound > this.fCurrentRound || !(actor.ID == condition.DurationCreatureID))
 						{
 							continue;
 						}
@@ -2134,7 +2124,7 @@ namespace Masterplan.UI
 				CombatData combatData = hero.CombatData;
 				foreach (OngoingCondition ongoingCondition in combatData.Conditions)
 				{
-					if (ongoingCondition.Duration != durationType || ongoingCondition.DurationRound > this.fCurrentRound || !(this.fCurrentActor.ID == ongoingCondition.DurationCreatureID))
+					if (ongoingCondition.Duration != durationType || ongoingCondition.DurationRound > this.fCurrentRound || !(actor.ID == ongoingCondition.DurationCreatureID))
 					{
 						continue;
 					}
@@ -2146,7 +2136,7 @@ namespace Masterplan.UI
                 CombatData item = trap.CombatData;
 				foreach (OngoingCondition condition1 in item.Conditions)
 				{
-					if (condition1.Duration != durationType || condition1.DurationRound > this.fCurrentRound || !(this.fCurrentActor.ID == condition1.DurationCreatureID))
+					if (condition1.Duration != durationType || condition1.DurationRound > this.fCurrentRound || !(actor.ID == condition1.DurationCreatureID))
 					{
 						continue;
 					}
@@ -2156,18 +2146,17 @@ namespace Masterplan.UI
 			if (pairs.Count > 0)
 			{
 				(new EndedEffectsForm(pairs, this.fEncounter)).ShowDialog();
-				this.update_list();
 			}
 		}
 
-		private void handle_ongoing_damage()
+		private void handle_ongoing_damage(CombatData actor)
 		{
-			if (this.fCurrentActor == null)
+			if (actor == null)
 			{
 				return;
 			}
 			List<OngoingCondition> ongoingConditions = new List<OngoingCondition>();
-			foreach (OngoingCondition condition in this.fCurrentActor.Conditions)
+			foreach (OngoingCondition condition in actor.Conditions)
 			{
 				if (condition.Type != OngoingType.Damage || condition.Value <= 0)
 				{
@@ -2180,7 +2169,7 @@ namespace Masterplan.UI
 				return;
 			}
 			EncounterCard card = null;
-			EncounterSlot encounterSlot = this.fEncounter.FindSlot(this.fCurrentActor);
+			EncounterSlot encounterSlot = this.fEncounter.FindSlot(actor);
 			if (encounterSlot != null)
 			{
 				card = encounterSlot.Card;
@@ -2189,43 +2178,41 @@ namespace Masterplan.UI
 			CreatureState state = CreatureState.Active;
 			if (encounterSlot != null)
 			{
-				state = encounterSlot.GetState(this.fCurrentActor);
+				state = encounterSlot.GetState(actor);
 			}
 			if (encounterSlot == null)
 			{
-				Hero hero = Session.Project.FindHero(this.fCurrentActor.ID);
+				Hero hero = Session.Project.FindHero(actor.ID);
 				state = hero.GetState(damage);
 			}
-			if ((new OngoingDamageForm(this.fCurrentActor, card, this.fEncounter)).ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			if ((new OngoingDamageForm(actor, card, this.fEncounter)).ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
-				if (this.fCurrentActor.Damage != damage)
+				if (actor.Damage != damage)
 				{
 					this.fLog.AddDamageEntry(this.fCurrentActor.ID, this.fCurrentActor.Damage - damage, null);
 				}
 				if (encounterSlot == null)
 				{
-					Hero hero1 = Session.Project.FindHero(this.fCurrentActor.ID);
-					if (hero1.GetState(this.fCurrentActor.Damage) != state)
+					Hero hero1 = Session.Project.FindHero(actor.ID);
+					if (hero1.GetState(actor.Damage) != state)
 					{
-						this.fLog.AddStateEntry(this.fCurrentActor.ID, hero1.GetState(this.fCurrentActor.Damage));
+						this.fLog.AddStateEntry(actor.ID, hero1.GetState(actor.Damage));
 					}
 				}
-				else if (encounterSlot.GetState(this.fCurrentActor) != state)
+				else if (encounterSlot.GetState(actor) != state)
 				{
-					this.fLog.AddStateEntry(this.fCurrentActor.ID, encounterSlot.GetState(this.fCurrentActor));
+					this.fLog.AddStateEntry(actor.ID, encounterSlot.GetState(actor));
 				}
-				this.update_list();
-				this.update_log();
 			}
 		}
 
-		private void handle_recharge()
+		private void handle_recharge(CombatData actor)
 		{
-			if (this.fCurrentActor == null)
+			if (actor == null)
 			{
 				return;
 			}
-			EncounterSlot encounterSlot = this.fEncounter.FindSlot(this.fCurrentActor);
+			EncounterSlot encounterSlot = this.fEncounter.FindSlot(actor);
 			if (encounterSlot == null)
 			{
 				return;
@@ -2247,23 +2234,21 @@ namespace Masterplan.UI
 			{
 				return;
 			}
-			if ((new RechargeForm(this.fCurrentActor, encounterSlot.Card)).ShowDialog() == System.Windows.Forms.DialogResult.OK)
-			{
-				this.update_list();
-			}
+
+            (new RechargeForm(actor, encounterSlot.Card)).ShowDialog();
 		}
 
-		private void handle_regen()
+		private void handle_regen(CombatData actor)
 		{
-			if (this.fCurrentActor == null)
+			if (actor == null)
 			{
 				return;
 			}
-			if (this.fCurrentActor.Damage <= 0)
+			if (actor.Damage <= 0)
 			{
 				return;
 			}
-			EncounterSlot encounterSlot = this.fEncounter.FindSlot(this.fCurrentActor);
+			EncounterSlot encounterSlot = this.fEncounter.FindSlot(actor);
 			if (encounterSlot == null)
 			{
 				return;
@@ -2277,7 +2262,7 @@ namespace Masterplan.UI
 				regeneration.Value = encounterSlot.Card.Regeneration.Value;
 				regeneration.Details = encounterSlot.Card.Regeneration.Details;
 			}
-			foreach (OngoingCondition condition in this.fCurrentActor.Conditions)
+			foreach (OngoingCondition condition in actor.Conditions)
 			{
 				if (condition.Type != OngoingType.Regeneration)
 				{
@@ -2300,7 +2285,7 @@ namespace Masterplan.UI
 			{
 				return;
 			}
-			string str = string.Concat(this.fCurrentActor.DisplayName, " has regeneration:");
+			string str = string.Concat(actor.DisplayName, " has regeneration:");
 			str = string.Concat(str, Environment.NewLine, Environment.NewLine);
 			object obj = str;
 			object[] value = new object[] { obj, "Value: ", regeneration.Value, Environment.NewLine };
@@ -2313,9 +2298,7 @@ namespace Masterplan.UI
 			str = string.Concat(str, "Do you want to apply it now?");
 			if (MessageBox.Show(str, "Masterplan", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == System.Windows.Forms.DialogResult.Yes)
 			{
-				CombatData damage = this.fCurrentActor;
-				damage.Damage = damage.Damage - regeneration.Value;
-				this.fCurrentActor.Damage = Math.Max(0, this.fCurrentActor.Damage);
+                Commands.CommandManager.GetInstance().ExecuteCommand(new Commands.Combat.HealEntitiesCommand(new List<CombatData>() { actor }, regeneration.Value, false));
 			}
 		}
 
@@ -2348,10 +2331,9 @@ namespace Masterplan.UI
 			{
 				card = encounterSlot.Card;
 			}
-			if ((new SavingThrowForm(this.fCurrentActor, card, this.fEncounter)).ShowDialog() == System.Windows.Forms.DialogResult.OK)
-			{
-				this.update_list();
-			}
+
+            (new SavingThrowForm(this.fCurrentActor, card, this.fEncounter)).ShowDialog();
+			
 		}
 
 		private void HealBtn_Click(object sender, EventArgs e)
@@ -5000,18 +4982,26 @@ namespace Masterplan.UI
 			this.toggle_visibility(this.MapView.SelectedTokens);
 		}
 
-        private void RunBeginningOFTurnUpdates()
+        private void RunBeginningOFTurnUpdates(CombatData nextTurnActor)
         {
-            this.handle_regen();
-            this.handle_ended_effects(true);
-            this.handle_ongoing_damage();
-            this.handle_recharge();
+            this.handle_regen(nextTurnActor);
+            this.handle_ended_effects(nextTurnActor, true);
+            this.handle_ongoing_damage(nextTurnActor);
+            this.handle_recharge(nextTurnActor);
         }
 
         private void UpdateUIForNewTurn()
         {
-            this.InitiativePanel.CurrentInitiative = this.fCurrentActor.Initiative;
+            this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
             this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
+            if (this.fCurrentActor.Initiative > this.InitiativePanel.CurrentInitiative)
+            {
+                this.fCurrentRound++;
+                this.RoundLbl.Text = string.Concat("Round: ", this.fCurrentRound);
+                this.fLog.AddStartRoundEntry(this.fCurrentRound);
+            }
+
+            this.InitiativePanel.CurrentInitiative = this.fCurrentActor.Initiative;
             if (this.fCurrentActor != null && !this.TwoColumnPreview)
             {
                 this.select_current_actor();
@@ -5040,19 +5030,6 @@ namespace Masterplan.UI
 
         private void InitiativeAdvancedHandler()
         {
-            this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
-            this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
-            if (this.fCurrentActor.Initiative > this.InitiativePanel.CurrentInitiative)
-            {
-                this.fCurrentRound++;
-                this.RoundLbl.Text = string.Concat("Round: ", this.fCurrentRound);
-                this.fLog.AddStartRoundEntry(this.fCurrentRound);
-            }
-
-            // TODO: Beginning of Turn updates should be turned into a nested command and not run during previous
-            this.RunBeginningOFTurnUpdates();
-            this.UpdateUIForNewTurn();
-
         }
 
         private void NextInitBtn_Click(object sender, EventArgs e)
@@ -5065,14 +5042,16 @@ namespace Masterplan.UI
 				}
 				else if (this.get_initiatives().Count != 0)
 				{
-                    //TODO this needs to go into the command!
-					this.handle_ended_effects(false);
+                    CommandManager.GetInstance().BeginCompoundCommand<BeginningOfTurnUpdates>();
+                    this.handle_ended_effects(this.fCurrentActor, false);
 					this.handle_saves();
 
-                    InitiativeAdvanceCommand command = new InitiativeAdvanceCommand(this.combatState.InitiativeList);
-                    CommandManager.GetInstance().ExecuteCommand(command);                    
-				}
-			}
+                    CommandManager.GetInstance().ExecuteCommand(new InitiativeAdvanceCommand(this.combatState.InitiativeList));
+                    this.RunBeginningOFTurnUpdates(this.combatState.InitiativeList.PeekNextActor());
+                    CommandManager.GetInstance().EndAndExecuteCompoundCommand();
+
+                }
+            }
 			catch (Exception exception)
 			{
 				LogSystem.Trace(exception);

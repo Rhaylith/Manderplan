@@ -10,7 +10,7 @@ namespace Masterplan.Commands.Combat
 {
     public class HealEntitiesCommand : ICommand
     {
-        private List<Pair<CombatData, EncounterCard>> _tokens;
+        private List<CombatData> _datas;
         private int _amount;
         private bool _isTemp;
 
@@ -19,41 +19,41 @@ namespace Masterplan.Commands.Combat
 
 
       
-        public HealEntitiesCommand(List<Pair<CombatData, EncounterCard>> tokens, int amount, bool isTemp)
+        public HealEntitiesCommand(List<CombatData> tokens, int amount, bool isTemp)
         {
-            _tokens = tokens;
+            _datas = tokens;
             _amount = amount;
             _isTemp = isTemp;
         }
 
         public void Do()
         {
-            foreach (var data_card in _tokens)
+            foreach (var data_card in _datas)
             {
-                previousValue = _isTemp ? data_card.First.TempHP : data_card.First.Damage;
+                previousValue = _isTemp ? data_card.TempHP : data_card.Damage;
                 if (_isTemp)
                 {
-                    data_card.First.TempHP = Math.Max(_amount, data_card.First.TempHP);
+                    data_card.TempHP = Math.Max(_amount, data_card.TempHP);
                 }
                 else
                 {
-                    _amount = Math.Min(data_card.First.Damage, _amount);
-                    data_card.First.Damage -= _amount;
+                    _amount = Math.Min(data_card.Damage, _amount);
+                    data_card.Damage -= _amount;
                 }
             }
         }
 
         public void Undo()
         {
-            foreach (var data_card in _tokens)
+            foreach (var data_card in _datas)
             {
                 if (_isTemp)
                 {
-                    data_card.First.TempHP = previousValue;
+                    data_card.TempHP = previousValue;
                 }
                 else
                 {
-                    data_card.First.Damage = previousValue;
+                    data_card.Damage = previousValue;
                 }
             }
         }
