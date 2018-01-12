@@ -9,7 +9,7 @@ namespace Masterplan.UI
 {
 	internal class DieRollerForm : Form
 	{
-		private Masterplan.Controls.DicePanel DicePanel;
+		public Masterplan.Controls.DicePanel DicePanel;
 
 		public DiceExpression Expression
 		{
@@ -25,25 +25,29 @@ namespace Masterplan.UI
 
 		public DieRollerForm()
 		{
-			this.InitializeComponent();
-			this.DicePanel.UpdateView();
+            this.InitializeComponent();
+
+            // TODO:  Add this back to InitializeComponent()
+            //this.DicePanel = new Masterplan.Controls.DicePanel();
+            //this.DicePanel.Dock = DockStyle.Fill;
+            //this.DicePanel.Expression = null;
+            //this.DicePanel.Location = new Point(0, 0);
+            //this.DicePanel.Name = "DicePanel";
+            //this.DicePanel.Size = new System.Drawing.Size(247, 372);
+            //this.DicePanel.TabIndex = 0;
+            //base.Controls.Add(this.DicePanel);
+
+            //this.DicePanel.UpdateView();
 		}
 
 		private void InitializeComponent()
 		{
-			this.DicePanel = new Masterplan.Controls.DicePanel();
-			base.SuspendLayout();
-			this.DicePanel.Dock = DockStyle.Fill;
-			this.DicePanel.Expression = null;
-			this.DicePanel.Location = new Point(0, 0);
-			this.DicePanel.Name = "DicePanel";
-			this.DicePanel.Size = new System.Drawing.Size(247, 372);
-			this.DicePanel.TabIndex = 0;
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
+
+            base.SuspendLayout();
+            base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			base.ClientSize = new System.Drawing.Size(247, 372);
-			base.Controls.Add(this.DicePanel);
-			base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			base.MaximizeBox = false;
 			base.MinimizeBox = false;
 			base.Name = "DieRollerForm";

@@ -183,15 +183,13 @@ namespace Masterplan.UI
 			NumericUpDown dayBox = this.DayBox;
 			int[] numArray1 = new int[] { 30, 0, 0, 0 };
 			dayBox.Maximum = new decimal(numArray1);
-			NumericUpDown num = this.DayBox;
 			int[] numArray2 = new int[] { 1, 0, 0, 0 };
-			num.Minimum = new decimal(numArray2);
+			this.DayBox.Minimum = new decimal(numArray2);
 			this.DayBox.Name = "DayBox";
 			this.DayBox.Size = new System.Drawing.Size(197, 20);
 			this.DayBox.TabIndex = 7;
-			NumericUpDown numericUpDown = this.DayBox;
 			int[] numArray3 = new int[] { 1, 0, 0, 0 };
-			numericUpDown.Value = new decimal(numArray3);
+			this.DayBox.Value = new decimal(numArray3);
 			base.AcceptButton = this.OKBtn;
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

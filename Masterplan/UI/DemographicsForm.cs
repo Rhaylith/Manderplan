@@ -39,7 +39,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(DemographicsForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(DemographicsForm));
 			this.Toolbar = new ToolStrip();
 			this.LevelBtn = new ToolStripButton();
 			this.RoleBtn = new ToolStripButton();
@@ -47,23 +47,22 @@ namespace Masterplan.UI
 			this.StatusBtn = new ToolStripButton();
 			this.Toolbar.SuspendLayout();
 			base.SuspendLayout();
-			ToolStripItemCollection items = this.Toolbar.Items;
 			ToolStripItem[] levelBtn = new ToolStripItem[] { this.LevelBtn, this.RoleBtn, this.StatusBtn };
-			items.AddRange(levelBtn);
+			this.Toolbar.Items.AddRange(levelBtn);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
 			this.Toolbar.Size = new System.Drawing.Size(752, 25);
 			this.Toolbar.TabIndex = 1;
 			this.Toolbar.Text = "toolStrip1";
 			this.LevelBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.LevelBtn.Image = (Image)componentResourceManager.GetObject("LevelBtn.Image");
+			this.LevelBtn.Image = (Image)resources.GetObject("LevelBtn.Image");
 			this.LevelBtn.ImageTransparentColor = Color.Magenta;
 			this.LevelBtn.Name = "LevelBtn";
 			this.LevelBtn.Size = new System.Drawing.Size(54, 22);
 			this.LevelBtn.Text = "By Level";
 			this.LevelBtn.Click += new EventHandler(this.LevelBtn_Click);
 			this.RoleBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.RoleBtn.Image = (Image)componentResourceManager.GetObject("RoleBtn.Image");
+			this.RoleBtn.Image = (Image)resources.GetObject("RoleBtn.Image");
 			this.RoleBtn.ImageTransparentColor = Color.Magenta;
 			this.RoleBtn.Name = "RoleBtn";
 			this.RoleBtn.Size = new System.Drawing.Size(50, 22);
@@ -77,7 +76,7 @@ namespace Masterplan.UI
 			this.BreakdownPanel.Size = new System.Drawing.Size(752, 265);
 			this.BreakdownPanel.TabIndex = 0;
 			this.StatusBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.StatusBtn.Image = (Image)componentResourceManager.GetObject("StatusBtn.Image");
+			this.StatusBtn.Image = (Image)resources.GetObject("StatusBtn.Image");
 			this.StatusBtn.ImageTransparentColor = Color.Magenta;
 			this.StatusBtn.Name = "StatusBtn";
 			this.StatusBtn.Size = new System.Drawing.Size(59, 22);

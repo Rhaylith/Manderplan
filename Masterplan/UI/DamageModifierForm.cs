@@ -120,9 +120,8 @@ namespace Masterplan.UI
 			this.ValueBox.Name = "ValueBox";
 			this.ValueBox.Size = new System.Drawing.Size(207, 20);
 			this.ValueBox.TabIndex = 4;
-			NumericUpDown num = this.ValueBox;
 			int[] numArray1 = new int[] { 1, 0, 0, 0 };
-			num.Value = new decimal(numArray1);
+			this.ValueBox.Value = new decimal(numArray1);
 			this.DamageTypeBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			this.DamageTypeBox.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.DamageTypeBox.FormattingEnabled = true;

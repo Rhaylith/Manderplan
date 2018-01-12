@@ -254,7 +254,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(DeckBuilderForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(DeckBuilderForm));
 			this.OKBtn = new Button();
 			this.CancelBtn = new Button();
 			this.NameLbl = new Label();
@@ -331,15 +331,13 @@ namespace Masterplan.UI
 			NumericUpDown levelBox = this.LevelBox;
 			int[] numArray = new int[] { 30, 0, 0, 0 };
 			levelBox.Maximum = new decimal(numArray);
-			NumericUpDown num = this.LevelBox;
 			int[] numArray1 = new int[] { 1, 0, 0, 0 };
-			num.Minimum = new decimal(numArray1);
+			this.LevelBox.Minimum = new decimal(numArray1);
 			this.LevelBox.Name = "LevelBox";
 			this.LevelBox.Size = new System.Drawing.Size(420, 20);
 			this.LevelBox.TabIndex = 3;
-			NumericUpDown numericUpDown = this.LevelBox;
 			int[] numArray2 = new int[] { 1, 0, 0, 0 };
-			numericUpDown.Value = new decimal(numArray2);
+			this.LevelBox.Value = new decimal(numArray2);
 			this.LevelBox.ValueChanged += new EventHandler(this.LevelBox_ValueChanged);
 			this.panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			this.panel1.Controls.Add(this.Splitter);
@@ -390,9 +388,8 @@ namespace Masterplan.UI
 			this.PropertiesPanel.Name = "PropertiesPanel";
 			this.PropertiesPanel.Size = new System.Drawing.Size(470, 54);
 			this.PropertiesPanel.TabIndex = 0;
-			ListView.ColumnHeaderCollection columns = this.CardList.Columns;
 			ColumnHeader[] cardHdr = new ColumnHeader[] { this.CardHdr, this.CardInfoHdr };
-			columns.AddRange(cardHdr);
+			this.CardList.Columns.AddRange(cardHdr);
 			this.CardList.Dock = DockStyle.Fill;
 			this.CardList.FullRowSelect = true;
 			this.CardList.HeaderStyle = ColumnHeaderStyle.Nonclickable;
@@ -410,23 +407,22 @@ namespace Masterplan.UI
 			this.CardHdr.Width = 227;
 			this.CardInfoHdr.Text = "Info";
 			this.CardInfoHdr.Width = 196;
-			ToolStripItemCollection items = this.DeckToolbar.Items;
 			ToolStripItem[] duplicateBtn = new ToolStripItem[] { this.DuplicateBtn, this.RemoveBtn, this.toolStripSeparator1, this.RefreshBtn, this.toolStripSeparator2, this.ViewBtn };
-			items.AddRange(duplicateBtn);
+			this.DeckToolbar.Items.AddRange(duplicateBtn);
 			this.DeckToolbar.Location = new Point(0, 0);
 			this.DeckToolbar.Name = "DeckToolbar";
 			this.DeckToolbar.Size = new System.Drawing.Size(470, 25);
 			this.DeckToolbar.TabIndex = 0;
 			this.DeckToolbar.Text = "toolStrip1";
 			this.DuplicateBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.DuplicateBtn.Image = (Image)componentResourceManager.GetObject("DuplicateBtn.Image");
+			this.DuplicateBtn.Image = (Image)resources.GetObject("DuplicateBtn.Image");
 			this.DuplicateBtn.ImageTransparentColor = Color.Magenta;
 			this.DuplicateBtn.Name = "DuplicateBtn";
 			this.DuplicateBtn.Size = new System.Drawing.Size(61, 22);
 			this.DuplicateBtn.Text = "Duplicate";
 			this.DuplicateBtn.Click += new EventHandler(this.DuplicateBtn_Click);
 			this.RemoveBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.RemoveBtn.Image = (Image)componentResourceManager.GetObject("RemoveBtn.Image");
+			this.RemoveBtn.Image = (Image)resources.GetObject("RemoveBtn.Image");
 			this.RemoveBtn.ImageTransparentColor = Color.Magenta;
 			this.RemoveBtn.Name = "RemoveBtn";
 			this.RemoveBtn.Size = new System.Drawing.Size(54, 22);
@@ -435,7 +431,7 @@ namespace Masterplan.UI
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			this.RefreshBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.RefreshBtn.Image = (Image)componentResourceManager.GetObject("RefreshBtn.Image");
+			this.RefreshBtn.Image = (Image)resources.GetObject("RefreshBtn.Image");
 			this.RefreshBtn.ImageTransparentColor = Color.Magenta;
 			this.RefreshBtn.Name = "RefreshBtn";
 			this.RefreshBtn.Size = new System.Drawing.Size(51, 22);
@@ -444,7 +440,7 @@ namespace Masterplan.UI
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			this.ViewBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.ViewBtn.Image = (Image)componentResourceManager.GetObject("ViewBtn.Image");
+			this.ViewBtn.Image = (Image)resources.GetObject("ViewBtn.Image");
 			this.ViewBtn.ImageTransparentColor = Color.Magenta;
 			this.ViewBtn.Name = "ViewBtn";
 			this.ViewBtn.Size = new System.Drawing.Size(69, 22);
