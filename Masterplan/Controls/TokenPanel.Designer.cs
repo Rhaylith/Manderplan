@@ -1,4 +1,4 @@
-using Masterplan;
+﻿using Masterplan;
 using Masterplan.Data;
 using Masterplan.UI;
 using System;
@@ -9,8 +9,26 @@ using System.Windows.Forms;
 
 namespace Masterplan.Controls
 {
-	internal class TokenPanel : UserControl
-	{
+    partial class TokenPanel
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
 		private PictureBox ImageBox;
 
 		private ToolStrip PictureToolbar;
@@ -69,12 +87,6 @@ namespace Masterplan.Controls
 			}
 		}
 
-		public TokenPanel()
-		{
-			this.InitializeComponent();
-			Application.Idle += new EventHandler(this.Application_Idle);
-		}
-
 		private void Application_Idle(object sender, EventArgs e)
 		{
 			this.ImageClear.Enabled = this.fImage != null;
@@ -129,72 +141,6 @@ namespace Masterplan.Controls
 			}
 		}
 
-		private void InitializeComponent()
-		{
-			ComponentResourceManager resources = new ComponentResourceManager(typeof(TokenPanel));
-			this.ImageBox = new PictureBox();
-			this.PictureToolbar = new ToolStrip();
-			this.toolStripButton1 = new ToolStripDropDownButton();
-			this.ImageSelectFile = new ToolStripMenuItem();
-			this.ImageSelectTile = new ToolStripMenuItem();
-			this.ImageSelectColour = new ToolStripMenuItem();
-			this.ImageClear = new ToolStripLabel();
-			((ISupportInitialize)this.ImageBox).BeginInit();
-			this.PictureToolbar.SuspendLayout();
-			base.SuspendLayout();
-			this.ImageBox.BackColor = Color.Transparent;
-			this.ImageBox.Dock = DockStyle.Fill;
-			this.ImageBox.Location = new Point(0, 25);
-			this.ImageBox.Name = "ImageBox";
-			this.ImageBox.Size = new System.Drawing.Size(237, 205);
-			this.ImageBox.SizeMode = PictureBoxSizeMode.Zoom;
-			this.ImageBox.TabIndex = 3;
-			this.ImageBox.TabStop = false;
-			ToolStripItem[] imageClear = new ToolStripItem[] { this.toolStripButton1, this.ImageClear };
-			this.PictureToolbar.Items.AddRange(imageClear);
-			this.PictureToolbar.Location = new Point(0, 0);
-			this.PictureToolbar.Name = "PictureToolbar";
-			this.PictureToolbar.Size = new System.Drawing.Size(237, 25);
-			this.PictureToolbar.TabIndex = 2;
-			this.PictureToolbar.Text = "toolStrip1";
-			this.toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItem[] imageSelectFile = new ToolStripItem[] { this.ImageSelectFile, this.ImageSelectTile, this.ImageSelectColour };
-			this.toolStripButton1.DropDownItems.AddRange(imageSelectFile);
-			this.toolStripButton1.Image = (System.Drawing.Image)resources.GetObject("toolStripButton1.Image");
-			this.toolStripButton1.ImageTransparentColor = Color.Magenta;
-			this.toolStripButton1.Name = "toolStripButton1";
-			this.toolStripButton1.Size = new System.Drawing.Size(51, 22);
-			this.toolStripButton1.Text = "Select";
-			this.ImageSelectFile.Name = "ImageSelectFile";
-			this.ImageSelectFile.Size = new System.Drawing.Size(160, 22);
-			this.ImageSelectFile.Text = "From File...";
-			this.ImageSelectFile.Click += new EventHandler(this.ImageSelectFile_Click);
-			this.ImageSelectTile.Name = "ImageSelectTile";
-			this.ImageSelectTile.Size = new System.Drawing.Size(160, 22);
-			this.ImageSelectTile.Text = "From Map Tile...";
-			this.ImageSelectTile.Click += new EventHandler(this.ImageSelectTile_Click);
-			this.ImageSelectColour.Name = "ImageSelectColour";
-			this.ImageSelectColour.Size = new System.Drawing.Size(160, 22);
-			this.ImageSelectColour.Text = "Plain Colour...";
-			this.ImageSelectColour.Click += new EventHandler(this.ImageSelectColour_Click);
-			this.ImageClear.IsLink = true;
-			this.ImageClear.Name = "ImageClear";
-			this.ImageClear.Size = new System.Drawing.Size(34, 22);
-			this.ImageClear.Text = "Clear";
-			this.ImageClear.Click += new EventHandler(this.ImageClear_Click);
-			base.AutoScaleDimensions = new SizeF(6f, 13f);
-			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			base.Controls.Add(this.ImageBox);
-			base.Controls.Add(this.PictureToolbar);
-			base.Name = "TilePanel";
-			base.Size = new System.Drawing.Size(237, 230);
-			((ISupportInitialize)this.ImageBox).EndInit();
-			this.PictureToolbar.ResumeLayout(false);
-			this.PictureToolbar.PerformLayout();
-			base.ResumeLayout(false);
-			base.PerformLayout();
-		}
-
 		private void update_picture()
 		{
 			if (this.fImage != null)
@@ -206,5 +152,82 @@ namespace Masterplan.Controls
 			this.ImageBox.BackColor = this.fColour;
 			this.ImageBox.Image = null;
 		}
-	}
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            //components = new System.ComponentModel.Container();
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
+            //ComponentResourceManager resources = new ComponentResourceManager(typeof(TokenPanel2));
+            this.ImageBox = new PictureBox();
+            this.PictureToolbar = new ToolStrip();
+            this.toolStripButton1 = new ToolStripDropDownButton();
+            this.ImageSelectFile = new ToolStripMenuItem();
+            this.ImageSelectTile = new ToolStripMenuItem();
+            this.ImageSelectColour = new ToolStripMenuItem();
+            this.ImageClear = new ToolStripLabel();
+            ((ISupportInitialize)this.ImageBox).BeginInit();
+            this.PictureToolbar.SuspendLayout();
+            base.SuspendLayout();
+            this.ImageBox.BackColor = Color.Transparent;
+            this.ImageBox.Dock = DockStyle.Fill;
+            this.ImageBox.Location = new Point(0, 25);
+            this.ImageBox.Name = "ImageBox";
+            this.ImageBox.Size = new System.Drawing.Size(237, 205);
+            this.ImageBox.SizeMode = PictureBoxSizeMode.Zoom;
+            this.ImageBox.TabIndex = 3;
+            this.ImageBox.TabStop = false;
+            ToolStripItem[] imageClear = new ToolStripItem[] { this.toolStripButton1, this.ImageClear };
+            this.PictureToolbar.Items.AddRange(imageClear);
+            this.PictureToolbar.Location = new Point(0, 0);
+            this.PictureToolbar.Name = "PictureToolbar";
+            this.PictureToolbar.Size = new System.Drawing.Size(237, 25);
+            this.PictureToolbar.TabIndex = 2;
+            this.PictureToolbar.Text = "toolStrip1";
+            this.toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            ToolStripItem[] imageSelectFile = new ToolStripItem[] { this.ImageSelectFile, this.ImageSelectTile, this.ImageSelectColour };
+            this.toolStripButton1.DropDownItems.AddRange(imageSelectFile);
+            //this.toolStripButton1.Image = (System.Drawing.Image)resources.GetObject("toolStripButton1.Image");
+            this.toolStripButton1.ImageTransparentColor = Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton1.Text = "Select";
+            this.ImageSelectFile.Name = "ImageSelectFile";
+            this.ImageSelectFile.Size = new System.Drawing.Size(160, 22);
+            this.ImageSelectFile.Text = "From File...";
+            this.ImageSelectFile.Click += new EventHandler(this.ImageSelectFile_Click);
+            this.ImageSelectTile.Name = "ImageSelectTile";
+            this.ImageSelectTile.Size = new System.Drawing.Size(160, 22);
+            this.ImageSelectTile.Text = "From Map Tile...";
+            this.ImageSelectTile.Click += new EventHandler(this.ImageSelectTile_Click);
+            this.ImageSelectColour.Name = "ImageSelectColour";
+            this.ImageSelectColour.Size = new System.Drawing.Size(160, 22);
+            this.ImageSelectColour.Text = "Plain Colour...";
+            this.ImageSelectColour.Click += new EventHandler(this.ImageSelectColour_Click);
+            this.ImageClear.IsLink = true;
+            this.ImageClear.Name = "ImageClear";
+            this.ImageClear.Size = new System.Drawing.Size(34, 22);
+            this.ImageClear.Text = "Clear";
+            this.ImageClear.Click += new EventHandler(this.ImageClear_Click);
+            base.AutoScaleDimensions = new SizeF(6f, 13f);
+            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            base.Controls.Add(this.ImageBox);
+            base.Controls.Add(this.PictureToolbar);
+            base.Name = "TilePanel";
+            base.Size = new System.Drawing.Size(237, 230);
+            ((ISupportInitialize)this.ImageBox).EndInit();
+            this.PictureToolbar.ResumeLayout(false);
+            this.PictureToolbar.PerformLayout();
+            base.ResumeLayout(false);
+            base.PerformLayout();
+        }
+
+        #endregion
+    }
 }

@@ -90,9 +90,8 @@ namespace Masterplan.UI
 			this.OKBtn.TabIndex = 1;
 			this.OKBtn.Text = "OK";
 			this.OKBtn.UseVisualStyleBackColor = true;
-			ListView.ColumnHeaderCollection columns = this.TrapList.Columns;
 			ColumnHeader[] nameHdr = new ColumnHeader[] { this.NameHdr, this.InfoHdr };
-			columns.AddRange(nameHdr);
+			this.TrapList.Columns.AddRange(nameHdr);
 			this.TrapList.Dock = DockStyle.Fill;
 			this.TrapList.FullRowSelect = true;
 			listViewGroup.Header = "Trap";

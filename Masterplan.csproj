@@ -70,6 +70,12 @@
     <Compile Include="Masterplan\Controls\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Masterplan\Controls\LevelRangePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\LevelRangePanel.Designer.cs">
+      <DependentUpon>LevelRangePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Masterplan\Controls\MapView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -81,6 +87,12 @@
     </Compile>
     <Compile Include="Masterplan\Controls\PlotView.Designer.cs">
       <DependentUpon>PlotView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TokenPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TokenPanel.Designer.cs">
+      <DependentUpon>TokenPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
@@ -652,11 +664,6 @@
     <Compile Include="Masterplan\Data\ReportRow.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\LevelRangePanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>LevelRangePanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Data\CardCategory.cs">
       <AutoGen>false</AutoGen>
@@ -1306,11 +1313,6 @@
     <Compile Include="Masterplan\Data\CampaignSettings.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\TokenPanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>TokenPanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Controls\PlotViewMode.cs">
       <AutoGen>false</AutoGen>
@@ -2876,10 +2878,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DicePanel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\LevelRangePanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LevelRangePanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Wizards\VariantRolePage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VariantRolePage.Designer.cs</LastGenOutput>
@@ -2943,10 +2941,6 @@
     <EmbeddedResource Include="Masterplan\Controls\TrapElementPanel.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TrapElementPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\TokenPanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TokenPanel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan.Scroll.ico" />
   </ItemGroup>
