@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Masterplan.Tools
 {
-	internal class DiceExpression
+	public class DiceExpression
 	{
 		private int fThrows;
 

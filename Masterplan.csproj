@@ -30,6 +30,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Web.Services" />
@@ -57,6 +58,12 @@
     <Compile Include="Masterplan\Commands\ICommand.cs" />
     <Compile Include="Masterplan\Commands\TurnTransaction.cs" />
     <Compile Include="Masterplan\Commands\UndoQueue.cs" />
+    <Compile Include="Masterplan\Controls\DicePanel2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\DicePanel2.Designer.cs">
+      <DependentUpon>DicePanel2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -627,7 +634,7 @@
     <Compile Include="Masterplan\Controls\DicePanel.Designer.cs">
       <AutoGen>true</AutoGen>
       <DependentUpon>DicePanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
+      <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Data\ReportRow.cs">
       <AutoGen>false</AutoGen>
