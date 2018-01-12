@@ -64,6 +64,12 @@
     <Compile Include="Masterplan\Controls\DicePanel2.Designer.cs">
       <DependentUpon>DicePanel2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Masterplan\Controls\MapView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapView.Designer.cs">
+      <DependentUpon>MapView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -498,11 +504,6 @@
     <Compile Include="Masterplan\Data\StartTurnLogEntry.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\MapView.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>MapView.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Data\Minion.cs">
       <AutoGen>false</AutoGen>
@@ -2864,10 +2865,6 @@
     <EmbeddedResource Include="Masterplan\Wizards\VariantFinishPage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VariantFinishPage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\MapView.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MapView.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Controls\MapElementPanel.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -379,7 +379,7 @@ namespace Masterplan.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(MapListForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(MapListForm));
 			this.MapList = new ListView();
 			this.MapHdr = new ColumnHeader();
 			this.ListContext = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -446,9 +446,8 @@ namespace Masterplan.UI
 			this.MapList.DoubleClick += new EventHandler(this.EditBtn_Click);
 			this.MapHdr.Text = "Map";
 			this.MapHdr.Width = 172;
-			ToolStripItemCollection items = this.ListContext.Items;
 			ToolStripItem[] listContextAdd = new ToolStripItem[] { this.ListContextAdd, this.ListContextRemove, this.ListContextEdit, this.toolStripMenuItem1, this.ListContextCategory, this.toolStripMenuItem2, this.ListContextDelve, this.ListContextBreakdown };
-			items.AddRange(listContextAdd);
+			this.ListContext.Items.AddRange(listContextAdd);
 			this.ListContext.Name = "ListContext";
 			this.ListContext.Size = new System.Drawing.Size(160, 148);
 			this.ListContextAdd.Name = "ListContextAdd";
@@ -478,19 +477,17 @@ namespace Masterplan.UI
 			this.ListContextBreakdown.Size = new System.Drawing.Size(159, 22);
 			this.ListContextBreakdown.Text = "Tile Breakdown";
 			this.ListContextBreakdown.Click += new EventHandler(this.ToolsBreakdown_Click);
-			ToolStripItemCollection toolStripItemCollections = this.ListToolbar.Items;
 			ToolStripItem[] addBtn = new ToolStripItem[] { this.AddBtn, this.RemoveBtn, this.EditBtn };
-			toolStripItemCollections.AddRange(addBtn);
+			this.ListToolbar.Items.AddRange(addBtn);
 			this.ListToolbar.Location = new Point(0, 0);
 			this.ListToolbar.Name = "ListToolbar";
 			this.ListToolbar.Size = new System.Drawing.Size(199, 25);
 			this.ListToolbar.TabIndex = 0;
 			this.ListToolbar.Text = "toolStrip1";
 			this.AddBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection dropDownItems = this.AddBtn.DropDownItems;
 			ToolStripItem[] addBuild = new ToolStripItem[] { this.AddBuild, this.toolStripSeparator5, this.AddImport, this.AddImportProject, this.toolStripSeparator3, this.AddTile };
-			dropDownItems.AddRange(addBuild);
-			this.AddBtn.Image = (Image)componentResourceManager.GetObject("AddBtn.Image");
+			this.AddBtn.DropDownItems.AddRange(addBuild);
+			this.AddBtn.Image = (Image)resources.GetObject("AddBtn.Image");
 			this.AddBtn.ImageTransparentColor = Color.Magenta;
 			this.AddBtn.Name = "AddBtn";
 			this.AddBtn.Size = new System.Drawing.Size(42, 22);
@@ -516,14 +513,14 @@ namespace Masterplan.UI
 			this.AddTile.Text = "Use Map Tile...";
 			this.AddTile.Click += new EventHandler(this.AddTile_Click);
 			this.RemoveBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.RemoveBtn.Image = (Image)componentResourceManager.GetObject("RemoveBtn.Image");
+			this.RemoveBtn.Image = (Image)resources.GetObject("RemoveBtn.Image");
 			this.RemoveBtn.ImageTransparentColor = Color.Magenta;
 			this.RemoveBtn.Name = "RemoveBtn";
 			this.RemoveBtn.Size = new System.Drawing.Size(54, 22);
 			this.RemoveBtn.Text = "Remove";
 			this.RemoveBtn.Click += new EventHandler(this.RemoveBtn_Click);
 			this.EditBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.EditBtn.Image = (Image)componentResourceManager.GetObject("EditBtn.Image");
+			this.EditBtn.Image = (Image)resources.GetObject("EditBtn.Image");
 			this.EditBtn.ImageTransparentColor = Color.Magenta;
 			this.EditBtn.Name = "EditBtn";
 			this.EditBtn.Size = new System.Drawing.Size(31, 22);
@@ -576,19 +573,17 @@ namespace Masterplan.UI
 			this.MapView.Tactical = false;
 			this.MapView.TokenLinks = null;
 			this.MapView.Viewpoint = new Rectangle(0, 0, 0, 0);
-			ToolStripItemCollection items1 = this.MapToolbar.Items;
 			ToolStripItem[] printMenu = new ToolStripItem[] { this.PrintMenu, this.ToolsBtn, this.DelveBtn, this.toolStripSeparator2, this.AreaLbl, this.AreaBox };
-			items1.AddRange(printMenu);
+			this.MapToolbar.Items.AddRange(printMenu);
 			this.MapToolbar.Location = new Point(0, 0);
 			this.MapToolbar.Name = "MapToolbar";
 			this.MapToolbar.Size = new System.Drawing.Size(547, 25);
 			this.MapToolbar.TabIndex = 1;
 			this.MapToolbar.Text = "toolStrip1";
 			this.PrintMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection dropDownItems1 = this.PrintMenu.DropDownItems;
 			ToolStripItem[] printMap = new ToolStripItem[] { this.PrintMap, this.PrintBlank };
-			dropDownItems1.AddRange(printMap);
-			this.PrintMenu.Image = (Image)componentResourceManager.GetObject("PrintMenu.Image");
+			this.PrintMenu.DropDownItems.AddRange(printMap);
+			this.PrintMenu.Image = (Image)resources.GetObject("PrintMenu.Image");
 			this.PrintMenu.ImageTransparentColor = Color.Magenta;
 			this.PrintMenu.Name = "PrintMenu";
 			this.PrintMenu.Size = new System.Drawing.Size(45, 22);
@@ -602,10 +597,9 @@ namespace Masterplan.UI
 			this.PrintBlank.Text = "Print Blank Grid";
 			this.PrintBlank.Click += new EventHandler(this.PrintBlank_Click);
 			this.ToolsBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection toolStripItemCollections1 = this.ToolsBtn.DropDownItems;
 			ToolStripItem[] toolsCategory = new ToolStripItem[] { this.ToolsCategory, this.ToolsBreakdown, this.toolStripSeparator1, this.ToolsScreenshot, this.ToolsPlayerView };
-			toolStripItemCollections1.AddRange(toolsCategory);
-			this.ToolsBtn.Image = (Image)componentResourceManager.GetObject("ToolsBtn.Image");
+			this.ToolsBtn.DropDownItems.AddRange(toolsCategory);
+			this.ToolsBtn.Image = (Image)resources.GetObject("ToolsBtn.Image");
 			this.ToolsBtn.ImageTransparentColor = Color.Magenta;
 			this.ToolsBtn.Name = "ToolsBtn";
 			this.ToolsBtn.Size = new System.Drawing.Size(49, 22);
@@ -629,10 +623,9 @@ namespace Masterplan.UI
 			this.ToolsPlayerView.Text = "Send to Player View";
 			this.ToolsPlayerView.Click += new EventHandler(this.ToolsPlayerView_Click);
 			this.DelveBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection dropDownItems2 = this.DelveBtn.DropDownItems;
 			ToolStripItem[] delveAutoBuild = new ToolStripItem[] { this.DelveAutoBuild, this.DelveAdvanced, this.toolStripSeparator4, this.DelveDeck };
-			dropDownItems2.AddRange(delveAutoBuild);
-			this.DelveBtn.Image = (Image)componentResourceManager.GetObject("DelveBtn.Image");
+			this.DelveBtn.DropDownItems.AddRange(delveAutoBuild);
+			this.DelveBtn.Image = (Image)resources.GetObject("DelveBtn.Image");
 			this.DelveBtn.ImageTransparentColor = Color.Magenta;
 			this.DelveBtn.Name = "DelveBtn";
 			this.DelveBtn.Size = new System.Drawing.Size(105, 22);
@@ -708,7 +701,8 @@ namespace Masterplan.UI
 		{
 			if (this.SelectedMap != null)
 			{
-				(new MapPrintingForm(this.MapView)).ShowDialog();
+                //TODO Fix this
+				//(new MapPrintingForm(this.MapView)).ShowDialog();
 			}
 		}
 
@@ -812,7 +806,8 @@ namespace Masterplan.UI
 				{
 					Session.PlayerView = new PlayerViewForm(this);
 				}
-				Session.PlayerView.ShowTacticalMap(this.MapView, null);
+                // TODO: Fix this!
+				//Session.PlayerView.ShowTacticalMap(this.MapView, null);
 			}
 		}
 
