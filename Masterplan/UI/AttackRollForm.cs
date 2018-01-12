@@ -212,9 +212,8 @@ namespace Masterplan.UI
 			this.PowerBrowser.TabIndex = 0;
 			this.PowerBrowser.WebBrowserShortcutsEnabled = false;
 			this.PowerBrowser.Navigating += new WebBrowserNavigatingEventHandler(this.PowerBrowser_Navigating);
-			ListView.ColumnHeaderCollection columns = this.RollList.Columns;
 			ColumnHeader[] columnHeaderArray = new ColumnHeader[] { this.columnHeader4, this.columnHeader1, this.columnHeader2, this.columnHeader3 };
-			columns.AddRange(columnHeaderArray);
+			this.RollList.Columns.AddRange(columnHeaderArray);
 			this.RollList.Dock = DockStyle.Fill;
 			this.RollList.FullRowSelect = true;
 			this.RollList.HeaderStyle = ColumnHeaderStyle.Nonclickable;

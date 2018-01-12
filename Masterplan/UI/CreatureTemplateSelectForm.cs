@@ -111,9 +111,8 @@ namespace Masterplan.UI
 			this.OKBtn.TabIndex = 1;
 			this.OKBtn.Text = "OK";
 			this.OKBtn.UseVisualStyleBackColor = true;
-			ListView.ColumnHeaderCollection columns = this.CreatureList.Columns;
 			ColumnHeader[] nameHdr = new ColumnHeader[] { this.NameHdr, this.InfoHdr };
-			columns.AddRange(nameHdr);
+			this.CreatureList.Columns.AddRange(nameHdr);
 			this.CreatureList.Dock = DockStyle.Fill;
 			this.CreatureList.FullRowSelect = true;
 			listViewGroup.Header = "Functional Templates";

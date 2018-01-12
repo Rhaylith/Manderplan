@@ -309,7 +309,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(CreatureTemplateBuilderForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(CreatureTemplateBuilderForm));
 			this.Toolbar = new ToolStrip();
 			this.FileMenu = new ToolStripDropDownButton();
 			this.FileExport = new ToolStripMenuItem();
@@ -322,9 +322,8 @@ namespace Masterplan.UI
 			this.Toolbar.SuspendLayout();
 			this.BtnPnl.SuspendLayout();
 			base.SuspendLayout();
-			ToolStripItemCollection items = this.Toolbar.Items;
 			ToolStripItem[] fileMenu = new ToolStripItem[] { this.FileMenu, this.OptionsMenu };
-			items.AddRange(fileMenu);
+			this.Toolbar.Items.AddRange(fileMenu);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
 			this.Toolbar.Size = new System.Drawing.Size(384, 25);
@@ -332,7 +331,7 @@ namespace Masterplan.UI
 			this.Toolbar.Text = "toolStrip1";
 			this.FileMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			this.FileMenu.DropDownItems.AddRange(new ToolStripItem[] { this.FileExport });
-			this.FileMenu.Image = (Image)componentResourceManager.GetObject("FileMenu.Image");
+			this.FileMenu.Image = (Image)resources.GetObject("FileMenu.Image");
 			this.FileMenu.ImageTransparentColor = Color.Magenta;
 			this.FileMenu.Name = "FileMenu";
 			this.FileMenu.Size = new System.Drawing.Size(38, 22);
@@ -343,7 +342,7 @@ namespace Masterplan.UI
 			this.FileExport.Click += new EventHandler(this.FileExport_Click);
 			this.OptionsMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			this.OptionsMenu.DropDownItems.AddRange(new ToolStripItem[] { this.OptionsVariant });
-			this.OptionsMenu.Image = (Image)componentResourceManager.GetObject("OptionsMenu.Image");
+			this.OptionsMenu.Image = (Image)resources.GetObject("OptionsMenu.Image");
 			this.OptionsMenu.ImageTransparentColor = Color.Magenta;
 			this.OptionsMenu.Name = "OptionsMenu";
 			this.OptionsMenu.Size = new System.Drawing.Size(62, 22);

@@ -211,15 +211,13 @@ namespace Masterplan.UI
 			NumericUpDown levelBox = this.LevelBox;
 			int[] numArray = new int[] { 40, 0, 0, 0 };
 			levelBox.Maximum = new decimal(numArray);
-			NumericUpDown num = this.LevelBox;
 			int[] numArray1 = new int[] { 1, 0, 0, 0 };
-			num.Minimum = new decimal(numArray1);
+			this.LevelBox.Minimum = new decimal(numArray1);
 			this.LevelBox.Name = "LevelBox";
 			this.LevelBox.Size = new System.Drawing.Size(214, 20);
 			this.LevelBox.TabIndex = 3;
-			NumericUpDown numericUpDown = this.LevelBox;
 			int[] numArray2 = new int[] { 1, 0, 0, 0 };
-			numericUpDown.Value = new decimal(numArray2);
+			this.LevelBox.Value = new decimal(numArray2);
 			this.RoleLbl.AutoSize = true;
 			this.RoleLbl.Location = new Point(12, 69);
 			this.RoleLbl.Name = "RoleLbl";

@@ -211,9 +211,8 @@ namespace Masterplan.UI
 			NumericUpDown initBox = this.InitBox;
 			int[] numArray1 = new int[] { 1000, 0, 0, 0 };
 			initBox.Maximum = new decimal(numArray1);
-			NumericUpDown num = this.InitBox;
 			int[] numArray2 = new int[] { 1000, 0, 0, -2147483648 };
-			num.Minimum = new decimal(numArray2);
+			this.InitBox.Minimum = new decimal(numArray2);
 			this.InitBox.Name = "InitBox";
 			this.InitBox.Size = new System.Drawing.Size(141, 20);
 			this.InitBox.TabIndex = 1;

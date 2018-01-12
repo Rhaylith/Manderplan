@@ -978,7 +978,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(CreatureBuilderForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(CreatureBuilderForm));
 			this.Toolbar = new ToolStrip();
 			this.FileMenu = new ToolStripDropDownButton();
 			this.FileExport = new ToolStripMenuItem();
@@ -1019,9 +1019,8 @@ namespace Masterplan.UI
 			((ISupportInitialize)this.PortraitBox).BeginInit();
 			this.EntryPage.SuspendLayout();
 			base.SuspendLayout();
-			ToolStripItemCollection items = this.Toolbar.Items;
 			ToolStripItem[] fileMenu = new ToolStripItem[] { this.FileMenu, this.OptionsMenu, this.LevelDownBtn, this.LevelUpBtn, this.LevelLbl, this.toolStripSeparator3, this.AdviceBtn, this.PowersBtn };
-			items.AddRange(fileMenu);
+			this.Toolbar.Items.AddRange(fileMenu);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
 			this.Toolbar.Size = new System.Drawing.Size(684, 25);
@@ -1029,7 +1028,7 @@ namespace Masterplan.UI
 			this.Toolbar.Text = "toolStrip1";
 			this.FileMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			this.FileMenu.DropDownItems.AddRange(new ToolStripItem[] { this.FileExport });
-			this.FileMenu.Image = (Image)componentResourceManager.GetObject("FileMenu.Image");
+			this.FileMenu.Image = (Image)resources.GetObject("FileMenu.Image");
 			this.FileMenu.ImageTransparentColor = Color.Magenta;
 			this.FileMenu.Name = "FileMenu";
 			this.FileMenu.Size = new System.Drawing.Size(38, 22);
@@ -1039,10 +1038,9 @@ namespace Masterplan.UI
 			this.FileExport.Text = "Export...";
 			this.FileExport.Click += new EventHandler(this.FileExport_Click);
 			this.OptionsMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection dropDownItems = this.OptionsMenu.DropDownItems;
 			ToolStripItem[] optionsImport = new ToolStripItem[] { this.OptionsImport, this.OptionsVariant, this.OptionsRandom, this.toolStripSeparator1, this.OptionsEntry, this.toolStripSeparator2, this.OptionsPowerBrowser };
-			dropDownItems.AddRange(optionsImport);
-			this.OptionsMenu.Image = (Image)componentResourceManager.GetObject("OptionsMenu.Image");
+			this.OptionsMenu.DropDownItems.AddRange(optionsImport);
+			this.OptionsMenu.Image = (Image)resources.GetObject("OptionsMenu.Image");
 			this.OptionsMenu.ImageTransparentColor = Color.Magenta;
 			this.OptionsMenu.Name = "OptionsMenu";
 			this.OptionsMenu.Size = new System.Drawing.Size(62, 22);
@@ -1073,7 +1071,7 @@ namespace Masterplan.UI
 			this.OptionsPowerBrowser.Click += new EventHandler(this.OptionsPowerBrowser_Click);
 			this.LevelDownBtn.Alignment = ToolStripItemAlignment.Right;
 			this.LevelDownBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.LevelDownBtn.Image = (Image)componentResourceManager.GetObject("LevelDownBtn.Image");
+			this.LevelDownBtn.Image = (Image)resources.GetObject("LevelDownBtn.Image");
 			this.LevelDownBtn.ImageTransparentColor = Color.Magenta;
 			this.LevelDownBtn.Name = "LevelDownBtn";
 			this.LevelDownBtn.Size = new System.Drawing.Size(23, 22);
@@ -1082,7 +1080,7 @@ namespace Masterplan.UI
 			this.LevelDownBtn.Click += new EventHandler(this.LevelDownBtn_Click);
 			this.LevelUpBtn.Alignment = ToolStripItemAlignment.Right;
 			this.LevelUpBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.LevelUpBtn.Image = (Image)componentResourceManager.GetObject("LevelUpBtn.Image");
+			this.LevelUpBtn.Image = (Image)resources.GetObject("LevelUpBtn.Image");
 			this.LevelUpBtn.ImageTransparentColor = Color.Magenta;
 			this.LevelUpBtn.Name = "LevelUpBtn";
 			this.LevelUpBtn.Size = new System.Drawing.Size(23, 22);
@@ -1096,14 +1094,14 @@ namespace Masterplan.UI
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
 			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
 			this.AdviceBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.AdviceBtn.Image = (Image)componentResourceManager.GetObject("AdviceBtn.Image");
+			this.AdviceBtn.Image = (Image)resources.GetObject("AdviceBtn.Image");
 			this.AdviceBtn.ImageTransparentColor = Color.Magenta;
 			this.AdviceBtn.Name = "AdviceBtn";
 			this.AdviceBtn.Size = new System.Drawing.Size(47, 22);
 			this.AdviceBtn.Text = "Advice";
 			this.AdviceBtn.Click += new EventHandler(this.AdviceBtn_Click);
 			this.PowersBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.PowersBtn.Image = (Image)componentResourceManager.GetObject("PowersBtn.Image");
+			this.PowersBtn.Image = (Image)resources.GetObject("PowersBtn.Image");
 			this.PowersBtn.ImageTransparentColor = Color.Magenta;
 			this.PowersBtn.Name = "PowersBtn";
 			this.PowersBtn.Size = new System.Drawing.Size(49, 22);
@@ -1169,30 +1167,29 @@ namespace Masterplan.UI
 			this.PicturePage.TabIndex = 1;
 			this.PicturePage.Text = "Picture";
 			this.PicturePage.UseVisualStyleBackColor = true;
-			ToolStripItemCollection toolStripItemCollections = this.PictureToolbar.Items;
 			ToolStripItem[] pictureBrowseBtn = new ToolStripItem[] { this.PictureBrowseBtn, this.PicturePasteBtn, this.PictureClearBtn };
-			toolStripItemCollections.AddRange(pictureBrowseBtn);
+			this.PictureToolbar.Items.AddRange(pictureBrowseBtn);
 			this.PictureToolbar.Location = new Point(3, 3);
 			this.PictureToolbar.Name = "PictureToolbar";
 			this.PictureToolbar.Size = new System.Drawing.Size(670, 25);
 			this.PictureToolbar.TabIndex = 6;
 			this.PictureToolbar.Text = "toolStrip1";
 			this.PictureBrowseBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.PictureBrowseBtn.Image = (Image)componentResourceManager.GetObject("PictureBrowseBtn.Image");
+			this.PictureBrowseBtn.Image = (Image)resources.GetObject("PictureBrowseBtn.Image");
 			this.PictureBrowseBtn.ImageTransparentColor = Color.Magenta;
 			this.PictureBrowseBtn.Name = "PictureBrowseBtn";
 			this.PictureBrowseBtn.Size = new System.Drawing.Size(49, 22);
 			this.PictureBrowseBtn.Text = "Browse";
 			this.PictureBrowseBtn.Click += new EventHandler(this.PictureBrowseBtn_Click);
 			this.PicturePasteBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.PicturePasteBtn.Image = (Image)componentResourceManager.GetObject("PicturePasteBtn.Image");
+			this.PicturePasteBtn.Image = (Image)resources.GetObject("PicturePasteBtn.Image");
 			this.PicturePasteBtn.ImageTransparentColor = Color.Magenta;
 			this.PicturePasteBtn.Name = "PicturePasteBtn";
 			this.PicturePasteBtn.Size = new System.Drawing.Size(39, 22);
 			this.PicturePasteBtn.Text = "Paste";
 			this.PicturePasteBtn.Click += new EventHandler(this.PicturePasteBtn_Click);
 			this.PictureClearBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.PictureClearBtn.Image = (Image)componentResourceManager.GetObject("PictureClearBtn.Image");
+			this.PictureClearBtn.Image = (Image)resources.GetObject("PictureClearBtn.Image");
 			this.PictureClearBtn.ImageTransparentColor = Color.Magenta;
 			this.PictureClearBtn.Name = "PictureClearBtn";
 			this.PictureClearBtn.Size = new System.Drawing.Size(38, 22);

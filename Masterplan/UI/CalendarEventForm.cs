@@ -120,9 +120,8 @@ namespace Masterplan.UI
 			this.DayBox.Name = "DayBox";
 			this.DayBox.Size = new System.Drawing.Size(196, 20);
 			this.DayBox.TabIndex = 5;
-			NumericUpDown num = this.DayBox;
 			int[] numArray1 = new int[] { 1, 0, 0, 0 };
-			num.Value = new decimal(numArray1);
+			this.DayBox.Value = new decimal(numArray1);
 			base.AcceptButton = this.OKBtn;
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

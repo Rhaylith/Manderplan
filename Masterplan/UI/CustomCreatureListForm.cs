@@ -233,7 +233,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(CustomCreatureListForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(CustomCreatureListForm));
 			ListViewGroup listViewGroup = new ListViewGroup("Custom Creatures", HorizontalAlignment.Left);
 			ListViewGroup listViewGroup1 = new ListViewGroup("NPCs", HorizontalAlignment.Left);
 			this.Toolbar = new ToolStrip();
@@ -257,19 +257,17 @@ namespace Masterplan.UI
 			this.Statusbar.SuspendLayout();
 			this.MainPanel.SuspendLayout();
 			base.SuspendLayout();
-			ToolStripItemCollection items = this.Toolbar.Items;
 			ToolStripItem[] addBtn = new ToolStripItem[] { this.AddBtn, this.RemoveBtn, this.EditBtn, this.toolStripSeparator1, this.StatBlockBtn, this.EncEntryBtn };
-			items.AddRange(addBtn);
+			this.Toolbar.Items.AddRange(addBtn);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
 			this.Toolbar.Size = new System.Drawing.Size(776, 25);
 			this.Toolbar.TabIndex = 0;
 			this.Toolbar.Text = "toolStrip1";
 			this.AddBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection dropDownItems = this.AddBtn.DropDownItems;
 			ToolStripItem[] addCreature = new ToolStripItem[] { this.AddCreature, this.AddNPC };
-			dropDownItems.AddRange(addCreature);
-			this.AddBtn.Image = (Image)componentResourceManager.GetObject("AddBtn.Image");
+			this.AddBtn.DropDownItems.AddRange(addCreature);
+			this.AddBtn.Image = (Image)resources.GetObject("AddBtn.Image");
 			this.AddBtn.ImageTransparentColor = Color.Magenta;
 			this.AddBtn.Name = "AddBtn";
 			this.AddBtn.Size = new System.Drawing.Size(42, 22);
@@ -283,14 +281,14 @@ namespace Masterplan.UI
 			this.AddNPC.Text = "New NPC...";
 			this.AddNPC.Click += new EventHandler(this.AddNPC_Click);
 			this.RemoveBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.RemoveBtn.Image = (Image)componentResourceManager.GetObject("RemoveBtn.Image");
+			this.RemoveBtn.Image = (Image)resources.GetObject("RemoveBtn.Image");
 			this.RemoveBtn.ImageTransparentColor = Color.Magenta;
 			this.RemoveBtn.Name = "RemoveBtn";
 			this.RemoveBtn.Size = new System.Drawing.Size(54, 22);
 			this.RemoveBtn.Text = "Remove";
 			this.RemoveBtn.Click += new EventHandler(this.RemoveBtn_Click);
 			this.EditBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.EditBtn.Image = (Image)componentResourceManager.GetObject("EditBtn.Image");
+			this.EditBtn.Image = (Image)resources.GetObject("EditBtn.Image");
 			this.EditBtn.ImageTransparentColor = Color.Magenta;
 			this.EditBtn.Name = "EditBtn";
 			this.EditBtn.Size = new System.Drawing.Size(31, 22);
@@ -299,22 +297,21 @@ namespace Masterplan.UI
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			this.StatBlockBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.StatBlockBtn.Image = (Image)componentResourceManager.GetObject("StatBlockBtn.Image");
+			this.StatBlockBtn.Image = (Image)resources.GetObject("StatBlockBtn.Image");
 			this.StatBlockBtn.ImageTransparentColor = Color.Magenta;
 			this.StatBlockBtn.Name = "StatBlockBtn";
 			this.StatBlockBtn.Size = new System.Drawing.Size(63, 22);
 			this.StatBlockBtn.Text = "Stat Block";
 			this.StatBlockBtn.Click += new EventHandler(this.StatBlockBtn_Click);
 			this.EncEntryBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.EncEntryBtn.Image = (Image)componentResourceManager.GetObject("EncEntryBtn.Image");
+			this.EncEntryBtn.Image = (Image)resources.GetObject("EncEntryBtn.Image");
 			this.EncEntryBtn.ImageTransparentColor = Color.Magenta;
 			this.EncEntryBtn.Name = "EncEntryBtn";
 			this.EncEntryBtn.Size = new System.Drawing.Size(111, 22);
 			this.EncEntryBtn.Text = "Encyclopedia Entry";
 			this.EncEntryBtn.Click += new EventHandler(this.EncEntryBtn_Click);
-			ListView.ColumnHeaderCollection columns = this.CreatureList.Columns;
 			ColumnHeader[] nameHdr = new ColumnHeader[] { this.NameHdr, this.InfoHdr, this.StatsHdr };
-			columns.AddRange(nameHdr);
+			this.CreatureList.Columns.AddRange(nameHdr);
 			this.CreatureList.Dock = DockStyle.Fill;
 			this.CreatureList.FullRowSelect = true;
 			listViewGroup.Header = "Custom Creatures";

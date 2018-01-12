@@ -103,9 +103,8 @@ namespace Masterplan.UI
 			this.Splitter.Size = new System.Drawing.Size(693, 336);
 			this.Splitter.SplitterDistance = 330;
 			this.Splitter.TabIndex = 5;
-			ListView.ColumnHeaderCollection columns = this.ItemList.Columns;
 			ColumnHeader[] nameHdr = new ColumnHeader[] { this.NameHdr, this.InfoHdr };
-			columns.AddRange(nameHdr);
+			this.ItemList.Columns.AddRange(nameHdr);
 			this.ItemList.Dock = DockStyle.Fill;
 			this.ItemList.FullRowSelect = true;
 			this.ItemList.HideSelection = false;

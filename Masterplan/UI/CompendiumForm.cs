@@ -164,9 +164,8 @@ namespace Masterplan.UI
 			listViewGroup2.Name = "listViewGroup3";
 			listViewGroup3.Header = "RPGA Modules";
 			listViewGroup3.Name = "listViewGroup4";
-			ListViewGroupCollection groups = this.BookList.Groups;
 			ListViewGroup[] listViewGroupArray = new ListViewGroup[] { listViewGroup, listViewGroup1, listViewGroup2, listViewGroup3 };
-			groups.AddRange(listViewGroupArray);
+			this.BookList.Groups.AddRange(listViewGroupArray);
 			this.BookList.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 			this.BookList.HideSelection = false;
 			this.BookList.Location = new Point(0, 0);
@@ -180,9 +179,8 @@ namespace Masterplan.UI
 			this.BookList.SelectedIndexChanged += new EventHandler(this.BookList_SelectedIndexChanged);
 			this.BookHdr.Text = "Source Book";
 			this.BookHdr.Width = 200;
-			ListView.ColumnHeaderCollection columns = this.ItemList.Columns;
 			ColumnHeader[] itemHdr = new ColumnHeader[] { this.ItemHdr, this.InfoHdr };
-			columns.AddRange(itemHdr);
+			this.ItemList.Columns.AddRange(itemHdr);
 			this.ItemList.Dock = DockStyle.Fill;
 			this.ItemList.FullRowSelect = true;
 			listViewGroup4.Header = "Creatures";

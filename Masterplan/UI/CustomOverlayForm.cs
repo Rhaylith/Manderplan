@@ -137,7 +137,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(CustomOverlayForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(CustomOverlayForm));
 			this.NameLbl = new Label();
 			this.NameBox = new TextBox();
 			this.OKBtn = new Button();
@@ -296,23 +296,22 @@ namespace Masterplan.UI
 			this.PowerBrowser.Name = "PowerBrowser";
 			this.PowerBrowser.Size = new System.Drawing.Size(311, 158);
 			this.PowerBrowser.TabIndex = 2;
-			ToolStripItemCollection items = this.TerrainPowerToolbar.Items;
 			ToolStripItem[] editBtn = new ToolStripItem[] { this.EditBtn, this.RemoveBtn, this.toolStripSeparator1, this.SelectBtn };
-			items.AddRange(editBtn);
+			this.TerrainPowerToolbar.Items.AddRange(editBtn);
 			this.TerrainPowerToolbar.Location = new Point(3, 3);
 			this.TerrainPowerToolbar.Name = "TerrainPowerToolbar";
 			this.TerrainPowerToolbar.Size = new System.Drawing.Size(311, 25);
 			this.TerrainPowerToolbar.TabIndex = 1;
 			this.TerrainPowerToolbar.Text = "toolStrip1";
 			this.EditBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.EditBtn.Image = (Image)componentResourceManager.GetObject("EditBtn.Image");
+			this.EditBtn.Image = (Image)resources.GetObject("EditBtn.Image");
 			this.EditBtn.ImageTransparentColor = Color.Magenta;
 			this.EditBtn.Name = "EditBtn";
 			this.EditBtn.Size = new System.Drawing.Size(31, 22);
 			this.EditBtn.Text = "Edit";
 			this.EditBtn.Click += new EventHandler(this.EditBtn_Click);
 			this.RemoveBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.RemoveBtn.Image = (Image)componentResourceManager.GetObject("RemoveBtn.Image");
+			this.RemoveBtn.Image = (Image)resources.GetObject("RemoveBtn.Image");
 			this.RemoveBtn.ImageTransparentColor = Color.Magenta;
 			this.RemoveBtn.Name = "RemoveBtn";
 			this.RemoveBtn.Size = new System.Drawing.Size(54, 22);
@@ -321,7 +320,7 @@ namespace Masterplan.UI
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			this.SelectBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.SelectBtn.Image = (Image)componentResourceManager.GetObject("SelectBtn.Image");
+			this.SelectBtn.Image = (Image)resources.GetObject("SelectBtn.Image");
 			this.SelectBtn.ImageTransparentColor = Color.Magenta;
 			this.SelectBtn.Name = "SelectBtn";
 			this.SelectBtn.Size = new System.Drawing.Size(116, 22);
@@ -329,27 +328,23 @@ namespace Masterplan.UI
 			this.SelectBtn.Click += new EventHandler(this.SelectBtn_Click);
 			this.WidthBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			this.WidthBox.Location = new Point(59, 38);
-			NumericUpDown widthBox = this.WidthBox;
 			int[] numArray = new int[] { 1, 0, 0, 0 };
-			widthBox.Minimum = new decimal(numArray);
+			this.WidthBox.Minimum = new decimal(numArray);
 			this.WidthBox.Name = "WidthBox";
 			this.WidthBox.Size = new System.Drawing.Size(303, 20);
 			this.WidthBox.TabIndex = 3;
-			NumericUpDown num = this.WidthBox;
 			int[] numArray1 = new int[] { 1, 0, 0, 0 };
-			num.Value = new decimal(numArray1);
+			this.WidthBox.Value = new decimal(numArray1);
 			this.WidthBox.ValueChanged += new EventHandler(this.WidthBox_ValueChanged);
 			this.HeightBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			this.HeightBox.Location = new Point(59, 64);
-			NumericUpDown heightBox = this.HeightBox;
 			int[] numArray2 = new int[] { 1, 0, 0, 0 };
-			heightBox.Minimum = new decimal(numArray2);
+			this.HeightBox.Minimum = new decimal(numArray2);
 			this.HeightBox.Name = "HeightBox";
 			this.HeightBox.Size = new System.Drawing.Size(303, 20);
 			this.HeightBox.TabIndex = 5;
-			NumericUpDown numericUpDown = this.HeightBox;
 			int[] numArray3 = new int[] { 1, 0, 0, 0 };
-			numericUpDown.Value = new decimal(numArray3);
+			this.HeightBox.Value = new decimal(numArray3);
 			this.HeightBox.ValueChanged += new EventHandler(this.HeightBox_ValueChanged);
 			this.WidthLbl.AutoSize = true;
 			this.WidthLbl.Location = new Point(12, 40);

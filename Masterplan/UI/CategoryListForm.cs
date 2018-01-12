@@ -98,7 +98,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(CategoryListForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CategoryListForm));
 			this.OKBtn = new Button();
 			this.CancelBtn = new Button();
 			this.CatList = new ListView();
@@ -149,23 +149,22 @@ namespace Masterplan.UI
 			this.ListPanel.Name = "ListPanel";
 			this.ListPanel.Size = new System.Drawing.Size(237, 277);
 			this.ListPanel.TabIndex = 0;
-			ToolStripItemCollection items = this.Toolbar.Items;
 			ToolStripItem[] selectBtn = new ToolStripItem[] { this.SelectBtn, this.DeselectBtn };
-			items.AddRange(selectBtn);
+			this.Toolbar.Items.AddRange(selectBtn);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
 			this.Toolbar.Size = new System.Drawing.Size(237, 25);
 			this.Toolbar.TabIndex = 0;
 			this.Toolbar.Text = "toolStrip1";
 			this.SelectBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.SelectBtn.Image = (Image)componentResourceManager.GetObject("SelectBtn.Image");
+			this.SelectBtn.Image = (Image)resources.GetObject("SelectBtn.Image");
 			this.SelectBtn.ImageTransparentColor = Color.Magenta;
 			this.SelectBtn.Name = "SelectBtn";
 			this.SelectBtn.Size = new System.Drawing.Size(59, 22);
 			this.SelectBtn.Text = "Select All";
 			this.SelectBtn.Click += new EventHandler(this.SelectBtn_Click);
 			this.DeselectBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.DeselectBtn.Image = (Image)componentResourceManager.GetObject("DeselectBtn.Image");
+			this.DeselectBtn.Image = (Image)resources.GetObject("DeselectBtn.Image");
 			this.DeselectBtn.ImageTransparentColor = Color.Magenta;
 			this.DeselectBtn.Name = "DeselectBtn";
 			this.DeselectBtn.Size = new System.Drawing.Size(72, 22);

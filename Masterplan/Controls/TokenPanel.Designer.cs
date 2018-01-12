@@ -131,7 +131,7 @@ namespace Masterplan.Controls
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(TokenPanel));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(TokenPanel));
 			this.ImageBox = new PictureBox();
 			this.PictureToolbar = new ToolStrip();
 			this.toolStripButton1 = new ToolStripDropDownButton();
@@ -150,19 +150,17 @@ namespace Masterplan.Controls
 			this.ImageBox.SizeMode = PictureBoxSizeMode.Zoom;
 			this.ImageBox.TabIndex = 3;
 			this.ImageBox.TabStop = false;
-			ToolStripItemCollection items = this.PictureToolbar.Items;
 			ToolStripItem[] imageClear = new ToolStripItem[] { this.toolStripButton1, this.ImageClear };
-			items.AddRange(imageClear);
+			this.PictureToolbar.Items.AddRange(imageClear);
 			this.PictureToolbar.Location = new Point(0, 0);
 			this.PictureToolbar.Name = "PictureToolbar";
 			this.PictureToolbar.Size = new System.Drawing.Size(237, 25);
 			this.PictureToolbar.TabIndex = 2;
 			this.PictureToolbar.Text = "toolStrip1";
 			this.toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection dropDownItems = this.toolStripButton1.DropDownItems;
 			ToolStripItem[] imageSelectFile = new ToolStripItem[] { this.ImageSelectFile, this.ImageSelectTile, this.ImageSelectColour };
-			dropDownItems.AddRange(imageSelectFile);
-			this.toolStripButton1.Image = (System.Drawing.Image)componentResourceManager.GetObject("toolStripButton1.Image");
+			this.toolStripButton1.DropDownItems.AddRange(imageSelectFile);
+			this.toolStripButton1.Image = (System.Drawing.Image)resources.GetObject("toolStripButton1.Image");
 			this.toolStripButton1.ImageTransparentColor = Color.Magenta;
 			this.toolStripButton1.Name = "toolStripButton1";
 			this.toolStripButton1.Size = new System.Drawing.Size(51, 22);

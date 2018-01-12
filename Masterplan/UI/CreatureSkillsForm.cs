@@ -136,7 +136,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(CreatureSkillsForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(CreatureSkillsForm));
 			this.OKBtn = new Button();
 			this.CancelBtn = new Button();
 			this.SkillList = new ListView();
@@ -169,9 +169,8 @@ namespace Masterplan.UI
 			this.CancelBtn.TabIndex = 6;
 			this.CancelBtn.Text = "Cancel";
 			this.CancelBtn.UseVisualStyleBackColor = true;
-			ListView.ColumnHeaderCollection columns = this.SkillList.Columns;
 			ColumnHeader[] skillHdr = new ColumnHeader[] { this.SkillHdr, this.TrainedHdr, this.AbilityHdr, this.MiscHdr, this.TotalHdr };
-			columns.AddRange(skillHdr);
+			this.SkillList.Columns.AddRange(skillHdr);
 			this.SkillList.Dock = DockStyle.Fill;
 			this.SkillList.FullRowSelect = true;
 			this.SkillList.HideSelection = false;
@@ -200,23 +199,22 @@ namespace Masterplan.UI
 			this.SkillPanel.Name = "SkillPanel";
 			this.SkillPanel.Size = new System.Drawing.Size(387, 349);
 			this.SkillPanel.TabIndex = 8;
-			ToolStripItemCollection items = this.Toolbar.Items;
 			ToolStripItem[] trainedBtn = new ToolStripItem[] { this.TrainedBtn, this.EditSkillBtn };
-			items.AddRange(trainedBtn);
+			this.Toolbar.Items.AddRange(trainedBtn);
 			this.Toolbar.Location = new Point(0, 0);
 			this.Toolbar.Name = "Toolbar";
 			this.Toolbar.Size = new System.Drawing.Size(387, 25);
 			this.Toolbar.TabIndex = 0;
 			this.Toolbar.Text = "toolStrip1";
 			this.TrainedBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.TrainedBtn.Image = (Image)componentResourceManager.GetObject("TrainedBtn.Image");
+			this.TrainedBtn.Image = (Image)resources.GetObject("TrainedBtn.Image");
 			this.TrainedBtn.ImageTransparentColor = Color.Magenta;
 			this.TrainedBtn.Name = "TrainedBtn";
 			this.TrainedBtn.Size = new System.Drawing.Size(51, 22);
 			this.TrainedBtn.Text = "Trained";
 			this.TrainedBtn.Click += new EventHandler(this.TrainedBtn_Click);
 			this.EditSkillBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			this.EditSkillBtn.Image = (Image)componentResourceManager.GetObject("EditSkillBtn.Image");
+			this.EditSkillBtn.Image = (Image)resources.GetObject("EditSkillBtn.Image");
 			this.EditSkillBtn.ImageTransparentColor = Color.Magenta;
 			this.EditSkillBtn.Name = "EditSkillBtn";
 			this.EditSkillBtn.Size = new System.Drawing.Size(55, 22);

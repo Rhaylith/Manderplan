@@ -330,7 +330,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(ArtifactBuilderForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(ArtifactBuilderForm));
 			this.BtnPnl = new Panel();
 			this.CancelBtn = new Button();
 			this.OKBtn = new Button();
@@ -383,10 +383,9 @@ namespace Masterplan.UI
 			this.Toolbar.TabIndex = 0;
 			this.Toolbar.Text = "toolStrip1";
 			this.FileMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
-			ToolStripItemCollection dropDownItems = this.FileMenu.DropDownItems;
 			ToolStripItem[] fileImport = new ToolStripItem[] { this.FileImport, this.FileExport };
-			dropDownItems.AddRange(fileImport);
-			this.FileMenu.Image = (Image)componentResourceManager.GetObject("FileMenu.Image");
+			this.FileMenu.DropDownItems.AddRange(fileImport);
+			this.FileMenu.Image = (Image)resources.GetObject("FileMenu.Image");
 			this.FileMenu.ImageTransparentColor = Color.Magenta;
 			this.FileMenu.Name = "FileMenu";
 			this.FileMenu.Size = new System.Drawing.Size(38, 22);
