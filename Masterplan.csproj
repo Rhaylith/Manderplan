@@ -2873,10 +2873,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VariantRolePage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\EncounterPanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EncounterPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Wizards\MapTypePage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MapTypePage.Designer.cs</LastGenOutput>
