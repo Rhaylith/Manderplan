@@ -237,7 +237,6 @@ namespace Masterplan.Controls
             //components = new System.ComponentModel.Container();
             //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 
-            ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(EncounterPanel));
             this.Toolbar = new ToolStrip();
             this.EditBtn = new ToolStripButton();
             this.RunBtn = new ToolStripButton();
@@ -260,14 +259,12 @@ namespace Masterplan.Controls
             this.Toolbar.TabIndex = 0;
             this.Toolbar.Text = "toolStrip1";
             this.EditBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.EditBtn.Image = (Image)componentResourceManager.GetObject("EditBtn.Image");
             this.EditBtn.ImageTransparentColor = Color.Magenta;
             this.EditBtn.Name = "EditBtn";
             this.EditBtn.Size = new System.Drawing.Size(105, 22);
             this.EditBtn.Text = "Encounter Builder";
             this.EditBtn.Click += new EventHandler(this.EditBtn_Click);
             this.RunBtn.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            this.RunBtn.Image = (Image)componentResourceManager.GetObject("RunBtn.Image");
             this.RunBtn.ImageTransparentColor = Color.Magenta;
             this.RunBtn.Name = "RunBtn";
             this.RunBtn.Size = new System.Drawing.Size(89, 22);
