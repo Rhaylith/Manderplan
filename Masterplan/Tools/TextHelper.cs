@@ -28,17 +28,8 @@ namespace Masterplan.Tools
 				string str1 = strArrays[i];
 				if (str1 != "")
 				{
-					bool flag = false;
-					try
-					{
-						int.Parse(str1);
-						flag = true;
-					}
-					catch
-					{
-						flag = false;
-					}
-					if (!flag)
+                    int result;
+					if (!int.TryParse(str1, out result))
 					{
 						char chr = str1[0];
 						if (char.IsUpper(chr))

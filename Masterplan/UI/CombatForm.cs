@@ -21,6 +21,8 @@ using System.Windows.Forms;
 using System.Windows.Forms.Layout;
 using Utils;
 
+using Microsoft.VisualStudio.Profiler;
+
 namespace Masterplan.UI
 {
 	internal class CombatForm : Form
@@ -3925,10 +3927,10 @@ namespace Masterplan.UI
 				this.update_list();
 				this.update_log();
 				this.update_preview_panel();
-				this.update_maps();
 				this.highlight_current_actor();
-			}
-			catch (Exception exception)
+                this.update_maps();
+            }
+            catch (Exception exception)
 			{
 				LogSystem.Trace(exception);
 			}
@@ -5011,6 +5013,7 @@ namespace Masterplan.UI
             this.update_log();
             this.update_preview_panel();
             this.highlight_current_actor();
+            this.update_maps();
         }
 
         private void UndoBtn_Click(object sender, EventArgs e)
@@ -5036,8 +5039,9 @@ namespace Masterplan.UI
 
         private void NextInitBtn_Click(object sender, EventArgs e)
 		{
-			try
-			{
+            DataCollection.StartProfile(ProfileLevel.Global, DataCollection.CurrentId);
+            try
+            {
 				if (!this.fCombatStarted)
 				{
 					this.start_combat();
@@ -7061,10 +7065,10 @@ namespace Masterplan.UI
 
 		private void update_maps()
 		{
-			this.MapView.Invalidate();
+            this.MapView.Redraw();
 			if (this.PlayerMap != null)
 			{
-				this.PlayerMap.Invalidate();
+				this.PlayerMap.Redraw();
 			}
 		}
 

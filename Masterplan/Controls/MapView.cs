@@ -30,6 +30,10 @@ namespace Masterplan.Controls
             this.fRight.Alignment = StringAlignment.Far;
             this.fRight.LineAlignment = StringAlignment.Center;
             this.fRight.Trimming = StringTrimming.EllipsisCharacter;
+
+            this.backbufferContext = BufferedGraphicsManager.Current;
+            this.RecreateBuffers();
+            this.Redraw();
         }
     }
 }

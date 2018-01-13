@@ -38,31 +38,36 @@ namespace Masterplan.Data
 			}
 		}
 
-		public System.Drawing.Image BlankImage
-		{
-			get
-			{
-				int num = 32;
-				int width = this.fSize.Width * num + 1;
-				int height = this.fSize.Height * num + 1;
-				Bitmap bitmap = new Bitmap(width, height);
-				for (int i = 0; i != width; i++)
-				{
-					for (int j = 0; j != height; j++)
-					{
-						Color darkGray = this.fBlankColour;
-						if (i % num == 0 || j % num == 0)
-						{
-							darkGray = Color.DarkGray;
-						}
-						bitmap.SetPixel(i, j, darkGray);
-					}
-				}
-				return bitmap;
-			}
-		}
+        public Image BlankImage
+        {
+            get
+            {
+                return LoadBlankBitmap();
+            }
+        }
 
-		public TileCategory Category
+        public Bitmap LoadBlankBitmap()
+        {
+            int num = 32;
+            int width = this.fSize.Width * num + 1;
+            int height = this.fSize.Height * num + 1;
+            Bitmap bitmap = new Bitmap(width, height);
+            for (int i = 0; i != width; i++)
+            {
+                for (int j = 0; j != height; j++)
+                {
+                    Color darkGray = this.fBlankColour;
+                    if (i % num == 0 || j % num == 0)
+                    {
+                        darkGray = Color.DarkGray;
+                    }
+                    bitmap.SetPixel(i, j, darkGray);
+                }
+            }
+            return bitmap;
+        }
+
+        public TileCategory Category
 		{
 			get
 			{
@@ -86,13 +91,27 @@ namespace Masterplan.Data
 			}
 		}
 
+        private System.Drawing.Bitmap cachedBitmap;
+
+        public System.Drawing.Bitmap BitmapResource
+        {
+            get
+            {
+                if (cachedBitmap == null)
+                {
+                    cachedBitmap = this.fImage == null ? this.LoadBlankBitmap() : new Bitmap(this.fImage);
+                }
+                return cachedBitmap;
+            }
+        }
+
 		public System.Drawing.Image Image
 		{
-			get
-			{
-				return this.fImage;
-			}
-			set
+            get
+            {
+                return this.fImage;
+            }
+            set
 			{
 				this.fImage = value;
 			}
@@ -125,6 +144,11 @@ namespace Masterplan.Data
 		public Tile()
 		{
 		}
+
+        ~Tile()
+        {
+            this.cachedBitmap?.Dispose();   
+        }
 
 		public Tile Copy()
 		{

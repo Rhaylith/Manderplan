@@ -16,6 +16,8 @@ using System.Windows.Forms;
 using Utils;
 using Utils.Graphics;
 
+using Microsoft.VisualStudio.Profiler;
+
 namespace Masterplan.Controls
 {
     partial class MapView
@@ -137,6 +139,36 @@ namespace Masterplan.Controls
         private MapView.ScrollingData fScrollingData;
 
         private Dictionary<Guid, List<Rectangle>> fSlotRegions = new Dictionary<Guid, List<Rectangle>>();
+
+        private BufferedGraphics backbufferGraphics;
+        private Graphics drawingGraphics;
+
+        private BufferedGraphicsContext backbufferContext;
+
+        private void RecreateBuffers()
+        {
+            // Check initialization has completed so we know backbufferContext has been assigned.
+            // Check that we aren't disposing or this could be invalid.
+            //if (!initializationComplete || isDisposing)
+            //    return;
+
+            // We recreate the buffer with a width and height of the control. The "+ 1"
+            // guarantees we never have a buffer with a width or height of 0.
+            backbufferContext.MaximumBuffer = new Size(this.Width + 1, this.Height + 1);
+
+            // Dispose of old backbufferGraphics (if one has been created already)
+            if (backbufferGraphics != null)
+                backbufferGraphics.Dispose();
+
+            // Create new backbufferGrpahics that matches the current size of buffer.
+            backbufferGraphics = backbufferContext.Allocate(this.CreateGraphics(),
+          new Rectangle(0, 0, Math.Max(this.Width, 1), Math.Max(this.Height, 1)));
+
+            // Assign the Graphics object on backbufferGraphics to "drawingGraphics" for easy reference elsewhere.
+            drawingGraphics = backbufferGraphics.Graphics;
+
+            // This is a good place to assign drawingGraphics.SmoothingMode if you want a better anti-aliasing technique.
+        }
 
         public bool AllowDrawing
         {
@@ -278,7 +310,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fEncounter = value;
-                base.Invalidate();
             }
         }
 
@@ -293,7 +324,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fFrameType = value;
-                base.Invalidate();
             }
         }
 
@@ -308,7 +338,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fHighlightAreas = value;
-                base.Invalidate();
             }
         }
 
@@ -333,7 +362,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fHoverToken = value;
-                base.Invalidate();
             }
         }
 
@@ -348,7 +376,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fHoverTokenLink = value;
-                base.Invalidate();
             }
         }
 
@@ -375,7 +402,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fLineOfSight = value;
-                base.Invalidate();
                 if (!this.fLineOfSight)
                 {
                     this.OnCancelledLOS();
@@ -395,7 +421,6 @@ namespace Masterplan.Controls
             {
                 this.fMap = value;
                 this.fLayoutData = null;
-                base.Invalidate();
             }
         }
 
@@ -410,7 +435,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fMode = value;
-                base.Invalidate();
             }
         }
 
@@ -425,7 +449,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fPlot = value;
-                base.Invalidate();
             }
         }
 
@@ -440,7 +463,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fScalingFactor = value;
-                base.Invalidate();
             }
         }
 
@@ -455,7 +477,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fSelectedArea = value;
-                base.Invalidate();
             }
         }
 
@@ -470,7 +491,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fSelectedTiles = value;
-                base.Invalidate();
             }
         }
 
@@ -495,7 +515,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fCurrentOutline = value;
-                base.Invalidate();
             }
         }
 
@@ -510,7 +529,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowAllWaves = value;
-                base.Invalidate();
             }
         }
 
@@ -525,7 +543,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowAuras = value;
-                base.Invalidate();
             }
         }
 
@@ -540,7 +557,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowConditions = value;
-                base.Invalidate();
             }
         }
 
@@ -555,7 +571,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowCreatureLabels = value;
-                base.Invalidate();
             }
         }
 
@@ -570,7 +585,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowCreatures = value;
-                base.Invalidate();
             }
         }
 
@@ -585,7 +599,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowGrid = value;
-                base.Invalidate();
             }
         }
 
@@ -600,7 +613,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowGridLabels = value;
-                base.Invalidate();
             }
         }
 
@@ -615,7 +627,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowHealthBars = value;
-                base.Invalidate();
             }
         }
 
@@ -630,7 +641,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowPictureTokens = value;
-                base.Invalidate();
             }
         }
 
@@ -653,7 +663,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fTactical = value;
-                base.Invalidate();
             }
         }
 
@@ -668,7 +677,6 @@ namespace Masterplan.Controls
             set
             {
                 this.fTokenLinks = value;
-                base.Invalidate();
             }
         }
 
@@ -684,7 +692,6 @@ namespace Masterplan.Controls
             {
                 this.fViewpoint = value;
                 this.fLayoutData = null;
-                base.Invalidate();
             }
         }
 
@@ -999,7 +1006,7 @@ namespace Masterplan.Controls
         {
             try
             {
-                Image image = tile.Image ?? tile.BlankImage;
+                //Image image = tile.Image ?? tile.BlankImage;
                 ImageAttributes imageAttribute = new ImageAttributes();
                 if (ghost)
                 {
@@ -1015,42 +1022,34 @@ namespace Masterplan.Controls
                 InterpolationMode interpolationMode = g.InterpolationMode;
                 g.InterpolationMode = InterpolationMode.NearestNeighbor;
 
+                Bitmap bitmap = tile.BitmapResource;
                 switch (rotation % 4)
                 {
                     case 0:
                         {
-                            using (Bitmap bitmap = new Bitmap(image))
-                            {
-                                g.DrawImage(bitmap, rectangle, 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imageAttribute);
-                                break;
-                            }
+                            g.DrawImage(bitmap, rectangle, 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imageAttribute);
+                            break;
                         }
                     case 1:
                         {
-                            using (Bitmap bitmap1 = new Bitmap(image))
-                            {
-                                bitmap1.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                                g.DrawImage(bitmap1, rectangle, 0, 0, bitmap1.Width, bitmap1.Height, GraphicsUnit.Pixel, imageAttribute);
-                                break;
-                            }
+                            bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            g.DrawImage(bitmap, rectangle, 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imageAttribute);
+                            bitmap.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
                         }
                     case 2:
                         {
-                            using (Bitmap bitmap2 = new Bitmap(image))
-                            {
-                                bitmap2.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                                g.DrawImage(bitmap2, rectangle, 0, 0, bitmap2.Width, bitmap2.Height, GraphicsUnit.Pixel, imageAttribute);
-                                break;
-                            }
+                            bitmap.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            g.DrawImage(bitmap, rectangle, 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imageAttribute);
+                            bitmap.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
                         }
                     case 3:
                         {
-                            using (Bitmap bitmap3 = new Bitmap(image))
-                            {
-                                bitmap3.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                                g.DrawImage(bitmap3, rectangle, 0, 0, bitmap3.Width, bitmap3.Height, GraphicsUnit.Pixel, imageAttribute);
-                                break;
-                            }
+                            bitmap.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            g.DrawImage(bitmap, rectangle, 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imageAttribute);
+                            bitmap.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
                         }
                 }
 
@@ -1551,7 +1550,6 @@ namespace Masterplan.Controls
         public void MapChanged()
         {
             this.fLayoutData = null;
-            base.Invalidate();
         }
 
         public void Nudge(KeyEventArgs e)
@@ -1637,7 +1635,6 @@ namespace Masterplan.Controls
                         if (tokenLink != null)
                         {
                             this.fTokenLinks[num] = tokenLink;
-                            base.Invalidate();
                         }
                     }
                     base.OnDoubleClick(e);
@@ -1669,7 +1666,6 @@ namespace Masterplan.Controls
                     tileDatum
                 };
                 this.fLayoutData = null;
-                base.Invalidate();
                 this.OnItemDropped();
             }
             CreatureToken data = e.Data.GetData(typeof(CreatureToken)) as CreatureToken;
@@ -1677,7 +1673,6 @@ namespace Masterplan.Controls
             {
                 data.Data.Location = this.fNewToken.Location;
                 this.fNewToken = null;
-                base.Invalidate();
                 this.OnItemDropped();
             }
             if (e.Data.GetData(typeof(Hero)) is Hero)
@@ -1685,7 +1680,6 @@ namespace Masterplan.Controls
                 Hero token = this.fNewToken.Token as Hero;
                 token.CombatData.Location = this.fNewToken.Location;
                 this.fNewToken = null;
-                base.Invalidate();
                 this.OnItemDropped();
             }
             CustomToken location = e.Data.GetData(typeof(CustomToken)) as CustomToken;
@@ -1693,7 +1687,6 @@ namespace Masterplan.Controls
             {
                 location.Data.Location = this.fNewToken.Location;
                 this.fNewToken = null;
-                base.Invalidate();
                 this.OnItemDropped();
             }
         }
@@ -1702,7 +1695,6 @@ namespace Masterplan.Controls
         {
             this.fNewTile = null;
             this.fNewToken = null;
-            base.Invalidate();
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -1719,7 +1711,6 @@ namespace Masterplan.Controls
                     Location = this.fLayoutData.GetSquareAtPoint(client),
                     Region = this.fLayoutData.GetRegion(this.fNewTile.Location, data.Size)
                 };
-                base.Invalidate();
             }
             CreatureToken creatureToken = e.Data.GetData(typeof(CreatureToken)) as CreatureToken;
             if (creatureToken != null)
@@ -1735,7 +1726,6 @@ namespace Masterplan.Controls
                         Location = squareAtPoint
                     };
                     e.Effect = DragDropEffects.Move;
-                    base.Invalidate();
                 }
             }
             Hero hero = e.Data.GetData(typeof(Hero)) as Hero;
@@ -1750,7 +1740,6 @@ namespace Masterplan.Controls
                         Location = squareAtPoint
                     };
                     e.Effect = DragDropEffects.Move;
-                    base.Invalidate();
                 }
             }
             CustomToken customToken = e.Data.GetData(typeof(CustomToken)) as CustomToken;
@@ -1762,7 +1751,6 @@ namespace Masterplan.Controls
                     Location = squareAtPoint
                 };
                 e.Effect = DragDropEffects.Move;
-                base.Invalidate();
             }
         }
 
@@ -1797,6 +1785,8 @@ namespace Masterplan.Controls
             {
                 this.HoverTokenChanged(this, new EventArgs());
             }
+
+            this.Redraw();
         }
 
         protected void OnItemDropped()
@@ -1939,7 +1929,6 @@ namespace Masterplan.Controls
                     }
             }
             this.fLayoutData = null;
-            base.Invalidate();
             if (flag1)
             {
                 this.OnItemMoved(1);
@@ -1972,8 +1961,11 @@ namespace Masterplan.Controls
                                 Pair<IToken, Rectangle> tokenAt = this.get_token_at(squareAtPoint);
                                 if (tokenAt == null)
                                 {
-                                    this.fSelectedTokens.Clear();
-                                    this.OnSelectedTokensChanged();
+                                    if (this.fSelectedTokens.Count > 0)
+                                    {
+                                        this.fSelectedTokens.Clear();
+                                        this.OnSelectedTokensChanged();
+                                    }
                                 }
                                 else
                                 {
@@ -2099,7 +2091,6 @@ namespace Masterplan.Controls
                             {
                                 this.fViewpoint = this.get_current_zoom_rect(true);
                                 this.fLayoutData = null;
-                                base.Invalidate();
                             }
                             this.fScrollingData = new MapView.ScrollingData()
                             {
@@ -2131,15 +2122,16 @@ namespace Masterplan.Controls
                         this.OnSketchCreated(this.fDrawing.CurrentSketch);
                     }
                     this.fDrawing.CurrentSketch = null;
-                    base.Invalidate();
                 }
                 else if (!this.fAllowScrolling)
                 {
                     if (this.fTactical)
                     {
-                        this.fDraggedToken = null;
-                        this.OnTokenDragged();
-                        base.Invalidate();
+                        if (this.fDraggedToken != null)
+                        {
+                            this.fDraggedToken = null;
+                            this.OnTokenDragged();
+                        }
                     }
                     if (this.fMode == MapViewMode.Normal)
                     {
@@ -2158,7 +2150,6 @@ namespace Masterplan.Controls
                         }
                         this.fDraggedTiles = null;
                         this.fDraggedOutline = null;
-                        base.Invalidate();
                     }
                 }
             }
@@ -2194,7 +2185,6 @@ namespace Masterplan.Controls
                             };
                             Console.WriteLine(this.get_point(mapSketchPoint));
                             this.fDrawing.CurrentSketch.Points.Add(mapSketchPoint);
-                            base.Invalidate();
                         }
                     }
                     else if (!this.fAllowScrolling)
@@ -2263,8 +2253,11 @@ namespace Masterplan.Controls
                                 CustomToken token = this.fDraggedToken.Token as CustomToken;
                                 if ((token == null ? false : token.Type == CustomTokenType.Overlay) || this.allow_creature_move(rectangle, this.fDraggedToken.Start))
                                 {
-                                    this.fDraggedToken.Location = offset;
-                                    this.OnTokenDragged();
+                                    if (offset != this.fDraggedToken.Location)
+                                    {
+                                        this.fDraggedToken.Location = offset;
+                                        this.OnTokenDragged();
+                                    }
                                 }
                                 else if (this.fAllowLinkCreation)
                                 {
@@ -2281,7 +2274,6 @@ namespace Masterplan.Controls
                             {
                                 this.OnHoverTokenChanged();
                             }
-                            base.Invalidate();
                         }
                         MapArea mapArea = null;
                         foreach (MapArea area in this.fMap.Areas)
@@ -2296,7 +2288,6 @@ namespace Masterplan.Controls
                         {
                             this.fHighlightedArea = mapArea;
                             this.OnHighlightedAreaChanged();
-                            base.Invalidate();
                         }
                         if (this.fMode == MapViewMode.Normal)
                         {
@@ -2318,12 +2309,10 @@ namespace Masterplan.Controls
                                     }
                                     this.fDraggedTiles.Region = this.fLayoutData.GetRegion(point1, size);
                                 }
-                                base.Invalidate();
                             }
                             else if (this.fDraggedOutline == null)
                             {
                                 this.fHoverTile = this.fLayoutData.GetTileAtSquare(squareAtPoint);
-                                base.Invalidate();
                             }
                             else
                             {
@@ -2334,7 +2323,6 @@ namespace Masterplan.Controls
                                 int num3 = Math.Abs(squareAtPoint2.X - squareAtPoint1.X) + 1;
                                 int num4 = Math.Abs(squareAtPoint2.Y - squareAtPoint1.Y) + 1;
                                 this.fDraggedOutline.Region = new Rectangle(num1, num2, num3, num4);
-                                base.Invalidate();
                             }
                         }
                     }
@@ -2345,7 +2333,6 @@ namespace Masterplan.Controls
                         this.fViewpoint.X = this.fViewpoint.X + x1;
                         this.fViewpoint.Y = this.fViewpoint.Y + y2;
                         this.fLayoutData = null;
-                        base.Invalidate();
                     }
                 }
             }
@@ -2372,43 +2359,45 @@ namespace Masterplan.Controls
                         {
                             if (this.fTactical)
                             {
-                                if (this.fDraggedToken != null && this.fDraggedToken.Location != this.fDraggedToken.Start)
+                                if (this.fDraggedToken != null)
                                 {
-                                    //int _distance = MMath.CalcDistance(this.fDraggedToken.Location, this.fDraggedToken.Start);
+                                    if (this.fDraggedToken.Location != this.fDraggedToken.Start)
+                                    {
+                                        //int _distance = MMath.CalcDistance(this.fDraggedToken.Location, this.fDraggedToken.Start);
 
-                                    // Need to set fDraggedToken to null for....reasons.  OnPaint can get called and then the locations don't match between fDraggedToken and the actual token
-                                    DraggedToken dragResult = this.fDraggedToken;
-                                    this.fDraggedToken = null;
-                                    this.ItemMoved?.Invoke(dragResult.Token, dragResult.Start, dragResult.Location);
-                                    //this.OnItemMoved(_distance);
-                                }
-                                if (this.fDraggedToken != null && this.fDraggedToken.LinkedToken != null)
-                                {
-                                    TokenLink tokenLink = this.find_link(this.fDraggedToken.Token, this.fDraggedToken.LinkedToken);
-                                    if (tokenLink != null)
-                                    {
-                                        //this.fTokenLinks.Remove(tokenLink);
-                                        CommandManager.GetInstance().ExecuteCommand(new AddRemoveLinkCommand(AddRemoveLinkCommand.AddRemoveOption.Remove, this.fTokenLinks, tokenLink));
+                                        // Need to set fDraggedToken to null for....reasons.  OnPaint can get called and then the locations don't match between fDraggedToken and the actual token
+                                        DraggedToken dragResult = this.fDraggedToken;
+                                        this.fDraggedToken = null;
+                                        this.ItemMoved?.Invoke(dragResult.Token, dragResult.Start, dragResult.Location);
+                                        //this.OnItemMoved(_distance);
                                     }
-                                    else if (this.fDraggedToken.Token != this.fDraggedToken.LinkedToken)
+                                    else if (this.fDraggedToken.LinkedToken != null)
                                     {
-                                        List<IToken> tokens = new List<IToken>()
+                                        TokenLink tokenLink = this.find_link(this.fDraggedToken.Token, this.fDraggedToken.LinkedToken);
+                                        if (tokenLink != null)
+                                        {
+                                            //this.fTokenLinks.Remove(tokenLink);
+                                            CommandManager.GetInstance().ExecuteCommand(new AddRemoveLinkCommand(AddRemoveLinkCommand.AddRemoveOption.Remove, this.fTokenLinks, tokenLink));
+                                        }
+                                        else if (this.fDraggedToken.Token != this.fDraggedToken.LinkedToken)
+                                        {
+                                            List<IToken> tokens = new List<IToken>()
                                         {
                                             this.fDraggedToken.Token,
                                             this.fDraggedToken.LinkedToken
                                         };
-                                        TokenLink tokenLink1 = this.OnCreateTokenLink(tokens);
-                                        if (tokenLink1 != null)
-                                        {
-                                            //this.fTokenLinks.Add(tokenLink1);
-                                            CommandManager.GetInstance().ExecuteCommand(new AddRemoveLinkCommand(AddRemoveLinkCommand.AddRemoveOption.Add, this.fTokenLinks, tokenLink1));
+                                            TokenLink tokenLink1 = this.OnCreateTokenLink(tokens);
+                                            if (tokenLink1 != null)
+                                            {
+                                                CommandManager.GetInstance().ExecuteCommand(new AddRemoveLinkCommand(AddRemoveLinkCommand.AddRemoveOption.Add, this.fTokenLinks, tokenLink1));
+                                            }
                                         }
+                                        this.fDraggedToken = null;
                                     }
+
                                     this.fDraggedToken = null;
+                                    this.OnTokenDragged();
                                 }
-                                this.fDraggedToken = null;
-                                this.OnTokenDragged();
-                                base.Invalidate();
                             }
                             Point squareAtPoint = this.fLayoutData.GetSquareAtPoint(client);
                             MapArea mapArea = null;
@@ -2424,7 +2413,6 @@ namespace Masterplan.Controls
                             {
                                 this.fSelectedArea = mapArea;
                                 this.OnAreaSelected(this.fSelectedArea);
-                                base.Invalidate();
                             }
                             if (this.fMode == MapViewMode.Normal)
                             {
@@ -2447,7 +2435,6 @@ namespace Masterplan.Controls
                                     }
                                     this.fDraggedTiles = null;
                                     this.fLayoutData = null;
-                                    base.Invalidate();
                                 }
                                 else if (this.fDraggedOutline != null)
                                 {
@@ -2470,7 +2457,6 @@ namespace Masterplan.Controls
                                         this.OnRegionSelected();
                                     }
                                     this.fDraggedOutline = null;
-                                    base.Invalidate();
                                 }
                             }
                         }
@@ -2480,7 +2466,6 @@ namespace Masterplan.Controls
                             {
                                 this.fViewpoint = this.get_current_zoom_rect(true);
                                 this.fLayoutData = null;
-                                base.Invalidate();
                             }
                             this.fScrollingData = null;
                         }
@@ -2493,7 +2478,6 @@ namespace Masterplan.Controls
                             this.OnSketchCreated(this.fDrawing.CurrentSketch);
                         }
                         this.fDrawing.CurrentSketch = null;
-                        base.Invalidate();
                     }
                 }
             }
@@ -2519,28 +2503,37 @@ namespace Masterplan.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (backbufferGraphics != null)
+            {
+                backbufferGraphics.Render(e.Graphics);
+            }
+        }
+
+        public void Redraw()
+        {
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();           
             Rectangle clientRectangle;
             Point location;
             if (this.fLayoutData == null)
             {
                 this.fLayoutData = new MapData(this, this.fScalingFactor);
             }
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            drawingGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+            drawingGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            drawingGraphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
             switch (this.fMode)
             {
                 case MapViewMode.Normal:
                     {
                         using (Brush solidBrush = new SolidBrush(Color.FromArgb(70, 100, 170)))
                         {
-                            e.Graphics.FillRectangle(solidBrush, base.ClientRectangle);
+                            drawingGraphics.FillRectangle(solidBrush, base.ClientRectangle);
                             break;
                         }
                     }
                 case MapViewMode.Plain:
                     {
-                        e.Graphics.FillRectangle(Brushes.White, base.ClientRectangle);
+                        drawingGraphics.FillRectangle(Brushes.White, base.ClientRectangle);
                         break;
                     }
                 case MapViewMode.Thumbnail:
@@ -2549,13 +2542,13 @@ namespace Masterplan.Controls
                         Color color1 = Color.FromArgb(170, 170, 170);
                         using (Brush linearGradientBrush = new LinearGradientBrush(base.ClientRectangle, color, color1, LinearGradientMode.Vertical))
                         {
-                            e.Graphics.FillRectangle(linearGradientBrush, base.ClientRectangle);
+                            drawingGraphics.FillRectangle(linearGradientBrush, base.ClientRectangle);
                             break;
                         }
                     }
                 case MapViewMode.PlayerView:
                     {
-                        e.Graphics.FillRectangle(Brushes.Black, base.ClientRectangle);
+                        drawingGraphics.FillRectangle(Brushes.Black, base.ClientRectangle);
                         break;
                     }
             }
@@ -2566,7 +2559,7 @@ namespace Masterplan.Controls
                 {
                     windowText = Brushes.White;
                 }
-                e.Graphics.DrawString("(no map selected)", this.Font, windowText, base.ClientRectangle, this.fCentred);
+                drawingGraphics.DrawString("(no map selected)", this.Font, windowText, base.ClientRectangle, this.fCentred);
                 return;
             }
             if (this.fShowGrid == MapGridMode.Behind && this.fLayoutData.SquareSize >= 10f)
@@ -2582,15 +2575,13 @@ namespace Masterplan.Controls
                         {
                             if (num % 4 != 0)
                             {
-                                Graphics graphics = e.Graphics;
                                 clientRectangle = base.ClientRectangle;
-                                graphics.DrawLine(pen, squareSize + width, 0f, squareSize + width, (float)clientRectangle.Height);
+                                drawingGraphics.DrawLine(pen, squareSize + width, 0f, squareSize + width, (float)clientRectangle.Height);
                             }
                             else
                             {
-                                Graphics graphic = e.Graphics;
                                 clientRectangle = base.ClientRectangle;
-                                graphic.DrawLine(pen1, squareSize + width, 0f, squareSize + width, (float)clientRectangle.Height);
+                                drawingGraphics.DrawLine(pen1, squareSize + width, 0f, squareSize + width, (float)clientRectangle.Height);
                             }
                             squareSize += this.fLayoutData.SquareSize;
                             num++;
@@ -2602,15 +2593,13 @@ namespace Masterplan.Controls
                         {
                             if (num1 % 4 != 0)
                             {
-                                Graphics graphics1 = e.Graphics;
                                 clientRectangle = base.ClientRectangle;
-                                graphics1.DrawLine(pen, 0f, single + height, (float)clientRectangle.Width, single + height);
+                                drawingGraphics.DrawLine(pen, 0f, single + height, (float)clientRectangle.Width, single + height);
                             }
                             else
                             {
-                                Graphics graphic1 = e.Graphics;
                                 clientRectangle = base.ClientRectangle;
-                                graphic1.DrawLine(pen1, 0f, single + height, (float)clientRectangle.Width, single + height);
+                                drawingGraphics.DrawLine(pen1, 0f, single + height, (float)clientRectangle.Width, single + height);
                             }
                             single += this.fLayoutData.SquareSize;
                             num1++;
@@ -2663,13 +2652,13 @@ namespace Masterplan.Controls
                     {
                         continue;
                     }
-                    e.Graphics.FillRectangle(lightBlue, region);
+                    drawingGraphics.FillRectangle(lightBlue, region);
                 }
             }
             if (this.fCurrentOutline != Rectangle.Empty)
             {
                 RectangleF rectangleF = this.fLayoutData.GetRegion(this.fCurrentOutline.Location, this.fCurrentOutline.Size);
-                e.Graphics.FillRectangle(Brushes.LightBlue, rectangleF);
+                drawingGraphics.FillRectangle(Brushes.LightBlue, rectangleF);
             }
             if (this.fBackgroundMap != null)
             {
@@ -2681,7 +2670,7 @@ namespace Masterplan.Controls
                     }
                     Tile item = this.fLayoutData.Tiles[tile];
                     RectangleF item1 = this.fLayoutData.TileRegions[tile];
-                    this.draw_tile(e.Graphics, item, tile.Rotations, item1, true);
+                    this.draw_tile(drawingGraphics, item, tile.Rotations, item1, true);
                 }
             }
             foreach (TileData tileDatum in this.fMap.Tiles)
@@ -2692,30 +2681,30 @@ namespace Masterplan.Controls
                 }
                 Tile tile1 = this.fLayoutData.Tiles[tileDatum];
                 RectangleF rectangleF1 = this.fLayoutData.TileRegions[tileDatum];
-                this.draw_tile(e.Graphics, tile1, tileDatum.Rotations, rectangleF1, false);
+                this.draw_tile(drawingGraphics, tile1, tileDatum.Rotations, rectangleF1, false);
                 if (this.fSelectedTiles == null || !this.fSelectedTiles.Contains(tileDatum))
                 {
                     if (tileDatum != this.fHoverTile)
                     {
                         continue;
                     }
-                    e.Graphics.DrawRectangle(Pens.DarkBlue, rectangleF1.X, rectangleF1.Y, rectangleF1.Width, rectangleF1.Height);
+                    drawingGraphics.DrawRectangle(Pens.DarkBlue, rectangleF1.X, rectangleF1.Y, rectangleF1.Width, rectangleF1.Height);
                 }
                 else
                 {
-                    e.Graphics.DrawRectangle(Pens.Blue, rectangleF1.X, rectangleF1.Y, rectangleF1.Width, rectangleF1.Height);
+                    drawingGraphics.DrawRectangle(Pens.Blue, rectangleF1.X, rectangleF1.Y, rectangleF1.Width, rectangleF1.Height);
                 }
             }
             if (this.fNewTile != null)
             {
-                this.draw_tile(e.Graphics, this.fNewTile.Tile, 0, this.fNewTile.Region, false);
+                this.draw_tile(drawingGraphics, this.fNewTile.Tile, 0, this.fNewTile.Region, false);
             }
             if (this.fDraggedTiles != null)
             {
                 foreach (TileData tileDatum1 in this.fDraggedTiles.Tiles)
                 {
                     Tile item2 = this.fLayoutData.Tiles[tileDatum1];
-                    this.draw_tile(e.Graphics, item2, tileDatum1.Rotations, this.fDraggedTiles.Region, false);
+                    this.draw_tile(drawingGraphics, item2, tileDatum1.Rotations, this.fDraggedTiles.Region, false);
                 }
             }
             if (this.fShowGrid == MapGridMode.Overlay && this.fLayoutData.SquareSize >= 10f)
@@ -2725,18 +2714,16 @@ namespace Masterplan.Controls
                 float width1 = this.fLayoutData.MapOffset.Width % this.fLayoutData.SquareSize;
                 while (squareSize1 <= (float)base.ClientRectangle.Width)
                 {
-                    Graphics graphics2 = e.Graphics;
                     clientRectangle = base.ClientRectangle;
-                    graphics2.DrawLine(darkGray, squareSize1 + width1, 0f, squareSize1 + width1, (float)clientRectangle.Height);
+                    drawingGraphics.DrawLine(darkGray, squareSize1 + width1, 0f, squareSize1 + width1, (float)clientRectangle.Height);
                     squareSize1 += this.fLayoutData.SquareSize;
                 }
                 float single1 = 0f;
                 float height1 = this.fLayoutData.MapOffset.Height % this.fLayoutData.SquareSize;
                 while (single1 <= (float)base.ClientRectangle.Height)
                 {
-                    Graphics graphic2 = e.Graphics;
                     clientRectangle = base.ClientRectangle;
-                    graphic2.DrawLine(darkGray, 0f, single1 + height1, (float)clientRectangle.Width, single1 + height1);
+                    drawingGraphics.DrawLine(darkGray, 0f, single1 + height1, (float)clientRectangle.Width, single1 + height1);
                     single1 += this.fLayoutData.SquareSize;
                 }
             }
@@ -2750,9 +2737,9 @@ namespace Masterplan.Controls
                     int minX = i - this.fLayoutData.MinX + 1;
                     string str1 = minX.ToString();
                     RectangleF region1 = this.fLayoutData.GetRegion(new Point(i, this.fLayoutData.MinY), new System.Drawing.Size(1, 1));
-                    this.draw_grid_label(e.Graphics, str1, font, region1, this.fTop);
+                    this.draw_grid_label(drawingGraphics, str1, font, region1, this.fTop);
                     RectangleF region2 = this.fLayoutData.GetRegion(new Point(i, this.fLayoutData.MaxY), new System.Drawing.Size(1, 1));
-                    this.draw_grid_label(e.Graphics, str1, font, region2, this.fBottom);
+                    this.draw_grid_label(drawingGraphics, str1, font, region2, this.fBottom);
                 }
                 for (int j = this.fLayoutData.MinY; j <= this.fLayoutData.MaxY; j++)
                 {
@@ -2766,9 +2753,9 @@ namespace Masterplan.Controls
                     int length1 = minY % str.Length;
                     str2 = string.Concat(str2, str.Substring(length1, 1));
                     RectangleF rectangleF2 = this.fLayoutData.GetRegion(new Point(this.fLayoutData.MinX, j), new System.Drawing.Size(1, 1));
-                    this.draw_grid_label(e.Graphics, str2, font, rectangleF2, this.fLeft);
+                    this.draw_grid_label(drawingGraphics, str2, font, rectangleF2, this.fLeft);
                     RectangleF region3 = this.fLayoutData.GetRegion(new Point(this.fLayoutData.MaxX, j), new System.Drawing.Size(1, 1));
-                    this.draw_grid_label(e.Graphics, str2, font, region3, this.fRight);
+                    this.draw_grid_label(drawingGraphics, str2, font, region3, this.fRight);
                 }
             }
             if (this.fHighlightAreas)
@@ -2793,7 +2780,7 @@ namespace Masterplan.Controls
                     {
                         darkBlue = Pens.DarkBlue;
                     }
-                    e.Graphics.DrawRectangle(darkBlue, rectangleF3.X, rectangleF3.Y, rectangleF3.Width, rectangleF3.Height);
+                    drawingGraphics.DrawRectangle(darkBlue, rectangleF3.X, rectangleF3.Y, rectangleF3.Width, rectangleF3.Height);
                     if (state == PlotPointState.Completed || state == PlotPointState.Skipped)
                     {
                         PointF pointF = new PointF(rectangleF3.Left, rectangleF3.Top);
@@ -2801,8 +2788,8 @@ namespace Masterplan.Controls
                         PointF pointF2 = new PointF(rectangleF3.Left, rectangleF3.Bottom);
                         PointF pointF3 = new PointF(rectangleF3.Right, rectangleF3.Bottom);
                         Pen pen2 = new Pen(Color.DarkGray, 2f);
-                        e.Graphics.DrawLine(pen2, pointF, pointF3);
-                        e.Graphics.DrawLine(pen2, pointF2, pointF1);
+                        drawingGraphics.DrawLine(pen2, pointF, pointF3);
+                        drawingGraphics.DrawLine(pen2, pointF2, pointF1);
                     }
                     if (!(this.fViewpoint == Rectangle.Empty) || !(mapArea.Name != "") || this.fNewTile != null || this.fDraggedTiles != null)
                     {
@@ -2814,7 +2801,7 @@ namespace Masterplan.Controls
                         font1 = new System.Drawing.Font(font1, font1.Style | FontStyle.Strikeout);
                     }
                     float single2 = 8f;
-                    SizeF sizeF = e.Graphics.MeasureString(mapArea.Name, font1);
+                    SizeF sizeF = drawingGraphics.MeasureString(mapArea.Name, font1);
                     sizeF = new SizeF(sizeF.Width + single2, sizeF.Height + single2);
                     float width2 = (rectangleF3.Width - sizeF.Width) / 2f;
                     float height2 = (rectangleF3.Height - sizeF.Height) / 2f;
@@ -2822,10 +2809,10 @@ namespace Masterplan.Controls
                     GraphicsPath graphicsPath = RoundedRectangle.Create(rectangleF4, rectangleF4.Height / 3f);
                     using (Brush brush = new SolidBrush(Color.FromArgb(200, Color.Black)))
                     {
-                        e.Graphics.FillPath(brush, graphicsPath);
+                        drawingGraphics.FillPath(brush, graphicsPath);
                     }
-                    e.Graphics.DrawPath(Pens.Black, graphicsPath);
-                    e.Graphics.DrawString(mapArea.Name, font1, Brushes.White, rectangleF4, this.fCentred);
+                    drawingGraphics.DrawPath(Pens.Black, graphicsPath);
+                    drawingGraphics.DrawString(mapArea.Name, font1, Brushes.White, rectangleF4, this.fCentred);
                 }
             }
             else if (this.fPlot != null)
@@ -2841,7 +2828,7 @@ namespace Masterplan.Controls
                     Point point1 = area1.Region.Location;
                     clientRectangle = area1.Region;
                     RectangleF region4 = mapDatum2.GetRegion(point1, clientRectangle.Size);
-                    e.Graphics.FillRectangle(Brushes.Black, region4);
+                    drawingGraphics.FillRectangle(Brushes.Black, region4);
                 }
             }
             if (this.fShowAuras)
@@ -2923,11 +2910,11 @@ namespace Masterplan.Controls
                         GraphicsPath graphicsPath1 = RoundedRectangle.Create(region5, squareSize3);
                         using (Pen pen3 = new Pen(Color.FromArgb(200, Color.Red)))
                         {
-                            e.Graphics.DrawPath(pen3, graphicsPath1);
+                            drawingGraphics.DrawPath(pen3, graphicsPath1);
                         }
                         using (Brush solidBrush1 = new SolidBrush(Color.FromArgb(15, Color.Red)))
                         {
-                            e.Graphics.FillPath(solidBrush1, graphicsPath1);
+                            drawingGraphics.FillPath(solidBrush1, graphicsPath1);
                         }
                     }
                 }
@@ -2955,7 +2942,7 @@ namespace Masterplan.Controls
                     PointF pointF5 = new PointF((tokenRect1.Left + tokenRect1.Right) / 2f, (tokenRect1.Top + tokenRect1.Bottom) / 2f);
                     using (Pen pen4 = new Pen(color4, 2f))
                     {
-                        e.Graphics.DrawLine(pen4, pointF4, pointF5);
+                        drawingGraphics.DrawLine(pen4, pointF4, pointF5);
                     }
                 }
             }
@@ -3008,7 +2995,7 @@ namespace Masterplan.Controls
                     {
                         d = this.get_combat_data(this.fHoverToken).ID == customToken.Data.ID;
                     }
-                    this.draw_custom(e.Graphics, customToken.Data.Location, customToken, flag, d, false);
+                    this.draw_custom(drawingGraphics, customToken.Data.Location, customToken, flag, d, false);
                 }
                 foreach (CustomToken customToken1 in this.fEncounter.CustomTokens)
                 {
@@ -3025,7 +3012,7 @@ namespace Masterplan.Controls
                             {
                                 continue;
                             }
-                            this.draw_token_placeholder(e.Graphics, customToken1.Data.Location, this.fDraggedToken.Location, customToken1.TokenSize, false);
+                            this.draw_token_placeholder(drawingGraphics, customToken1.Data.Location, this.fDraggedToken.Location, customToken1.TokenSize, false);
                             continue;
                         }
                     }
@@ -3035,7 +3022,7 @@ namespace Masterplan.Controls
                     {
                         d1 = this.get_combat_data(this.fHoverToken).ID == customToken1.Data.ID;
                     }
-                    this.draw_custom(e.Graphics, customToken1.Data.Location, customToken1, flag1, d1, false);
+                    this.draw_custom(drawingGraphics, customToken1.Data.Location, customToken1, flag1, d1, false);
                 }
                 foreach (EncounterSlot allSlot1 in this.fEncounter.AllSlots)
                 {
@@ -3061,7 +3048,7 @@ namespace Masterplan.Controls
                                 }
                                 ICreature creature3 = Session.FindCreature(allSlot1.Card.CreatureID, SearchType.Global);
                                 bool image = creature3.Image != null;
-                                this.draw_token_placeholder(e.Graphics, combatDatum3.Location, this.fDraggedToken.Location, creature3.Size, image);
+                                this.draw_token_placeholder(drawingGraphics, combatDatum3.Location, this.fDraggedToken.Location, creature3.Size, image);
                                 continue;
                             }
                         }
@@ -3081,7 +3068,7 @@ namespace Masterplan.Controls
                         {
                             flag3 = true;
                         }
-                        this.draw_creature(e.Graphics, combatDatum3.Location, allSlot1.Card, combatDatum3, flag2, flag3, false);
+                        this.draw_creature(drawingGraphics, combatDatum3.Location, allSlot1.Card, combatDatum3, flag2, flag3, false);
                     }
                 }
             }
@@ -3103,13 +3090,13 @@ namespace Masterplan.Controls
                                 continue;
                             }
                             bool portrait = hero2.Portrait != null;
-                            this.draw_token_placeholder(e.Graphics, hero2.CombatData.Location, this.fDraggedToken.Location, hero2.Size, portrait);
+                            this.draw_token_placeholder(drawingGraphics, hero2.CombatData.Location, this.fDraggedToken.Location, hero2.Size, portrait);
                             continue;
                         }
                     }
                     bool flag4 = this.fSelectedTokens.Contains(hero2);
                     bool flag5 = hero2 == this.fHoverToken;
-                    this.draw_hero(e.Graphics, hero2.CombatData.Location, hero2, flag4, flag5, false);
+                    this.draw_hero(drawingGraphics, hero2.CombatData.Location, hero2, flag4, flag5, false);
                 }
             }
             if (this.fNewToken != null)
@@ -3119,17 +3106,17 @@ namespace Masterplan.Controls
                     CreatureToken token4 = this.fNewToken.Token as CreatureToken;
                     EncounterSlot encounterSlot2 = this.fEncounter.FindSlot(token4.SlotID);
                     Session.FindCreature(encounterSlot2.Card.CreatureID, SearchType.Global);
-                    this.draw_creature(e.Graphics, this.fNewToken.Location, encounterSlot2.Card, token4.Data, true, true, true);
+                    this.draw_creature(drawingGraphics, this.fNewToken.Location, encounterSlot2.Card, token4.Data, true, true, true);
                 }
                 if (this.fNewToken.Token is Hero)
                 {
                     Hero hero3 = this.fNewToken.Token as Hero;
-                    this.draw_hero(e.Graphics, this.fNewToken.Location, hero3, true, true, true);
+                    this.draw_hero(drawingGraphics, this.fNewToken.Location, hero3, true, true, true);
                 }
                 if (this.fNewToken.Token is CustomToken)
                 {
                     CustomToken customToken3 = this.fNewToken.Token as CustomToken;
-                    this.draw_custom(e.Graphics, this.fNewToken.Location, customToken3, true, true, true);
+                    this.draw_custom(drawingGraphics, this.fNewToken.Location, customToken3, true, true, true);
                 }
             }
             if (this.fDraggedToken != null)
@@ -3138,23 +3125,23 @@ namespace Masterplan.Controls
                 {
                     CreatureToken creatureToken4 = this.fDraggedToken.Token as CreatureToken;
                     EncounterSlot encounterSlot3 = this.fEncounter.FindSlot(creatureToken4.SlotID);
-                    this.draw_creature(e.Graphics, this.fDraggedToken.Location, encounterSlot3.Card, creatureToken4.Data, true, true, true);
+                    this.draw_creature(drawingGraphics, this.fDraggedToken.Location, encounterSlot3.Card, creatureToken4.Data, true, true, true);
                 }
                 if (this.fDraggedToken.Token is Hero)
                 {
                     Hero hero4 = this.fDraggedToken.Token as Hero;
-                    this.draw_hero(e.Graphics, this.fDraggedToken.Location, hero4, true, true, true);
+                    this.draw_hero(drawingGraphics, this.fDraggedToken.Location, hero4, true, true, true);
                 }
                 if (this.fDraggedToken.Token is CustomToken)
                 {
                     CustomToken customToken4 = this.fDraggedToken.Token as CustomToken;
-                    this.draw_custom(e.Graphics, this.fDraggedToken.Location, customToken4, true, true, true);
+                    this.draw_custom(drawingGraphics, this.fDraggedToken.Location, customToken4, true, true, true);
                 }
                 if (this.fDraggedToken.LinkedToken != null)
                 {
                     Pen pen5 = new Pen(Color.Red, 2f);
                     RectangleF tokenRect2 = this.get_token_rect(this.fDraggedToken.LinkedToken);
-                    e.Graphics.DrawRectangle(pen5, tokenRect2.X, tokenRect2.Y, tokenRect2.Width, tokenRect2.Height);
+                    drawingGraphics.DrawRectangle(pen5, tokenRect2.X, tokenRect2.Y, tokenRect2.Width, tokenRect2.Height);
                 }
             }
             this.fTokenLinkRegions.Clear();
@@ -3188,26 +3175,26 @@ namespace Masterplan.Controls
                     float single3 = Math.Min(this.Font.Size, this.fLayoutData.SquareSize / 4f);
                     using (System.Drawing.Font font2 = new System.Drawing.Font(this.Font.FontFamily, single3))
                     {
-                        SizeF sizeF1 = e.Graphics.MeasureString(text, font2);
+                        SizeF sizeF1 = drawingGraphics.MeasureString(text, font2);
                         sizeF1 = new SizeF(sizeF1.Width * 1.2f, sizeF1.Height * 1.2f);
                         PointF pointF8 = new PointF((pointF6.X + pointF7.X) / 2f, (pointF6.Y + pointF7.Y) / 2f);
                         PointF pointF9 = new PointF(pointF8.X - sizeF1.Width / 2f, pointF8.Y - sizeF1.Height / 2f);
                         RectangleF rectangleF5 = new RectangleF(pointF9, sizeF1);
                         Pen pen6 = (tokenLink == this.fHoverTokenLink ? Pens.Blue : Pens.Navy);
-                        e.Graphics.FillRectangle(Brushes.White, rectangleF5);
-                        e.Graphics.DrawString(text, font2, Brushes.Navy, rectangleF5, this.fCentred);
-                        e.Graphics.DrawRectangle(pen6, rectangleF5.X, rectangleF5.Y, rectangleF5.Width, rectangleF5.Height);
+                        drawingGraphics.FillRectangle(Brushes.White, rectangleF5);
+                        drawingGraphics.DrawString(text, font2, Brushes.Navy, rectangleF5, this.fCentred);
+                        drawingGraphics.DrawRectangle(pen6, rectangleF5.X, rectangleF5.Y, rectangleF5.Width, rectangleF5.Height);
                         this.fTokenLinkRegions[tokenLink] = rectangleF5;
                     }
                 }
             }
             foreach (MapSketch fSketch in this.fSketches)
             {
-                this.draw_sketch(e.Graphics, fSketch);
+                this.draw_sketch(drawingGraphics, fSketch);
             }
             if (this.fDrawing != null && this.fDrawing.CurrentSketch != null)
             {
-                this.draw_sketch(e.Graphics, this.fDrawing.CurrentSketch);
+                this.draw_sketch(drawingGraphics, this.fDrawing.CurrentSketch);
             }
             if (this.fLineOfSight)
             {
@@ -3228,23 +3215,23 @@ namespace Masterplan.Controls
                         };
                         foreach (PointF pointF10 in pointFs)
                         {
-                            e.Graphics.DrawLine(Pens.Blue, closestVertex, pointF10);
+                            drawingGraphics.DrawLine(Pens.Blue, closestVertex, pointF10);
                             RectangleF rectangleF6 = new RectangleF(pointF10.X - single4, pointF10.Y - single4, single4 * 2f, single4 * 2f);
-                            e.Graphics.FillEllipse(Brushes.LightBlue, rectangleF6);
-                            e.Graphics.DrawEllipse(Pens.Blue, rectangleF6);
+                            drawingGraphics.FillEllipse(Brushes.LightBlue, rectangleF6);
+                            drawingGraphics.DrawEllipse(Pens.Blue, rectangleF6);
                         }
                     }
                     RectangleF rectangleF7 = new RectangleF(closestVertex.X - single4, closestVertex.Y - single4, single4 * 2f, single4 * 2f);
-                    e.Graphics.FillEllipse(Brushes.LightBlue, rectangleF7);
-                    e.Graphics.DrawEllipse(Pens.Blue, rectangleF7);
+                    drawingGraphics.FillEllipse(Brushes.LightBlue, rectangleF7);
+                    drawingGraphics.DrawEllipse(Pens.Blue, rectangleF7);
                 }
             }
             if (this.fDraggedOutline != null)
             {
                 RectangleF region6 = this.fLayoutData.GetRegion(this.fDraggedOutline.Region.Location, this.fDraggedOutline.Region.Size);
-                e.Graphics.DrawRectangle(Pens.DarkBlue, region6.X, region6.Y, region6.Width, region6.Height);
+                drawingGraphics.DrawRectangle(Pens.DarkBlue, region6.X, region6.Y, region6.Width, region6.Height);
                 string str3 = string.Concat(this.fDraggedOutline.Region.Width, "x", this.fDraggedOutline.Region.Height);
-                SizeF sizeF2 = e.Graphics.MeasureString(str3, this.Font);
+                SizeF sizeF2 = drawingGraphics.MeasureString(str3, this.Font);
                 sizeF2.Width = Math.Min(region6.Width, sizeF2.Width);
                 sizeF2.Height = Math.Min(region6.Height, sizeF2.Height);
                 float width4 = (region6.Width - sizeF2.Width) / 2f;
@@ -3252,12 +3239,12 @@ namespace Masterplan.Controls
                 RectangleF rectangleF8 = new RectangleF(region6.X + width4, region6.Y + height4, sizeF2.Width, sizeF2.Height);
                 using (Brush brush1 = new SolidBrush(Color.FromArgb(150, Color.White)))
                 {
-                    e.Graphics.FillRectangle(brush1, rectangleF8);
+                    drawingGraphics.FillRectangle(brush1, rectangleF8);
                 }
-                e.Graphics.DrawString(str3, this.Font, Brushes.DarkBlue, region6, this.fCentred);
+                drawingGraphics.DrawString(str3, this.Font, Brushes.DarkBlue, region6, this.fCentred);
             }
             RectangleF region7 = this.fLayoutData.GetRegion(this.fCurrentOutline.Location, this.fCurrentOutline.Size);
-            e.Graphics.DrawRectangle(Pens.LightBlue, region7.X, region7.Y, region7.Width, region7.Height);
+            drawingGraphics.DrawRectangle(Pens.LightBlue, region7.X, region7.Y, region7.Width, region7.Height);
             if (this.fFrameType != MapDisplayType.None && this.fViewpoint != Rectangle.Empty && !this.fAllowScrolling)
             {
                 Color black = Color.Black;
@@ -3282,24 +3269,21 @@ namespace Masterplan.Controls
                 RectangleF region8 = this.fLayoutData.GetRegion(this.fViewpoint.Location, this.fViewpoint.Size);
                 using (Brush solidBrush2 = new SolidBrush(Color.FromArgb(num4, black)))
                 {
-                    Graphics graphics3 = e.Graphics;
                     clientRectangle = base.ClientRectangle;
-                    graphics3.FillRectangle(solidBrush2, 0f, 0f, (float)clientRectangle.Width, region8.Top);
-                    Graphics graphic3 = e.Graphics;
+                    drawingGraphics.FillRectangle(solidBrush2, 0f, 0f, (float)clientRectangle.Width, region8.Top);
                     float bottom = region8.Bottom;
                     float width5 = (float)base.ClientRectangle.Width;
                     clientRectangle = base.ClientRectangle;
-                    graphic3.FillRectangle(solidBrush2, 0f, bottom, width5, (float)clientRectangle.Height);
-                    e.Graphics.FillRectangle(solidBrush2, 0f, region8.Top, region8.Left, region8.Height);
-                    Graphics graphics4 = e.Graphics;
+                    drawingGraphics.FillRectangle(solidBrush2, 0f, bottom, width5, (float)clientRectangle.Height);
+                    drawingGraphics.FillRectangle(solidBrush2, 0f, region8.Top, region8.Left, region8.Height);
                     float right = region8.Right;
                     float top = region8.Top;
                     clientRectangle = base.ClientRectangle;
-                    graphics4.FillRectangle(solidBrush2, right, top, (float)clientRectangle.Width - region8.Right, region8.Height);
+                    drawingGraphics.FillRectangle(solidBrush2, right, top, (float)clientRectangle.Width - region8.Right, region8.Height);
                 }
                 if (this.fHighlightAreas)
                 {
-                    e.Graphics.DrawRectangle(SystemPens.ControlLight, region8.X, region8.Y, region8.Width, region8.Height);
+                    drawingGraphics.DrawRectangle(SystemPens.ControlLight, region8.X, region8.Y, region8.Width, region8.Height);
                 }
             }
             string str4 = this.fCaption;
@@ -3340,17 +3324,23 @@ namespace Masterplan.Controls
                 float single5 = 10f;
                 clientRectangle = base.ClientRectangle;
                 float width6 = (float)clientRectangle.Width - 2f * single5;
-                SizeF sizeF3 = e.Graphics.MeasureString(str4, this.Font, (int)width6);
+                SizeF sizeF3 = drawingGraphics.MeasureString(str4, this.Font, (int)width6);
                 float height5 = sizeF3.Height * 2f;
                 RectangleF rectangleF9 = new RectangleF(single5, single5, width6, height5);
                 GraphicsPath graphicsPath2 = RoundedRectangle.Create(rectangleF9, height5 / 3f);
                 using (Brush brush2 = new SolidBrush(Color.FromArgb(200, Color.Black)))
                 {
-                    e.Graphics.FillPath(brush2, graphicsPath2);
+                    drawingGraphics.FillPath(brush2, graphicsPath2);
                 }
-                e.Graphics.DrawPath(Pens.Black, graphicsPath2);
-                e.Graphics.DrawString(str4, this.Font, Brushes.White, rectangleF9, this.fCentred);
+                drawingGraphics.DrawPath(Pens.Black, graphicsPath2);
+                drawingGraphics.DrawString(str4, this.Font, Brushes.White, rectangleF9, this.fCentred);
             }
+            sw.Stop();
+            Console.WriteLine("Redraw took {0} ms", sw.ElapsedMilliseconds);
+
+            base.Invalidate();
+
+            DataCollection.StopProfile(ProfileLevel.Global, DataCollection.CurrentId);
         }
 
         protected void OnRegionSelected()
@@ -3364,7 +3354,8 @@ namespace Masterplan.Controls
         protected override void OnResize(EventArgs e)
         {
             this.fLayoutData = null;
-            base.Invalidate();
+            this.RecreateBuffers();
+            this.Redraw();
         }
 
         protected void OnSelectedTokensChanged()
@@ -3373,6 +3364,8 @@ namespace Masterplan.Controls
             {
                 this.SelectedTokensChanged(this, new EventArgs());
             }
+
+            this.Redraw();
         }
 
         protected void OnSketchCreated(MapSketch sketch)
@@ -3408,6 +3401,7 @@ namespace Masterplan.Controls
                 point = (this.fDraggedToken != null ? this.fDraggedToken.Location : CombatData.NoPoint);
                 this.TokenDragged(this, new DraggedTokenEventArgs(point1, point));
             }
+            this.Redraw();
         }
 
         public void SelectTokens(List<IToken> tokens, bool raise_event)
@@ -3438,7 +3432,6 @@ namespace Masterplan.Controls
             {
                 this.fSelectedTokens.Remove(token1);
             }
-            base.Invalidate();
             if (raise_event)
             {
                 this.OnSelectedTokensChanged();
@@ -3450,7 +3443,6 @@ namespace Masterplan.Controls
             if (old_point == CombatData.NoPoint)
             {
                 this.fDraggedToken = null;
-                base.Invalidate();
                 return;
             }
             Pair<IToken, Rectangle> tokenAt = this.get_token_at(old_point);
@@ -3462,7 +3454,6 @@ namespace Masterplan.Controls
                     Start = old_point,
                     Location = new_point
                 };
-                base.Invalidate();
             }
         }
 
