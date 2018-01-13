@@ -70,6 +70,12 @@
     <Compile Include="Masterplan\Controls\EncounterGauge.Designer.cs">
       <DependentUpon>EncounterGauge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Masterplan\Controls\EncounterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\EncounterPanel.Designer.cs">
+      <DependentUpon>EncounterPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Masterplan\Controls\FilterPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -94,6 +100,12 @@
     <Compile Include="Masterplan\Controls\LibraryHelpPanel.Designer.cs">
       <DependentUpon>LibraryHelpPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Masterplan\Controls\MapElementPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\MapElementPanel.Designer.cs">
+      <DependentUpon>MapElementPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Masterplan\Controls\MapView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -106,11 +118,44 @@
     <Compile Include="Masterplan\Controls\PlotView.Designer.cs">
       <DependentUpon>PlotView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Masterplan\Controls\QuestPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\QuestPanel.Designer.cs">
+      <DependentUpon>QuestPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\SkillChallengePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\SkillChallengePanel.Designer.cs">
+      <DependentUpon>SkillChallengePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TilePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TitlePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TitlePanel.Designer.cs">
+      <DependentUpon>TitlePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Masterplan\Controls\TokenPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Masterplan\Controls\TokenPanel.Designer.cs">
       <DependentUpon>TokenPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TrapElementPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\TrapElementPanel.Designer.cs">
+      <DependentUpon>TrapElementPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\WelcomePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\WelcomePanel.Designer.cs">
+      <DependentUpon>WelcomePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
@@ -644,11 +689,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Masterplan\Controls\MapElementPanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>MapElementPanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Masterplan\Data\RoundLog.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -716,11 +756,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Masterplan\Controls\TitlePanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>TitlePanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Masterplan\Tools\Generators\Book.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -741,11 +776,6 @@
     <Compile Include="Masterplan\Wizards\MapWizard.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\EncounterPanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>EncounterPanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Wizards\EncounterTemplateWizard.cs">
       <AutoGen>false</AutoGen>
@@ -1111,11 +1141,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Masterplan\Controls\TilePanel.cs">
-      <AutoGen>false</AutoGen>
-      <DesignTimeSharedInput>false</DesignTimeSharedInput>
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Masterplan\Data\CombatData.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -1123,11 +1148,6 @@
     <Compile Include="Masterplan\Data\Aura.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\SkillChallengePanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>SkillChallengePanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Controls\FiveByFivePanel.cs">
       <AutoGen>false</AutoGen>
@@ -1188,11 +1208,6 @@
     <Compile Include="Masterplan\Session.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\QuestPanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>QuestPanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Tools\Generators\HalflingName.cs">
       <AutoGen>false</AutoGen>
@@ -1258,11 +1273,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Masterplan\Controls\WelcomePanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>WelcomePanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Masterplan\Data\Trap.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -1274,11 +1284,6 @@
     <Compile Include="Masterplan\Data\TrapAttack.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\TrapElementPanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>TrapElementPanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Data\IElement.cs">
       <AutoGen>false</AutoGen>
@@ -2864,17 +2869,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VariantFinishPage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\MapElementPanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MapElementPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Wizards\VariantRolePage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VariantRolePage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\TitlePanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TitlePanel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Controls\EncounterPanel.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -2892,10 +2889,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\SkillChallengePanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SkillChallengePanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Wizards\VariantTemplatesPage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VariantTemplatesPage.Designer.cs</LastGenOutput>
@@ -2911,18 +2904,6 @@
     <EmbeddedResource Include="Masterplan\Wizards\MapSizePage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MapSizePage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\QuestPanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>QuestPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\WelcomePanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>WelcomePanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\TrapElementPanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TrapElementPanel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan.Scroll.ico" />
   </ItemGroup>

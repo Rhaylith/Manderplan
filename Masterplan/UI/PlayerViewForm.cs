@@ -156,14 +156,14 @@ namespace Masterplan.UI
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			ComponentResourceManager componentResourceManager = new ComponentResourceManager(typeof(PlayerViewForm));
+			ComponentResourceManager resources = new ComponentResourceManager(typeof(PlayerViewForm));
 			this.Tooltip = new ToolTip(this.components);
 			base.SuspendLayout();
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = Color.Black;
 			base.ClientSize = new System.Drawing.Size(534, 357);
-			base.Icon = (System.Drawing.Icon)componentResourceManager.GetObject("$this.Icon");
+			base.Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
 			base.Name = "PlayerViewForm";
 			base.StartPosition = FormStartPosition.CenterParent;
 			this.Text = "Player View";
