@@ -159,19 +159,69 @@
     </Compile>
     <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
+    <Compile Include="Masterplan\Wizards\EncounterSelectionPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\EncounterSelectionPage.Designer.cs">
+      <DependentUpon>EncounterSelectionPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\EncounterTemplatePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\EncounterTemplatePage.Designer.cs">
+      <DependentUpon>EncounterTemplatePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapAreasPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapAreasPage.Designer.cs">
+      <DependentUpon>MapAreasPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapLibrariesPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapLibrariesPage.Designer.cs">
+      <DependentUpon>MapLibrariesPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapSizePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapSizePage.Designer.cs">
+      <DependentUpon>MapSizePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapTypePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\MapTypePage.Designer.cs">
+      <DependentUpon>MapTypePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantBasePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantBasePage.Designer.cs">
+      <DependentUpon>VariantBasePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantFinishPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantFinishPage.Designer.cs">
+      <DependentUpon>VariantFinishPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantRolePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantRolePage.Designer.cs">
+      <DependentUpon>VariantRolePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantTemplatesPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Wizards\VariantTemplatesPage.Designer.cs">
+      <DependentUpon>VariantTemplatesPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\MapAreasPage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>MapAreasPage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\EncounterSelectionPage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>EncounterSelectionPage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Tools\Generators\EncounterBuilder.cs">
       <AutoGen>false</AutoGen>
@@ -233,11 +283,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\VariantFinishPage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>VariantFinishPage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Data\PlayerBackground.cs">
       <AutoGen>false</AutoGen>
@@ -717,11 +762,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Masterplan\Wizards\VariantRolePage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>VariantRolePage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Masterplan\UI\ListMode.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -784,16 +824,6 @@
     <Compile Include="Masterplan\Wizards\AdviceData.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\MapTypePage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>MapTypePage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\MapLibrariesPage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>MapLibrariesPage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Controls\DeckGrid.cs">
       <AutoGen>false</AutoGen>
@@ -1168,26 +1198,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\VariantTemplatesPage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>VariantTemplatesPage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\VariantBasePage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>VariantBasePage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\EncounterTemplatePage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>EncounterTemplatePage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Wizards\MapSizePage.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>MapSizePage.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Properties\Settings.cs">
       <AutoGen>false</AutoGen>
@@ -2857,49 +2867,9 @@
     <EmbeddedResource Include="Masterplan\UI\EncounterReportForm.resx">
       <DependentUpon>EncounterReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\MapAreasPage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MapAreasPage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\EncounterSelectionPage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EncounterSelectionPage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\VariantFinishPage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>VariantFinishPage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\VariantRolePage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>VariantRolePage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\MapTypePage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MapTypePage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\MapLibrariesPage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MapLibrariesPage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\VariantTemplatesPage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>VariantTemplatesPage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\VariantBasePage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>VariantBasePage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\EncounterTemplatePage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EncounterTemplatePage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Wizards\MapSizePage.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>MapSizePage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan.Scroll.ico" />
   </ItemGroup>
