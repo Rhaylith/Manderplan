@@ -2,7 +2,7 @@ using System;
 
 namespace Masterplan.UI
 {
-	internal enum ListMode
+	public enum ListMode
 	{
 		Creatures,
 		Templates,

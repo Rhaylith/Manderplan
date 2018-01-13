@@ -9,7 +9,7 @@ namespace Masterplan.UI
 {
 	internal class DieRollerForm : Form
 	{
-		public Masterplan.Controls.DicePanel2 DicePanel;
+		public Masterplan.Controls.DicePanel DicePanel;
 
 		public DiceExpression Expression
 		{
@@ -31,7 +31,7 @@ namespace Masterplan.UI
 
 		private void InitializeComponent()
 		{
-            this.DicePanel = new Masterplan.Controls.DicePanel2();
+            this.DicePanel = new Masterplan.Controls.DicePanel();
             base.SuspendLayout();
             base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

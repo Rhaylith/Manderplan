@@ -58,11 +58,23 @@
     <Compile Include="Masterplan\Commands\ICommand.cs" />
     <Compile Include="Masterplan\Commands\TurnTransaction.cs" />
     <Compile Include="Masterplan\Commands\UndoQueue.cs" />
-    <Compile Include="Masterplan\Controls\DicePanel2.cs">
+    <Compile Include="Masterplan\Controls\DicePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Masterplan\Controls\DicePanel2.Designer.cs">
-      <DependentUpon>DicePanel2.cs</DependentUpon>
+    <Compile Include="Masterplan\Controls\DicePanel.Designer.cs">
+      <DependentUpon>DicePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\EncounterGauge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\EncounterGauge.Designer.cs">
+      <DependentUpon>EncounterGauge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\FilterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\FilterPanel.Designer.cs">
+      <DependentUpon>FilterPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Masterplan\Controls\InfoPanel.cs">
       <SubType>UserControl</SubType>
@@ -75,6 +87,12 @@
     </Compile>
     <Compile Include="Masterplan\Controls\LevelRangePanel.Designer.cs">
       <DependentUpon>LevelRangePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masterplan\Controls\LibraryHelpPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masterplan\Controls\LibraryHelpPanel.Designer.cs">
+      <DependentUpon>LibraryHelpPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Masterplan\Controls\MapView.cs">
       <SubType>UserControl</SubType>
@@ -170,11 +188,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Masterplan\Controls\FilterPanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>FilterPanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Wizards\VariantFinishPage.Designer.cs">
       <AutoGen>true</AutoGen>
@@ -656,11 +669,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Masterplan\Controls\DicePanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>DicePanel.resx</DependentUpon>
-      <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Masterplan\Data\ReportRow.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -1022,11 +1030,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Masterplan\Controls\LibraryHelpPanel.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>LibraryHelpPanel.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="Masterplan\Data\OngoingType.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -1034,11 +1037,6 @@
     <Compile Include="Masterplan\Data\DurationType.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Masterplan\Controls\EncounterGauge.Designer.cs">
-      <AutoGen>true</AutoGen>
-      <DependentUpon>EncounterGauge.resx</DependentUpon>
-      <DesignTimeSharedInput>true</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Masterplan\Data\OngoingCondition.cs">
       <AutoGen>false</AutoGen>
@@ -2862,10 +2860,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>EncounterSelectionPage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\FilterPanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>FilterPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Wizards\VariantFinishPage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VariantFinishPage.Designer.cs</LastGenOutput>
@@ -2873,10 +2867,6 @@
     <EmbeddedResource Include="Masterplan\Controls\MapElementPanel.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MapElementPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\DicePanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DicePanel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Wizards\VariantRolePage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -2897,14 +2887,6 @@
     <EmbeddedResource Include="Masterplan\Wizards\MapLibrariesPage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MapLibrariesPage.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\LibraryHelpPanel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LibraryHelpPanel.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Masterplan\Controls\EncounterGauge.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>EncounterGauge.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Masterplan\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

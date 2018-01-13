@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Masterplan.Controls
 {
-    public partial class DicePanel2 : UserControl
+    public partial class DicePanel : UserControl
     {
-        public DicePanel2()
+        public DicePanel()
         {
             InitializeComponent();
             Application.Idle += new EventHandler(this.Application_Idle);
