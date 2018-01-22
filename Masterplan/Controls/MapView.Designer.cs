@@ -771,6 +771,34 @@ namespace Masterplan.Controls
             str = (!this.fShowCreatureLabels ? creature.Category : data.DisplayName);
             string str1 = TextHelper.Abbreviation(str);
             ghost = (ghost ? true : !visible);
+            //bool isVisible = true;
+            if (fBoxedTokens.Count > 0)
+            {
+                IToken boxedToken = fBoxedTokens[0];
+                if (boxedToken is CreatureToken)
+                {
+                    CombatData boxedData= (boxedToken as CreatureToken).Data;
+                    if (data != boxedData)
+                    {
+                        /*
+                        Point location = boxedData.Location;
+                        PointF locationF = new PointF() { X = (float)location.X, Y = (float)location.Y };
+                        PointF pointF = new PointF() { X = (float)data.Location.X, Y = (float)data.Location.Y };
+
+                        if (!Data.Combat.Visibility.CanSee(locationF, pointF))
+                        {
+                            black = Color.Yellow;
+                        }
+                        */
+                        Data.Combat.Visibility.OcclusionLevel vis = Data.Combat.Visibility.GetInstance().VisibilityMap[data.Location.X, data.Location.Y];
+                        if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
+                        {
+                            black = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.Yellow : Color.Purple;
+                        }
+                    }
+                }
+            }
+
             this.draw_token(g, pt, creature.Size, creature.Image, black, str1, selected, flag, hovered, ghost, data.Conditions, data.Altitude);
             if (this.fShowHealthBars && data != null)
             {
@@ -1232,7 +1260,7 @@ namespace Masterplan.Controls
             }
             using (System.Drawing.Font font = new System.Drawing.Font(this.Font.FontFamily, this.fLayoutData.SquareSize * (float)num / 4f))
             {
-                int _distance = MMath.CalcDistance(start_location, new_location);
+                int _distance = Utils.MMath.CalcDistance(start_location, new_location);
                 g.DrawString(_distance.ToString(), font, Brushes.Red, rectangleF1, this.fCentred);
             }
             PointF pointF = new PointF(region.X + region.Width / 2f, region.Y + region.Height / 2f);
@@ -2420,7 +2448,7 @@ namespace Masterplan.Controls
                                 {
                                     if (client != this.fDraggedTiles.Start)
                                     {
-                                        int num = MMath.CalcDistance(client, this.fDraggedTiles.Start);
+                                        int num = Utils.MMath.CalcDistance(client, this.fDraggedTiles.Start);
                                         foreach (TileData tile in this.fDraggedTiles.Tiles)
                                         {
                                             Point point = tile.Location;
@@ -2707,6 +2735,41 @@ namespace Masterplan.Controls
                     this.draw_tile(drawingGraphics, item2, tileDatum1.Rotations, this.fDraggedTiles.Region, false);
                 }
             }
+
+            // Draw Visibility
+            if (this.fBoxedTokens.Count > 0)
+            {
+                IToken boxedToken = fBoxedTokens[0];
+                if (boxedToken is CreatureToken)
+                {
+                    CombatData boxedData = (boxedToken as CreatureToken).Data;
+                    {
+                        Point min = new Point(this.LayoutData.MinX, this.LayoutData.MinY);
+                        Point max = new Point(this.LayoutData.MaxX, this.LayoutData.MaxY);
+                        Data.Combat.Visibility.GetInstance().SetSize(min, max);
+                        Data.Combat.Visibility.GetInstance().RecalculateFromPosition(boxedData.Location);
+                        Data.Combat.Visibility.OcclusionLevel[,] visMap = Data.Combat.Visibility.GetInstance().VisibilityMap;
+                        for(int x=0;x<visMap.GetLength(0);++x)
+                        {
+                            for (int y=0; y<visMap.GetLength(1); ++y)
+                            {
+                                Data.Combat.Visibility.OcclusionLevel vis = visMap[x, y];
+                                if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
+                                {
+                                    Color color = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.FromArgb(192, Color.Black) : Color.FromArgb(128, Color.Black);
+                                    Point point = new Point(x + this.LayoutData.MinX, y + this.LayoutData.MinY);
+                                    RectangleF region = this.fLayoutData.GetRegion(point, new Size(1, 1));
+                                    using (Brush solidBrush = new SolidBrush(color))
+                                    {
+                                        drawingGraphics.FillRectangle(solidBrush, region);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             if (this.fShowGrid == MapGridMode.Overlay && this.fLayoutData.SquareSize >= 10f)
             {
                 Pen darkGray = Pens.DarkGray;

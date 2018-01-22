@@ -17,7 +17,7 @@ namespace Masterplan.Commands.Combat
             _destLocation = destLocation;
             _token = token;
 
-            int _distance = MMath.CalcDistance(destLocation, startLocation);
+            int _distance = Utils.MMath.CalcDistance(destLocation, startLocation);
             if (_token is CreatureToken)
             {
                 _data = (_token as CreatureToken).Data;
