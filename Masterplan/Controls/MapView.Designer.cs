@@ -2537,6 +2537,33 @@ namespace Masterplan.Controls
             }
         }
 
+        private void AddAllEnemiesToOcclusion()
+        {
+            Data.Combat.Visibility.GetInstance().Blockers.Clear();
+            Data.Combat.Visibility.GetInstance().AddMapBlockers();
+
+            foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
+            {
+                //int size = Creature.GetSize(creature.Size);
+                foreach (CombatData combatDatum in allSlot.CombatData)
+                {
+                    IToken boxedToken = fBoxedTokens[0];
+                    if (combatDatum != (boxedToken as CreatureToken).Data)
+                    {
+                        var blocker = new Data.Combat.RectangleVisibilityBlocker(new RectangleF(combatDatum.Location.X, combatDatum.Location.Y, 1.0f, 1.0f),
+                                                                                                                    Data.Combat.Visibility.OcclusionLevel.Cover);
+                        blocker.Type = Data.Combat.VisibilityBlocker.BlockerType.BlocksLookingThrough;
+                        Data.Combat.Visibility.GetInstance().Blockers.Add(blocker);
+                    }
+                }
+            }
+
+                        //customToken.Data.Location = combatDatum2.Location;
+                        //EncounterSlot encounterSlot1 = this.fEncounter.FindSlot(combatDatum2);
+                        //ICreature creature2 = Session.FindCreature(encounterSlot1.Card.CreatureID, SearchType.Global);
+                        //creatureSize = creature2.Size;
+        }
+
         public void Redraw()
         {
             System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();           
@@ -2739,6 +2766,7 @@ namespace Masterplan.Controls
             // Draw Visibility
             if (this.fBoxedTokens.Count > 0)
             {
+                AddAllEnemiesToOcclusion();
                 IToken boxedToken = fBoxedTokens[0];
                 if (boxedToken is CreatureToken)
                 {
@@ -2759,6 +2787,8 @@ namespace Masterplan.Controls
                                     Color color = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.FromArgb(192, Color.Black) : Color.FromArgb(128, Color.Black);
                                     Point point = new Point(x + this.LayoutData.MinX, y + this.LayoutData.MinY);
                                     RectangleF region = this.fLayoutData.GetRegion(point, new Size(1, 1));
+
+                                    // This gives us the full size but don't draw the full size because then it overlaps
                                     using (Brush solidBrush = new SolidBrush(color))
                                     {
                                         drawingGraphics.FillRectangle(solidBrush, region);

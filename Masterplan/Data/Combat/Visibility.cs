@@ -9,8 +9,8 @@ namespace Masterplan.Data.Combat
 {
     public class Visibility
     {
-        private static List<VisibilityBlocker> Blockers = new List<VisibilityBlocker>();
-        static Visibility()
+        public List<VisibilityBlocker> Blockers = new List<VisibilityBlocker>();
+        public void AddMapBlockers()
         {
             Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(16f, 6f, 1f, 7f)));
             Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(16f, 18f, 1f, 8f)));
@@ -186,14 +186,14 @@ namespace Masterplan.Data.Combat
                 for (int y = this.Min.Y; y < this.Max.Y; ++y)
                 {
                     PointF targetLocation = new PointF((float)x + 0.5f, (float)y + 0.5f);
-                    visData[x - this.Min.X, y - this.Min.Y] = Data.Combat.Visibility.GetOcclusion(viewerLocation, targetLocation);
+                    visData[x - this.Min.X, y - this.Min.Y] = this.GetOcclusion(viewerLocation, targetLocation);
                 }
             }
 
             return visData;
         }
 
-        public static OcclusionLevel GetOcclusion(PointF fromPoint, PointF targetPoint)
+        public OcclusionLevel GetOcclusion(PointF fromPoint, PointF targetPoint)
         {
             MMath.LineSegment l = new MMath.LineSegment(fromPoint, targetPoint);
             OcclusionLevel result = OcclusionLevel.Visible;

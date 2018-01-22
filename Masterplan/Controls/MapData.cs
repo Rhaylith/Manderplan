@@ -17,9 +17,9 @@ namespace Masterplan.Controls
 
 		public double ScalingFactor;
 
-		public float SquareSize;
+		public int SquareSize;
 
-		public SizeF MapOffset = new SizeF();
+		public Size MapOffset = new Size();
 
 		public int MinX = 2147483647;
 
@@ -97,12 +97,12 @@ namespace Masterplan.Controls
 					{
 						this.MinY = rectangle.Y;
 					}
-					int x1 = rectangle.X + rectangle.Width - 1;
+					int x1 = rectangle.X + rectangle.Width;
 					if (x1 > this.MaxX)
 					{
 						this.MaxX = x1;
 					}
-					int num1 = rectangle.Y + rectangle.Height - 1;
+					int num1 = rectangle.Y + rectangle.Height;
 					if (num1 <= this.MaxY)
 					{
 						continue;
@@ -129,16 +129,16 @@ namespace Masterplan.Controls
 				this.MaxY = y2 + viewpoint1.Height - 1;
 			}
 			Rectangle clientRectangle = mapview.ClientRectangle;
-			float single = (float)clientRectangle.Width / (float)this.Width;
+			int single = clientRectangle.Width / this.Width;
 			Rectangle clientRectangle1 = mapview.ClientRectangle;
-			float height1 = (float)clientRectangle1.Height / (float)this.Height;
-			this.SquareSize = Math.Min(single, height1);
-			this.SquareSize *= (float)this.ScalingFactor;
-			float width1 = (float)this.Width * this.SquareSize;
-			float single1 = (float)this.Height * this.SquareSize;
-			float width2 = (float)mapview.ClientRectangle.Width - width1;
-			float height2 = (float)mapview.ClientRectangle.Height - single1;
-			this.MapOffset = new SizeF(width2 / 2f, height2 / 2f);
+			int height1 = clientRectangle1.Height / this.Height;
+			this.SquareSize = (int) Math.Min(single, height1);
+			this.SquareSize *= (int)this.ScalingFactor;
+			int width1 = this.Width * this.SquareSize;
+			int single1 = this.Height * this.SquareSize;
+			int width2 = mapview.ClientRectangle.Width - width1;
+			int height2 = mapview.ClientRectangle.Height - single1;
+			this.MapOffset = new Size(width2 / 2, height2 / 2);
 			if (mapview.Map != null)
 			{
 				foreach (TileData key in this.Tiles.Keys)
@@ -162,7 +162,7 @@ namespace Masterplan.Controls
 			float y = (float)(square.Y - this.MinY) * this.SquareSize + this.MapOffset.Height;
 			float width = (float)size.Width * this.SquareSize;
 			float height = (float)size.Height * this.SquareSize;
-			return new RectangleF(x, y, width + 1f, height + 1f);
+			return new RectangleF(x, y, width, height);
 		}
 
 		public Point GetSquareAtPoint(Point pt)
