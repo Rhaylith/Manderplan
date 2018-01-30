@@ -4864,6 +4864,7 @@ namespace Masterplan.UI
 
         private void OnMoveTokenCommand()
         {
+            this.RecalculateVisibilityAllMaps();
             this.update_maps();
             foreach (IToken selectedToken in this.MapView.SelectedTokens)
             {
@@ -4996,6 +4997,15 @@ namespace Masterplan.UI
         private void UpdateUIForNewTurn()
         {
             this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
+            Hero hero = Session.Project.FindHero(this.fCurrentActor.ID);
+            bool isHero = hero != null;
+            if (isHero && this.PlayerMap != null)
+            {
+                this.PlayerMap.SetNewVisibilitySource(this.fCurrentActor, isHero);
+            }
+
+            this.MapView.SetNewVisibilitySource(this.fCurrentActor, isHero);
+            
             this.fLog.AddStartTurnEntry(this.fCurrentActor.ID);
             if (this.fCurrentActor.Initiative > this.InitiativePanel.CurrentInitiative)
             {
@@ -6421,6 +6431,23 @@ namespace Masterplan.UI
 			}
 		}
 
+        private CombatData FindFirstHeroInitiative()
+        {
+            CombatData data = null;
+            foreach(var hero in Session.Project.Heroes)
+            {
+                if (data == null)
+                {
+                    data = hero.CombatData;
+                }
+                else if(data.Initiative < hero.CombatData.Initiative)
+                {
+                    // TODO:  handle case of tied initiative and init bonuses
+                    data = hero.CombatData;
+                }
+            }
+            return data;
+        }
 		private void start_combat()
 		{
 			this.roll_initiative();
@@ -6432,6 +6459,16 @@ namespace Masterplan.UI
                 this.InitiativePanel.CurrentInitiative = this.fCurrentActor.Initiative;
                 this.select_current_actor();
                 this.update_list();
+
+                bool isHero = Session.Project.FindHero(this.fCurrentActor.ID) != null;
+                this.MapView.SetNewVisibilitySource(this.fCurrentActor, isHero);
+                if (this.PlayerMap != null)
+                {
+                    CombatData data = isHero ? this.fCurrentActor : this.FindFirstHeroInitiative();
+                    this.PlayerMap?.SetNewVisibilitySource(data, isHero);
+                }
+                this.RecalculateVisibilityAllMaps();
+
                 this.update_maps();
                 this.update_statusbar();
                 this.update_preview_panel();
@@ -7058,18 +7095,20 @@ namespace Masterplan.UI
 
 		private void update_log()
 		{
-			string str = this.EncounterLogView(false);
-			this.LogBrowser.Document.OpenNew(true);
-			this.LogBrowser.Document.Write(str);
+			//string str = this.EncounterLogView(false);
+			//this.LogBrowser.Document.OpenNew(true);
+			//this.LogBrowser.Document.Write(str);
 		}
 
+        private void RecalculateVisibilityAllMaps()
+        {
+            this.MapView.RecalculateVisibility();
+            this.PlayerMap?.RecalculateVisibility();
+        }
 		private void update_maps()
 		{
             this.MapView.Redraw();
-			if (this.PlayerMap != null)
-			{
-				this.PlayerMap.Redraw();
-			}
+            this.PlayerMap?.Redraw();
 		}
 
 		private void update_preview_panel()

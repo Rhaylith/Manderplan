@@ -32,6 +32,11 @@ namespace Masterplan.Data.Combat
 
         public override bool Intersects(MMath.LineSegment sightLine)
         {
+            if (MMath.Rectangle.RectContainsPoint(this.Rect, sightLine.Start))
+            {
+                return false;
+            }
+
             // If end point is inside this rectangle then we know based on the type what it is
             if (MMath.Rectangle.RectContainsPoint(this.Rect, sightLine.End))
             {

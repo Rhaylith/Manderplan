@@ -173,7 +173,7 @@ namespace Masterplan.UI
 
 		private void item_moved(IToken token, Point start, Point end)
 		{
-			this.fParentMap.Invalidate();
+			//this.fParentMap.Invalidate();
 		}
 
 		private void mouse_move(object sender, MouseEventArgs e)

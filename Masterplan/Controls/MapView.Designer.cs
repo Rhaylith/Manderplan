@@ -772,30 +772,15 @@ namespace Masterplan.Controls
             string str1 = TextHelper.Abbreviation(str);
             ghost = (ghost ? true : !visible);
             //bool isVisible = true;
-            if (fBoxedTokens.Count > 0)
-            {
-                IToken boxedToken = fBoxedTokens[0];
-                if (boxedToken is CreatureToken)
-                {
-                    CombatData boxedData= (boxedToken as CreatureToken).Data;
-                    if (data != boxedData)
-                    {
-                        /*
-                        Point location = boxedData.Location;
-                        PointF locationF = new PointF() { X = (float)location.X, Y = (float)location.Y };
-                        PointF pointF = new PointF() { X = (float)data.Location.X, Y = (float)data.Location.Y };
 
-                        if (!Data.Combat.Visibility.CanSee(locationF, pointF))
-                        {
-                            black = Color.Yellow;
-                        }
-                        */
-                        Data.Combat.Visibility.OcclusionLevel vis = Data.Combat.Visibility.GetInstance().VisibilityMap[data.Location.X, data.Location.Y];
-                        if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
-                        {
-                            black = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.Yellow : Color.Purple;
-                        }
-                    }
+            Data.Combat.Visibility.OcclusionLevel[,] visMap = this.GetVisibilityMapForView();
+
+            if (visMap != null)
+            {
+                Data.Combat.Visibility.OcclusionLevel vis = visMap[data.Location.X, data.Location.Y];
+                if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
+                {
+                    black = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.Yellow : Color.Purple;
                 }
             }
 
@@ -1825,12 +1810,11 @@ namespace Masterplan.Controls
             }
         }
 
-        protected void OnItemMoved(int distance)
+        protected void OnItemMoved(DraggedToken moveResult)
         {
             if (this.ItemMoved != null)
             {
-                // TODO:  Fix this
-                //				this.ItemMoved(this, new MovementEventArgs(distance));
+                this.ItemMoved(moveResult.Token, moveResult.Start, moveResult.Location);
             }
         }
 
@@ -1959,7 +1943,8 @@ namespace Masterplan.Controls
             this.fLayoutData = null;
             if (flag1)
             {
-                this.OnItemMoved(1);
+                // WTF?
+               // this.OnItemMoved(1);
             }
             if (flag)
             {
@@ -2396,8 +2381,7 @@ namespace Masterplan.Controls
                                         // Need to set fDraggedToken to null for....reasons.  OnPaint can get called and then the locations don't match between fDraggedToken and the actual token
                                         DraggedToken dragResult = this.fDraggedToken;
                                         this.fDraggedToken = null;
-                                        this.ItemMoved?.Invoke(dragResult.Token, dragResult.Start, dragResult.Location);
-                                        //this.OnItemMoved(_distance);
+                                        this.OnItemMoved(dragResult);
                                     }
                                     else if (this.fDraggedToken.LinkedToken != null)
                                     {
@@ -2459,7 +2443,9 @@ namespace Masterplan.Controls
                                             this.fMap.Tiles.Remove(tile);
                                             this.fMap.Tiles.Add(tile);
                                         }
-                                        this.OnItemMoved(num);
+
+                                        // FIX THIS
+                                        //this.OnItemMoved(num);
                                     }
                                     this.fDraggedTiles = null;
                                     this.fLayoutData = null;
@@ -2537,31 +2523,98 @@ namespace Masterplan.Controls
             }
         }
 
-        private void AddAllEnemiesToOcclusion()
+        private void AddAllEnemiesToOcclusion(bool isHero)
         {
             Data.Combat.Visibility.GetInstance().Blockers.Clear();
             Data.Combat.Visibility.GetInstance().AddMapBlockers();
 
-            foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
+            if (isHero)
             {
-                //int size = Creature.GetSize(creature.Size);
-                foreach (CombatData combatDatum in allSlot.CombatData)
+                // Enemies provide cover
+                foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
                 {
-                    IToken boxedToken = fBoxedTokens[0];
-                    if (combatDatum != (boxedToken as CreatureToken).Data)
+                    //int size = Creature.GetSize(creature.Size);
+                    foreach (CombatData combatDatum in allSlot.CombatData)
                     {
                         var blocker = new Data.Combat.RectangleVisibilityBlocker(new RectangleF(combatDatum.Location.X, combatDatum.Location.Y, 1.0f, 1.0f),
-                                                                                                                    Data.Combat.Visibility.OcclusionLevel.Cover);
+                                                                                 Data.Combat.Visibility.OcclusionLevel.Cover);
                         blocker.Type = Data.Combat.VisibilityBlocker.BlockerType.BlocksLookingThrough;
                         Data.Combat.Visibility.GetInstance().Blockers.Add(blocker);
                     }
                 }
             }
+            else
+            {
+                // Heroes provide cover
+                foreach (Hero hero in Session.Project.Heroes)
+                {
+                    if (hero.CombatData.Location == CombatData.NoPoint)
+                    {
+                        continue;
+                    }
 
-                        //customToken.Data.Location = combatDatum2.Location;
-                        //EncounterSlot encounterSlot1 = this.fEncounter.FindSlot(combatDatum2);
-                        //ICreature creature2 = Session.FindCreature(encounterSlot1.Card.CreatureID, SearchType.Global);
-                        //creatureSize = creature2.Size;
+                    CombatData data = hero.CombatData;
+                    var blocker = new Data.Combat.RectangleVisibilityBlocker(new RectangleF(data.Location.X, data.Location.Y, 1.0f, 1.0f),
+                                                                             Data.Combat.Visibility.OcclusionLevel.Cover);
+                    blocker.Type = Data.Combat.VisibilityBlocker.BlockerType.BlocksLookingThrough;
+                    Data.Combat.Visibility.GetInstance().Blockers.Add(blocker);
+
+                }
+            }
+        }
+
+        // Visibility Info
+        CombatData latestTurnVisData = null;
+        Data.Combat.Visibility.OcclusionLevel[,] latestTurnVisMap;
+
+        public Data.Combat.Visibility.OcclusionLevel[,] GetVisibilityMapForView()
+        {
+            return latestTurnVisMap;
+        }
+
+        public void SetNewVisibilitySource(CombatData data, bool isHero)
+        {
+            latestTurnVisData = data;
+            RecalculateVisibility();
+        }
+
+        public void RecalculateVisibility()
+        { 
+            AddAllEnemiesToOcclusion(this.fMode == MapViewMode.PlayerView);
+            Point min = new Point(this.LayoutData.MinX, this.LayoutData.MinY);
+            Point max = new Point(this.LayoutData.MaxX, this.LayoutData.MaxY);
+            Data.Combat.Visibility.GetInstance().SetSize(min, max);
+            Data.Combat.Visibility.GetInstance().RecalculateFromPosition(latestTurnVisData.Location);
+            latestTurnVisMap = Data.Combat.Visibility.GetInstance().VisibilityMap;
+        }
+
+        public void DrawVisibility()
+        {
+            Data.Combat.Visibility.OcclusionLevel[,] visMap = this.GetVisibilityMapForView();
+            if (visMap == null)
+            {
+                return;
+            }
+
+            for (int x = 0; x < visMap.GetLength(0); ++x)
+            {
+                for (int y = 0; y < visMap.GetLength(1); ++y)
+                {
+                    Data.Combat.Visibility.OcclusionLevel vis = visMap[x, y];
+                    if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
+                    {
+                        Color color = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.FromArgb(128, Color.Black) : Color.FromArgb(64, Color.Black);
+                        Point point = new Point(x + this.LayoutData.MinX, y + this.LayoutData.MinY);
+                        RectangleF region = this.fLayoutData.GetRegion(point, new Size(1, 1));
+
+                        // This gives us the full size but don't draw the full size because then it overlaps
+                        using (Brush solidBrush = new SolidBrush(color))
+                        {
+                            drawingGraphics.FillRectangle(solidBrush, region);
+                        }
+                    }
+                }
+            }
         }
 
         public void Redraw()
@@ -2763,42 +2816,7 @@ namespace Masterplan.Controls
                 }
             }
 
-            // Draw Visibility
-            if (this.fBoxedTokens.Count > 0)
-            {
-                AddAllEnemiesToOcclusion();
-                IToken boxedToken = fBoxedTokens[0];
-                if (boxedToken is CreatureToken)
-                {
-                    CombatData boxedData = (boxedToken as CreatureToken).Data;
-                    {
-                        Point min = new Point(this.LayoutData.MinX, this.LayoutData.MinY);
-                        Point max = new Point(this.LayoutData.MaxX, this.LayoutData.MaxY);
-                        Data.Combat.Visibility.GetInstance().SetSize(min, max);
-                        Data.Combat.Visibility.GetInstance().RecalculateFromPosition(boxedData.Location);
-                        Data.Combat.Visibility.OcclusionLevel[,] visMap = Data.Combat.Visibility.GetInstance().VisibilityMap;
-                        for(int x=0;x<visMap.GetLength(0);++x)
-                        {
-                            for (int y=0; y<visMap.GetLength(1); ++y)
-                            {
-                                Data.Combat.Visibility.OcclusionLevel vis = visMap[x, y];
-                                if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
-                                {
-                                    Color color = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.FromArgb(192, Color.Black) : Color.FromArgb(128, Color.Black);
-                                    Point point = new Point(x + this.LayoutData.MinX, y + this.LayoutData.MinY);
-                                    RectangleF region = this.fLayoutData.GetRegion(point, new Size(1, 1));
-
-                                    // This gives us the full size but don't draw the full size because then it overlaps
-                                    using (Brush solidBrush = new SolidBrush(color))
-                                    {
-                                        drawingGraphics.FillRectangle(solidBrush, region);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            DrawVisibility();
 
             if (this.fShowGrid == MapGridMode.Overlay && this.fLayoutData.SquareSize >= 10f)
             {
@@ -3652,7 +3670,7 @@ namespace Masterplan.Controls
             }
         }
 
-        private class DraggedToken
+        public class DraggedToken
         {
             public IToken Token;
 

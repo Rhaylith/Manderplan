@@ -12,13 +12,30 @@ namespace Masterplan.Data.Combat
         public List<VisibilityBlocker> Blockers = new List<VisibilityBlocker>();
         public void AddMapBlockers()
         {
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(16f, 6f, 1f, 7f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(16f, 18f, 1f, 8f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(23f, 5f, 1f, 2f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(24f, 13f, 1f, 6f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(23f, 24f, 1f, 3f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(31f, 6f, 1f, 8f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(31f, 19f, 1f, 7f)));
+            // Battle
+            //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(16f, 6f, 1f, 7f)));
+            //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(16f, 18f, 1f, 8f)));
+            //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(23f, 5f, 1f, 2f)));
+            //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(24f, 13f, 1f, 6f)));
+            //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(23f, 24f, 1f, 3f)));
+            //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(31f, 6f, 1f, 8f)));
+            //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(31f, 19f, 1f, 7f)));
+
+            // Forest map
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 3f, 2f, 2f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(3f, 2f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(6f, 3f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 7f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(5f, 7f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(8f, 6f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(4f, 12f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(7f, 10f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(0f, 14f, 2f, 2f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(7f, 15f, 1f, 1f)));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(5f, 17f, 1f, 1f)));
+
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(4f, 14f, 2f, 2f), OcclusionLevel.Cover));
+            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 8f, 4f, 3f), OcclusionLevel.Cover));
         }
 
         private static Visibility _instance;
@@ -157,14 +174,14 @@ namespace Masterplan.Data.Combat
             // Calculate cover spots
             for (int x = 0; x < this.VisibilityMap.GetLength(0); ++x)
             {
-                for(int y=0; y< this.VisibilityMap.GetLength(1); ++y)
+                for (int y = 0; y < this.VisibilityMap.GetLength(1); ++y)
                 {
-                    if(this.VisibilityMap[x,y] == OcclusionLevel.Obscured)
+                    if (this.VisibilityMap[x, y] == OcclusionLevel.Obscured)
                     {
-                        if (TestSquare(x, y-1) == OcclusionLevel.Visible ||
-                            TestSquare(x, y+1) == OcclusionLevel.Visible ||
-                            TestSquare(x-1, y) == OcclusionLevel.Visible ||
-                            TestSquare(x+1, y) == OcclusionLevel.Visible)
+                        if (TestSquare(x, y - 1) == OcclusionLevel.Visible ||
+                            TestSquare(x, y + 1) == OcclusionLevel.Visible ||
+                            TestSquare(x - 1, y) == OcclusionLevel.Visible ||
+                            TestSquare(x + 1, y) == OcclusionLevel.Visible)
                         {
                             this.VisibilityMap[x, y] = OcclusionLevel.Cover;
                         }
