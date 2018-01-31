@@ -2042,7 +2042,7 @@ namespace Masterplan.UI
 			this.MapView.TokenLinks = null;
 			this.MapView.Viewpoint = new Rectangle(0, 0, 0, 0);
 			this.MapView.TokenActivated += new TokenEventHandler(this.MapView_TokenActivated);
-			this.MapView.ItemDropped += new EventHandler(this.MapView_ItemDropped);
+			this.MapView.ItemDropped += new ItemDroppedEventHandler(this.MapView_ItemDropped);
 			this.MapView.DoubleClick += new EventHandler(this.MapView_DoubleClick);
 			this.MapView.SelectedTokensChanged += new EventHandler(this.MapView_SelectedTokensChanged);
 			this.MapView.HoverTokenChanged += new EventHandler(this.MapView_HoverTokenChanged);
@@ -2483,8 +2483,9 @@ namespace Masterplan.UI
 			this.Tooltip.SetToolTip(this.MapView, info);
 		}
 
-		private void MapView_ItemDropped(object sender, EventArgs e)
+		private void MapView_ItemDropped(CombatData data, Point location)
 		{
+            data.Location = location;
 			this.update_mapthreats();
 		}
 

@@ -1682,28 +1682,31 @@ namespace Masterplan.Controls
                     tileDatum
                 };
                 this.fLayoutData = null;
-                this.OnItemDropped();
+
+                // Fix this!  Changed OnItemDrop to pass the combatdata of the token it's moving, but that doesn't work with tiles
+                //this.OnItemDropped();
             }
+            Point newLocation = this.fNewToken.Location;
             CreatureToken data = e.Data.GetData(typeof(CreatureToken)) as CreatureToken;
             if (data != null)
             {
-                data.Data.Location = this.fNewToken.Location;
+                //data.Data.Location = this.fNewToken.Location;
                 this.fNewToken = null;
-                this.OnItemDropped();
+                this.OnItemDropped(data.Data, newLocation);
             }
             if (e.Data.GetData(typeof(Hero)) is Hero)
             {
                 Hero token = this.fNewToken.Token as Hero;
-                token.CombatData.Location = this.fNewToken.Location;
+                //token.CombatData.Location = this.fNewToken.Location;
                 this.fNewToken = null;
-                this.OnItemDropped();
+                this.OnItemDropped(token.CombatData, newLocation);
             }
             CustomToken location = e.Data.GetData(typeof(CustomToken)) as CustomToken;
             if (location != null)
             {
-                location.Data.Location = this.fNewToken.Location;
+                //location.Data.Location = this.fNewToken.Location;
                 this.fNewToken = null;
-                this.OnItemDropped();
+                this.OnItemDropped(location.Data, newLocation);
             }
         }
 
@@ -1805,11 +1808,11 @@ namespace Masterplan.Controls
             this.Redraw();
         }
 
-        protected void OnItemDropped()
+        protected void OnItemDropped(CombatData data, Point location)
         {
             if (this.ItemDropped != null)
             {
-                this.ItemDropped(this, new EventArgs());
+                this.ItemDropped(data, location);
             }
         }
 
@@ -3640,7 +3643,7 @@ namespace Masterplan.Controls
 
         [Category("Action")]
         [Description("Called when a tile or token is dropped onto the map.")]
-        public event EventHandler ItemDropped;
+        public event ItemDroppedEventHandler ItemDropped;
 
         [Category("Action")]
         [Description("Called when a tile or token is moved around the map.")]

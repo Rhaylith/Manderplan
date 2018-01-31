@@ -3698,7 +3698,8 @@ namespace Masterplan.UI
 			this.MapView.SelectedTokensChanged += new EventHandler(this.MapView_SelectedTokensChanged);
 			this.MapView.HoverTokenChanged += new EventHandler(this.MapView_HoverTokenChanged);
 			this.MapView.ItemMoved += new MovementEventHandler(this.MapView_ItemMoved);
-			this.MapView.SketchCreated += new MapSketchEventHandler(this.MapView_SketchCreated);
+            this.MapView.ItemDropped += new ItemDroppedEventHandler(this.MapView_ItemDropped);
+            this.MapView.SketchCreated += new MapSketchEventHandler(this.MapView_SketchCreated);
 			ToolStripItemCollection items2 = this.MapContext.Items;
 			ToolStripItem[] mapDetails = new ToolStripItem[] { this.MapDetails, this.toolStripMenuItem2, this.MapDamage, this.MapHeal, this.MapAddEffect, this.MapRemoveEffect, this.MapSetPicture, this.toolStripMenuItem1, this.MapRemove, this.MapCreateCopy, this.toolStripSeparator2, this.MapVisible, this.MapDelay, this.toolStripSeparator22, this.MapContextDrawing, this.MapContextClearDrawings, this.toolStripSeparator25, this.MapContextLOS, this.toolStripSeparator24, this.MapContextOverlay };
 			items2.AddRange(mapDetails);
@@ -4917,9 +4918,15 @@ namespace Masterplan.UI
             this.update_maps();
         }
 
+        private void MapView_ItemDropped(CombatData data, Point point)
+        {
+            MoveTokenCommand command = new MoveTokenCommand(data, data.Location, point);
+            CommandManager.GetInstance().ExecuteCommand(command);
+        }
+
         private void MapView_ItemMoved(IToken token, Point start, Point end)
 		{
-            MoveTokenCommand command = new MoveTokenCommand(token, start, end);
+            MoveTokenCommand command = new MoveTokenCommand(CombatData.FromToken(token), start, end);
             CommandManager.GetInstance().ExecuteCommand(command);
 		}
 

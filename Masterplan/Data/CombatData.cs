@@ -172,7 +172,24 @@ namespace Masterplan.Data
 		{
 		}
 
-		public int CompareTo(CombatData rhs)
+        public static CombatData FromToken(IToken token)
+        {
+            if (token is CreatureToken)
+            {
+                return (token as CreatureToken).Data;
+            }
+            else if (token is Hero)
+            {
+                return (token as Hero).CombatData;
+            }
+            else if (token is CustomToken)
+            {
+                return (token as CustomToken).Data;
+            }
+            return null;
+        }
+
+        public int CompareTo(CombatData rhs)
 		{
 			return this.fDisplayName.CompareTo(rhs.DisplayName);
 		}
