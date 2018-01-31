@@ -149,6 +149,8 @@ namespace Masterplan.UI
 
 		private ToolStripMenuItem PlayerLabels;
 
+        private ToolStripMenuItem PlayerViewShowVisibility;
+
 		private ToolStripMenuItem MapFog;
 
 		private ToolStripMenuItem MapFogAllCreatures;
@@ -2885,6 +2887,7 @@ namespace Masterplan.UI
 			this.PlayerPictureTokens = new ToolStripMenuItem();
 			this.toolStripSeparator17 = new ToolStripSeparator();
 			this.PlayerLabels = new ToolStripMenuItem();
+            this.PlayerViewShowVisibility = new ToolStripMenuItem();
 			this.PlayerViewNoMapMenu = new ToolStripDropDownButton();
 			this.PlayerViewNoMapShowInitiativeList = new ToolStripMenuItem();
 			this.PlayerViewNoMapShowLabels = new ToolStripMenuItem();
@@ -3227,7 +3230,7 @@ namespace Masterplan.UI
 			this.MapExport.Click += new EventHandler(this.MapExport_Click);
 			this.PlayerViewMapMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			ToolStripItemCollection toolStripItemCollections1 = this.PlayerViewMapMenu.DropDownItems;
-			ToolStripItem[] playerViewMap = new ToolStripItem[] { this.PlayerViewMap, this.PlayerViewInitList, this.toolStripSeparator9, this.PlayerViewFog, this.toolStripSeparator16, this.PlayerViewLOS, this.PlayerViewGrid, this.PlayerViewGridLabels, this.PlayerHealth, this.PlayerConditions, this.PlayerPictureTokens, this.toolStripSeparator17, this.PlayerLabels };
+			ToolStripItem[] playerViewMap = new ToolStripItem[] { this.PlayerViewMap, this.PlayerViewInitList, this.toolStripSeparator9, this.PlayerViewFog, this.toolStripSeparator16, this.PlayerViewLOS, this.PlayerViewGrid, this.PlayerViewGridLabels, this.PlayerHealth, this.PlayerConditions, this.PlayerPictureTokens, this.toolStripSeparator17, this.PlayerLabels, this.PlayerViewShowVisibility};
 			toolStripItemCollections1.AddRange(playerViewMap);
 			this.PlayerViewMapMenu.Image = (Image)componentResourceManager.GetObject("PlayerViewMapMenu.Image");
 			this.PlayerViewMapMenu.ImageTransparentColor = Color.Magenta;
@@ -3298,7 +3301,13 @@ namespace Masterplan.UI
 			this.PlayerLabels.Size = new System.Drawing.Size(215, 22);
 			this.PlayerLabels.Text = "Show Detailed Information";
 			this.PlayerLabels.Click += new EventHandler(this.PlayerLabels_Click);
-			this.PlayerViewNoMapMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
+
+            this.PlayerViewShowVisibility.Name = "PlayerViewVisibility";
+            this.PlayerViewShowVisibility.Size = new System.Drawing.Size(215, 22);
+            this.PlayerViewShowVisibility.Text = "Render Player Visibility";
+            this.PlayerViewShowVisibility.Click += new EventHandler(this.PlayerViewVisibility_Click);
+
+            this.PlayerViewNoMapMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			ToolStripItemCollection toolStripItemCollections2 = this.PlayerViewNoMapMenu.DropDownItems;
 			ToolStripItem[] playerViewNoMapShowInitiativeList = new ToolStripItem[] { this.PlayerViewNoMapShowInitiativeList, this.PlayerViewNoMapShowLabels };
 			toolStripItemCollections2.AddRange(playerViewNoMapShowInitiativeList);
@@ -4864,6 +4873,9 @@ namespace Masterplan.UI
 
         private void OnMoveTokenCommand()
         {
+            // Clear any drag events
+            this.PlayerMap?.SetDragInfo(CombatData.NoPoint, CombatData.NoPoint);
+
             this.RecalculateVisibilityAllMaps();
             this.update_maps();
             foreach (IToken selectedToken in this.MapView.SelectedTokens)
@@ -4978,6 +4990,8 @@ namespace Masterplan.UI
 			if (this.PlayerMap != null)
 			{
 				this.PlayerMap.SetDragInfo(e.OldLocation, e.NewLocation);
+                //this.PlayerMap.RecalculateVisibility();
+                this.PlayerMap.Redraw();
 			}
 		}
 
@@ -5314,7 +5328,17 @@ namespace Masterplan.UI
 			}
 		}
 
-		private void PlayerLabels_Click(object sender, EventArgs e)
+        private void PlayerViewVisibility_Click(object sender, EventArgs e)
+        {
+            if (this.PlayerMap != null)
+            {
+                this.PlayerMap.ShouldRenderVisibility = !this.PlayerMap.ShouldRenderVisibility;
+                this.PlayerMap.RecalculateVisibility();
+                this.PlayerMap.Redraw();
+            }
+        }
+
+        private void PlayerLabels_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -5439,7 +5463,10 @@ namespace Masterplan.UI
 			this.PlayerPictureTokens.Enabled = this.PlayerMap != null;
 			this.PlayerPictureTokens.Checked = (this.PlayerMap == null ? false : this.PlayerMap.ShowPictureTokens);
 			this.PlayerLabels.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
-			ToolStripMenuItem playerLabels = this.PlayerLabels;
+            this.PlayerViewShowVisibility.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
+            this.PlayerViewShowVisibility.Checked = (this.PlayerMap == null) ? false : this.PlayerMap.ShouldRenderVisibility;
+
+            ToolStripMenuItem playerLabels = this.PlayerLabels;
 			if (this.PlayerMap == null || !this.PlayerMap.ShowCreatureLabels)
 			{
 				flag = (this.PlayerInitiative == null ? false : Session.Preferences.PlayerViewCreatureLabels);
@@ -5449,6 +5476,7 @@ namespace Masterplan.UI
 				flag = true;
 			}
 			playerLabels.Checked = flag;
+
 			this.PlayerViewFog.Enabled = this.PlayerMap != null;
 			this.PlayerFogAll.Checked = (this.PlayerMap == null ? false : this.PlayerMap.ShowCreatures == CreatureViewMode.All);
 			this.PlayerFogVisible.Checked = (this.PlayerMap == null ? false : this.PlayerMap.ShowCreatures == CreatureViewMode.Visible);

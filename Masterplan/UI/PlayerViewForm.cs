@@ -173,7 +173,7 @@ namespace Masterplan.UI
 
 		private void item_moved(IToken token, Point start, Point end)
 		{
-			//this.fParentMap.Invalidate();
+			this.fParentMap.Invalidate();
 		}
 
 		private void mouse_move(object sender, MouseEventArgs e)
@@ -486,7 +486,8 @@ namespace Masterplan.UI
 					ShowCreatureLabels = Session.Preferences.PlayerViewCreatureLabels,
 					ShowGrid = (Session.Preferences.PlayerViewGrid ? MapGridMode.Overlay : MapGridMode.None),
 					ShowGridLabels = Session.Preferences.PlayerViewGridLabels,
-					ShowAuras = false
+					ShowAuras = false,
+                    HideNonVisibleTokens = true
 				};
 				mapView.ShowGrid = MapGridMode.None;
 				foreach (MapSketch sketch in mapview.Sketches)

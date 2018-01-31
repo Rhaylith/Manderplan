@@ -2,6 +2,7 @@
 using Masterplan.Commands;
 using Masterplan.Commands.Combat;
 using Masterplan.Data;
+using Masterplan.Data.Combat.Visibility;
 using Masterplan.Events;
 using Masterplan.Tools;
 using System;
@@ -39,6 +40,14 @@ namespace Masterplan.Controls
             }
             base.Dispose(disposing);
         }
+
+        public bool ShouldRenderVisibility = true;
+        public bool HideNonVisibleTokens = false;
+        public bool ShowLabelsForNonVisibleTokens = true;
+        Color TokenInCoverColor = Color.Gray;
+        Color TokenNotVisibleColor = Color.Yellow;
+        Color SquareInCoverColor = Color.FromArgb(64, Color.Black);
+        Color SquareObscurredColor = Color.FromArgb(128, Color.Black);
 
         private Masterplan.Data.Map fMap;
 
@@ -724,7 +733,7 @@ namespace Masterplan.Controls
             return true;
         }
 
-        private void draw_creature(Graphics g, Point pt, EncounterCard card, CombatData data, bool selected, bool hovered, bool ghost)
+        private void draw_creature(Graphics g, Point pt, EncounterCard card, CombatData data, bool selected, bool hovered, bool ghost, OcclusionLevel occlusionLevel)
         {
             ICreature creature = Session.FindCreature(card.CreatureID, SearchType.Global);
             if (creature == null)
@@ -752,6 +761,11 @@ namespace Masterplan.Controls
                         }
                 }
             }
+            if (occlusionLevel != OcclusionLevel.Visible)
+            {
+                black = occlusionLevel == OcclusionLevel.Cover ? this.TokenInCoverColor : this.TokenNotVisibleColor;
+            }
+
             bool flag = false;
             foreach (IToken fBoxedToken in this.fBoxedTokens)
             {
@@ -772,17 +786,6 @@ namespace Masterplan.Controls
             string str1 = TextHelper.Abbreviation(str);
             ghost = (ghost ? true : !visible);
             //bool isVisible = true;
-
-            Data.Combat.Visibility.OcclusionLevel[,] visMap = this.GetVisibilityMapForView();
-
-            if (visMap != null)
-            {
-                Data.Combat.Visibility.OcclusionLevel vis = visMap[data.Location.X, data.Location.Y];
-                if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
-                {
-                    black = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.Yellow : Color.Purple;
-                }
-            }
 
             this.draw_token(g, pt, creature.Size, creature.Image, black, str1, selected, flag, hovered, ghost, data.Conditions, data.Altitude);
             if (this.fShowHealthBars && data != null)
@@ -2525,8 +2528,8 @@ namespace Masterplan.Controls
 
         private void AddAllEnemiesToOcclusion(bool isHero)
         {
-            Data.Combat.Visibility.GetInstance().Blockers.Clear();
-            Data.Combat.Visibility.GetInstance().AddMapBlockers();
+            VisibilitySystem.GetInstance().Blockers.Clear();
+            VisibilitySystem.GetInstance().AddMapBlockers();
 
             if (isHero)
             {
@@ -2536,10 +2539,9 @@ namespace Masterplan.Controls
                     //int size = Creature.GetSize(creature.Size);
                     foreach (CombatData combatDatum in allSlot.CombatData)
                     {
-                        var blocker = new Data.Combat.RectangleVisibilityBlocker(new RectangleF(combatDatum.Location.X, combatDatum.Location.Y, 1.0f, 1.0f),
-                                                                                 Data.Combat.Visibility.OcclusionLevel.Cover);
+                        var blocker = new Data.Combat.RectangleVisibilityBlocker(new RectangleF(combatDatum.Location.X, combatDatum.Location.Y, 1.0f, 1.0f), OcclusionLevel.Cover);
                         blocker.Type = Data.Combat.VisibilityBlocker.BlockerType.BlocksLookingThrough;
-                        Data.Combat.Visibility.GetInstance().Blockers.Add(blocker);
+                        VisibilitySystem.GetInstance().Blockers.Add(blocker);
                     }
                 }
             }
@@ -2554,23 +2556,16 @@ namespace Masterplan.Controls
                     }
 
                     CombatData data = hero.CombatData;
-                    var blocker = new Data.Combat.RectangleVisibilityBlocker(new RectangleF(data.Location.X, data.Location.Y, 1.0f, 1.0f),
-                                                                             Data.Combat.Visibility.OcclusionLevel.Cover);
+                    var blocker = new Data.Combat.RectangleVisibilityBlocker(new RectangleF(data.Location.X, data.Location.Y, 1.0f, 1.0f), OcclusionLevel.Cover);
                     blocker.Type = Data.Combat.VisibilityBlocker.BlockerType.BlocksLookingThrough;
-                    Data.Combat.Visibility.GetInstance().Blockers.Add(blocker);
-
+                    VisibilitySystem.GetInstance().Blockers.Add(blocker);
                 }
             }
         }
 
         // Visibility Info
         CombatData latestTurnVisData = null;
-        Data.Combat.Visibility.OcclusionLevel[,] latestTurnVisMap;
-
-        public Data.Combat.Visibility.OcclusionLevel[,] GetVisibilityMapForView()
-        {
-            return latestTurnVisMap;
-        }
+        VisibilityMap latestTurnVisMap = new VisibilityMap(OcclusionLevel.Visible);
 
         public void SetNewVisibilitySource(CombatData data, bool isHero)
         {
@@ -2580,30 +2575,35 @@ namespace Masterplan.Controls
 
         public void RecalculateVisibility()
         { 
+            if (latestTurnVisData == null)
+            {
+                // we haven't set any vis source yet, so nothing we can do.
+                return;
+            }
+
             AddAllEnemiesToOcclusion(this.fMode == MapViewMode.PlayerView);
             Point min = new Point(this.LayoutData.MinX, this.LayoutData.MinY);
             Point max = new Point(this.LayoutData.MaxX, this.LayoutData.MaxY);
-            Data.Combat.Visibility.GetInstance().SetSize(min, max);
-            Data.Combat.Visibility.GetInstance().RecalculateFromPosition(latestTurnVisData.Location);
-            latestTurnVisMap = Data.Combat.Visibility.GetInstance().VisibilityMap;
+            VisibilitySystem.GetInstance().SetSize(min, max);
+            VisibilitySystem.GetInstance().RecalculateFromPosition(latestTurnVisData.Location);
+            latestTurnVisMap = VisibilitySystem.GetInstance().VisibilityMap;
         }
 
         public void DrawVisibility()
         {
-            Data.Combat.Visibility.OcclusionLevel[,] visMap = this.GetVisibilityMapForView();
-            if (visMap == null)
+            if (this.latestTurnVisMap == null)
             {
                 return;
             }
 
-            for (int x = 0; x < visMap.GetLength(0); ++x)
+            for (int x = 0; x < this.latestTurnVisMap.Width; ++x)
             {
-                for (int y = 0; y < visMap.GetLength(1); ++y)
+                for (int y = 0; y < this.latestTurnVisMap.Height; ++y)
                 {
-                    Data.Combat.Visibility.OcclusionLevel vis = visMap[x, y];
-                    if (vis != Data.Combat.Visibility.OcclusionLevel.Visible)
+                    OcclusionLevel vis = this.latestTurnVisMap[x, y];
+                    if (vis != OcclusionLevel.Visible)
                     {
-                        Color color = vis == Data.Combat.Visibility.OcclusionLevel.Obscured ? Color.FromArgb(128, Color.Black) : Color.FromArgb(64, Color.Black);
+                        Color color = vis == OcclusionLevel.Obscured ? this.SquareObscurredColor : this.SquareInCoverColor;
                         Point point = new Point(x + this.LayoutData.MinX, y + this.LayoutData.MinY);
                         RectangleF region = this.fLayoutData.GetRegion(point, new Size(1, 1));
 
@@ -2629,6 +2629,7 @@ namespace Masterplan.Controls
             drawingGraphics.SmoothingMode = SmoothingMode.AntiAlias;
             drawingGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             drawingGraphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
             switch (this.fMode)
             {
                 case MapViewMode.Normal:
@@ -2816,7 +2817,10 @@ namespace Masterplan.Controls
                 }
             }
 
-            DrawVisibility();
+            if (this.ShouldRenderVisibility)
+            {
+                DrawVisibility();
+            }
 
             if (this.fShowGrid == MapGridMode.Overlay && this.fLayoutData.SquareSize >= 10f)
             {
@@ -3042,6 +3046,12 @@ namespace Masterplan.Controls
                     {
                         continue;
                     }
+
+                    if (this.HideNonVisibleTokens && (!this.latestTurnVisMap.IsVisible(combatData1) || !this.latestTurnVisMap.IsVisible(combatDatum1)))
+                    {
+                        continue;
+                    }
+
                     RectangleF tokenRect = this.get_token_rect(token1);
                     RectangleF tokenRect1 = this.get_token_rect(token2);
                     if (tokenRect == RectangleF.Empty || tokenRect1 == RectangleF.Empty)
@@ -3148,11 +3158,22 @@ namespace Masterplan.Controls
                         {
                             continue;
                         }
+
+                        if (this.HideNonVisibleTokens && !this.latestTurnVisMap.IsVisible(combatDatum3))
+                        {
+                            continue;
+                        }
+
                         if (this.fDraggedToken != null && this.fDraggedToken.Token is CreatureToken)
                         {
                             CreatureToken creatureToken1 = this.fDraggedToken.Token as CreatureToken;
                             if (allSlot1.ID == creatureToken1.SlotID && combatDatum3.Location == this.fDraggedToken.Start)
                             {
+                                if (this.HideNonVisibleTokens && !this.latestTurnVisMap.IsVisible(this.fDraggedToken.Location))
+                                {
+                                    continue;
+                                }
+
                                 if (combatDatum3.Location == this.fDraggedToken.Location)
                                 {
                                     continue;
@@ -3179,7 +3200,8 @@ namespace Masterplan.Controls
                         {
                             flag3 = true;
                         }
-                        this.draw_creature(drawingGraphics, combatDatum3.Location, allSlot1.Card, combatDatum3, flag2, flag3, false);
+
+                        this.draw_creature(drawingGraphics, combatDatum3.Location, allSlot1.Card, combatDatum3, flag2, flag3, false, this.latestTurnVisMap[combatDatum3]);
                     }
                 }
             }
@@ -3217,7 +3239,11 @@ namespace Masterplan.Controls
                     CreatureToken token4 = this.fNewToken.Token as CreatureToken;
                     EncounterSlot encounterSlot2 = this.fEncounter.FindSlot(token4.SlotID);
                     Session.FindCreature(encounterSlot2.Card.CreatureID, SearchType.Global);
-                    this.draw_creature(drawingGraphics, this.fNewToken.Location, encounterSlot2.Card, token4.Data, true, true, true);
+
+                    if (!this.HideNonVisibleTokens || this.latestTurnVisMap.IsVisible(this.fNewToken.Location))
+                    {
+                        this.draw_creature(drawingGraphics, this.fNewToken.Location, encounterSlot2.Card, token4.Data, true, true, true, this.latestTurnVisMap[this.fNewToken.Location]);
+                    }
                 }
                 if (this.fNewToken.Token is Hero)
                 {
@@ -3236,7 +3262,11 @@ namespace Masterplan.Controls
                 {
                     CreatureToken creatureToken4 = this.fDraggedToken.Token as CreatureToken;
                     EncounterSlot encounterSlot3 = this.fEncounter.FindSlot(creatureToken4.SlotID);
-                    this.draw_creature(drawingGraphics, this.fDraggedToken.Location, encounterSlot3.Card, creatureToken4.Data, true, true, true);
+
+                    if (!this.HideNonVisibleTokens || this.latestTurnVisMap.IsVisible(this.fDraggedToken.Location))
+                    {
+                        this.draw_creature(drawingGraphics, this.fDraggedToken.Location, encounterSlot3.Card, creatureToken4.Data, true, true, true, this.latestTurnVisMap[this.fDraggedToken.Location]);
+                    }
                 }
                 if (this.fDraggedToken.Token is Hero)
                 {
@@ -3269,6 +3299,10 @@ namespace Masterplan.Controls
                     CombatData combatData2 = this.get_combat_data(item3);
                     CombatData combatData3 = this.get_combat_data(item4);
                     if (!combatData2.Visible || !combatData3.Visible)
+                    {
+                        continue;
+                    }
+                    if (this.HideNonVisibleTokens && (!this.latestTurnVisMap.IsVisible(combatData2) || !this.latestTurnVisMap.IsVisible(combatData3)))
                     {
                         continue;
                     }

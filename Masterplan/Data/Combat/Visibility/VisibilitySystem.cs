@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Masterplan.Data.Combat.Visibility;
 
-namespace Masterplan.Data.Combat
+namespace Masterplan.Data.Combat.Visibility
 {
-    public class Visibility
+    public class VisibilitySystem
     {
         public List<VisibilityBlocker> Blockers = new List<VisibilityBlocker>();
         public void AddMapBlockers()
@@ -38,27 +36,20 @@ namespace Masterplan.Data.Combat
             Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 8f, 4f, 3f), OcclusionLevel.Cover));
         }
 
-        private static Visibility _instance;
-        public static Visibility GetInstance()
+        private static VisibilitySystem _instance;
+        public static VisibilitySystem GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new Visibility();
+                _instance = new VisibilitySystem();
             }
             return _instance;
-        }
-
-        public enum OcclusionLevel
-        {
-            Visible,
-            Cover,
-            Obscured
         }
 
         public Point Min;
         public Point Max;
 
-        public Visibility()
+        public VisibilitySystem()
         {
 
         }
@@ -116,10 +107,10 @@ namespace Masterplan.Data.Combat
             // if we have corners to test, then run through the whole visibility map from that corner and union it to our result
             foreach(var point in cornersToTest)
             {
-                OcclusionLevel[,] cornerMap = this.GenerateVisibilityMapForPosition(point);
-                for(int x=0; x < cornerMap.GetLength(0); ++x)
+                VisibilityMap cornerMap = this.GenerateVisibilityMapForPosition(point);
+                for(int x=0; x < cornerMap.Width; ++x)
                 {
-                    for(int y=0; y<cornerMap.GetLength(1);  ++y)
+                    for(int y=0; y<cornerMap.Height;  ++y)
                     {
                         this.VisibilityMap[x, y] = this.VisibilityMap[x, y] == OcclusionLevel.Obscured ? OcclusionLevel.Obscured : cornerMap[x, y];
                     }
@@ -127,7 +118,7 @@ namespace Masterplan.Data.Combat
             }
         }
 
-        public OcclusionLevel[,] VisibilityMap
+        public VisibilityMap VisibilityMap
         {
             get;
             private set;
@@ -154,16 +145,16 @@ namespace Masterplan.Data.Combat
             this.VisibilityMap = null;
             foreach (var point in cornersToTest)
             {
-                OcclusionLevel[,] cornerMap = this.GenerateVisibilityMapForPosition(point);
+                VisibilityMap cornerMap = this.GenerateVisibilityMapForPosition(point);
                 if (this.VisibilityMap == null)
                 {
                     this.VisibilityMap = cornerMap;
                 }
                 else
                 {
-                    for (int x = 0; x < cornerMap.GetLength(0); ++x)
+                    for (int x = 0; x < cornerMap.Width; ++x)
                     {
-                        for (int y = 0; y < cornerMap.GetLength(1); ++y)
+                        for (int y = 0; y < cornerMap.Height; ++y)
                         {
                             this.VisibilityMap[x, y] = (OcclusionLevel) Math.Min((int)this.VisibilityMap[x, y], (int)cornerMap[x, y]);
                         }
@@ -172,9 +163,9 @@ namespace Masterplan.Data.Combat
             }
 
             // Calculate cover spots
-            for (int x = 0; x < this.VisibilityMap.GetLength(0); ++x)
+            for (int x = 0; x < this.VisibilityMap.Width; ++x)
             {
-                for (int y = 0; y < this.VisibilityMap.GetLength(1); ++y)
+                for (int y = 0; y < this.VisibilityMap.Height; ++y)
                 {
                     if (this.VisibilityMap[x, y] == OcclusionLevel.Obscured)
                     {
@@ -194,9 +185,9 @@ namespace Masterplan.Data.Combat
             //this.TestCorners(viewerPosition);
         }
 
-        private OcclusionLevel[,] GenerateVisibilityMapForPosition(PointF viewerLocation)
+        private VisibilityMap GenerateVisibilityMapForPosition(PointF viewerLocation)
         {
-            OcclusionLevel[,] visData = new OcclusionLevel[this.Max.X - this.Min.X, this.Max.Y - this.Min.Y];
+            VisibilityMap visData = new VisibilityMap(this.Max.X - this.Min.X, this.Max.Y - this.Min.Y);
 
             for (int x = this.Min.X; x < this.Max.X; ++x)
             {
