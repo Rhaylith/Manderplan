@@ -29,6 +29,9 @@ namespace Masterplan.Controls
 
 		public int MaxY = -2147483648;
 
+        public int OverallMaxX = int.MaxValue;
+        public int OverallMaxY = int.MaxValue;
+
 		public int Height
 		{
 			get
@@ -110,6 +113,8 @@ namespace Masterplan.Controls
 					this.MaxY = num1;
 				}
 			}
+            this.OverallMaxX = this.MaxX;
+            this.OverallMaxY = this.MaxY;
 			if (mapview.Map == null || !(mapview.Viewpoint != Rectangle.Empty))
 			{
 				this.MinX -= mapview.BorderSize;

@@ -4011,7 +4011,9 @@ namespace Masterplan.UI
 				{
 					continue;
 				}
-				string str = "white";
+                displayName = string.Format("[{0}] {1}", TextHelper.Abbreviation(displayName), displayName);
+
+                string str = "white";
 				if (data == this.fCurrentActor)
 				{
 					flag = true;
@@ -4754,6 +4756,7 @@ namespace Masterplan.UI
 					this.PlayerMap.Viewpoint = this.MapView.Viewpoint;
 				}
 				this.MapView.MapChanged();
+                this.update_maps();
 			}
 			catch (Exception exception)
 			{
@@ -6795,7 +6798,9 @@ namespace Masterplan.UI
 					{
 						str1 = string.Concat("(", str1, ")");
 					}
-					ListViewItem grayText = this.CombatList.Items.Add(combatDatum1.DisplayName);
+
+                    string displayName = string.Format("[{0}] {1}", TextHelper.Abbreviation(combatDatum1.DisplayName), combatDatum1.DisplayName);
+					ListViewItem grayText = this.CombatList.Items.Add(displayName);
 					grayText.Tag = new CreatureToken(encounterSlot.ID, combatDatum1);
 					if (combatDatum1.Initiative == -2147483648)
 					{
@@ -7351,7 +7356,10 @@ namespace Masterplan.UI
 					value *= 2;
 					this.MapView.ScalingFactor = num1 + value * (num - num1);
 				}
-				this.MapView.MapChanged();
+
+                this.MapView.MapChanged();
+                this.MapView.RecalculateVisibility();
+                this.MapView.Redraw();
 			}
 			catch (Exception exception)
 			{

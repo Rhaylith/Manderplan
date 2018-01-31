@@ -2352,6 +2352,7 @@ namespace Masterplan.Controls
                         this.fViewpoint.X = this.fViewpoint.X + x1;
                         this.fViewpoint.Y = this.fViewpoint.Y + y2;
                         this.fLayoutData = null;
+                        this.Redraw();
                     }
                 }
             }
@@ -2584,9 +2585,18 @@ namespace Masterplan.Controls
                 return;
             }
 
+            if (latestTurnVisData.Location == CombatData.NoPoint)
+            {
+                // We have a vis source but that person isn't on the map so they can't see anything
+                latestTurnVisMap = new VisibilityMap(OcclusionLevel.Obscured);
+                return;
+            }
+
             AddAllEnemiesToOcclusion(this.fMode == MapViewMode.PlayerView);
-            Point min = new Point(this.LayoutData.MinX, this.LayoutData.MinY);
-            Point max = new Point(this.LayoutData.MaxX, this.LayoutData.MaxY);
+            //Point min = new Point(this.LayoutData.MinX, this.LayoutData.MinY);
+            //Point max = new Point(this.LayoutData.MaxX, this.LayoutData.MaxY);
+            Point min = new Point(0, 0);
+            Point max = new Point(this.LayoutData.OverallMaxX, this.LayoutData.OverallMaxY);
             VisibilitySystem.GetInstance().SetSize(min, max);
             VisibilitySystem.GetInstance().RecalculateFromPosition(latestTurnVisData.Location);
             latestTurnVisMap = VisibilitySystem.GetInstance().VisibilityMap;
