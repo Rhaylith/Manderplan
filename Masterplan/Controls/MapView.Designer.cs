@@ -44,10 +44,10 @@ namespace Masterplan.Controls
         public bool ShouldRenderVisibility = true;
         public bool HideNonVisibleTokens = false;
         public bool ShowLabelsForNonVisibleTokens = true;
-        Color TokenInCoverColor = Color.Gray;
+        Color TokenInCoverColor = Color.DimGray;
         Color TokenNotVisibleColor = Color.Yellow;
-        Color SquareInCoverColor = Color.FromArgb(64, Color.Black);
-        Color SquareObscurredColor = Color.FromArgb(128, Color.Black);
+        Color SquareInCoverColor = Color.FromArgb(128, Color.Black);
+        Color SquareObscurredColor = Color.Black; //Color.FromArgb(128, Color.Black);
 
         private Masterplan.Data.Map fMap;
 
@@ -2489,6 +2489,7 @@ namespace Masterplan.Controls
                                 this.fLayoutData = null;
                             }
                             this.fScrollingData = null;
+                            this.Redraw();
                         }
                     }
                     else
@@ -2604,20 +2605,20 @@ namespace Masterplan.Controls
 
         public void DrawVisibility()
         {
-            if (this.latestTurnVisMap == null)
+            if (this.latestTurnVisMap == null || this.latestTurnVisMap.Width == 0)
             {
                 return;
             }
 
-            for (int x = 0; x < this.latestTurnVisMap.Width; ++x)
+            for (int x = this.LayoutData.MinX; x < this.LayoutData.MaxX; ++x)
             {
-                for (int y = 0; y < this.latestTurnVisMap.Height; ++y)
+                for (int y = this.LayoutData.MinY; y < this.LayoutData.MaxY; ++y)
                 {
                     OcclusionLevel vis = this.latestTurnVisMap[x, y];
                     if (vis != OcclusionLevel.Visible)
                     {
                         Color color = vis == OcclusionLevel.Obscured ? this.SquareObscurredColor : this.SquareInCoverColor;
-                        Point point = new Point(x + this.LayoutData.MinX, y + this.LayoutData.MinY);
+                        Point point = new Point(x, y);
                         RectangleF region = this.fLayoutData.GetRegion(point, new Size(1, 1));
 
                         // This gives us the full size but don't draw the full size because then it overlaps
