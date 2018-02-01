@@ -8,7 +8,7 @@ namespace Masterplan.Data.Combat.Visibility
     public class VisibilitySystem
     {
         public List<VisibilityBlocker> Blockers = new List<VisibilityBlocker>();
-        public void AddMapBlockers()
+        public void AddMapBlockers(Encounter encounter)
         {
             // Battle
             //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(16f, 6f, 1f, 7f)));
@@ -20,20 +20,34 @@ namespace Masterplan.Data.Combat.Visibility
             //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(31f, 19f, 1f, 7f)));
 
             // Forest map
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 3f, 2f, 2f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(3f, 2f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(6f, 3f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 7f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(5f, 7f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(8f, 6f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(4f, 12f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(7f, 10f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(0f, 14f, 2f, 2f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(7f, 15f, 1f, 1f)));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(5f, 17f, 1f, 1f)));
+            {
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 3f, 2f, 2f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(3f, 2f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(6f, 3f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 7f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(5f, 7f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(8f, 6f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(4f, 12f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(7f, 10f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(0f, 14f, 2f, 2f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(7f, 15f, 1f, 1f)));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(5f, 17f, 1f, 1f)));
 
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(4f, 14f, 2f, 2f), OcclusionLevel.Cover));
-            Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 8f, 4f, 3f), OcclusionLevel.Cover));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(4f, 14f, 2f, 2f), OcclusionLevel.Cover));
+                Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 8f, 4f, 3f), OcclusionLevel.Cover));
+            }
+
+            foreach (CustomToken customToken in encounter.CustomTokens)
+            {
+                if (customToken.Type == CustomTokenType.Overlay && customToken.BlocksLineOfSight && 
+                    customToken.Data.Location != CombatData.NoPoint && customToken.Data.Visible)
+                {
+                    PointF location = new PointF((float)customToken.Data.Location.X, (float)customToken.Data.Location.Y);
+                    PointF size = new PointF((float)customToken.OverlaySize.Width, (float)customToken.OverlaySize.Height);
+                    Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(location.X, location.Y, size.X, size.Y)));
+                }
+            }
+
         }
 
         private static VisibilitySystem _instance;

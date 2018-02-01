@@ -32,7 +32,8 @@ namespace Masterplan.Data.Combat
 
         public override bool Intersects(MMath.LineSegment sightLine)
         {
-            if (MMath.Rectangle.RectContainsPoint(this.Rect, sightLine.Start))
+            //if (MMath.Rectangle.RectContainsPoint(this.Rect, sightLine.Start))
+            if (this.Rect.X != sightLine.Start.X && this.Rect.Y != sightLine.Start.Y && this.Rect.Contains(sightLine.Start))
             {
                 return false;
             }

@@ -142,7 +142,32 @@ namespace Masterplan.Data
 			}
 		}
 
-		public Size OverlaySize
+        public bool IsTerrainLayer
+        {
+            get;
+            set;
+        }
+
+        public bool IsUnSelectable
+        {
+            get;
+            set;
+        }
+
+        // TODO:  Need to support cover as well
+        public bool BlocksLineOfSight
+        {
+            get
+            {
+                return this.Opaque;
+            }
+            set
+            {
+                this.Opaque = value;
+            }
+        }
+
+        public Size OverlaySize
 		{
 			get
 			{
@@ -222,6 +247,8 @@ namespace Masterplan.Data
 				Image = this.fImage,
 				DifficultTerrain = this.fDifficultTerrain,
 				Opaque = this.fOpaque,
+                IsTerrainLayer = this.IsTerrainLayer,
+                IsUnSelectable = this.IsUnSelectable,
 				Data = this.fData.Copy()
 			};
 			CustomToken customToken1 = customToken;

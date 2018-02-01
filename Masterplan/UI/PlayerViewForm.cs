@@ -467,27 +467,28 @@ namespace Masterplan.UI
 			MapView mapView = null;
 			if (this.fParentMap != null)
 			{
-				mapView = new MapView()
-				{
-					Map = this.fParentMap.Map,
-					Viewpoint = this.fParentMap.Viewpoint,
-					BorderSize = this.fParentMap.BorderSize,
-					ScalingFactor = this.fParentMap.ScalingFactor,
-					Encounter = this.fParentMap.Encounter,
-					Plot = this.fParentMap.Plot,
-					TokenLinks = this.fParentMap.TokenLinks,
-					AllowDrawing = this.fParentMap.AllowDrawing,
-					Mode = MapViewMode.PlayerView,
-					Tactical = true,
-					HighlightAreas = false,
-					FrameType = MapDisplayType.Opaque,
-					ShowCreatures = Session.Preferences.PlayerViewFog,
-					ShowHealthBars = Session.Preferences.PlayerViewHealthBars,
-					ShowCreatureLabels = Session.Preferences.PlayerViewCreatureLabels,
-					ShowGrid = (Session.Preferences.PlayerViewGrid ? MapGridMode.Overlay : MapGridMode.None),
-					ShowGridLabels = Session.Preferences.PlayerViewGridLabels,
-					ShowAuras = false,
-                    HideNonVisibleTokens = true
+                mapView = new MapView()
+                {
+                    Map = this.fParentMap.Map,
+                    Viewpoint = this.fParentMap.Viewpoint,
+                    BorderSize = this.fParentMap.BorderSize,
+                    ScalingFactor = this.fParentMap.ScalingFactor,
+                    Encounter = this.fParentMap.Encounter,
+                    Plot = this.fParentMap.Plot,
+                    TokenLinks = this.fParentMap.TokenLinks,
+                    AllowDrawing = this.fParentMap.AllowDrawing,
+                    Mode = MapViewMode.PlayerView,
+                    Tactical = true,
+                    HighlightAreas = false,
+                    FrameType = MapDisplayType.Opaque,
+                    ShowCreatures = Session.Preferences.PlayerViewFog,
+                    ShowHealthBars = Session.Preferences.PlayerViewHealthBars,
+                    ShowCreatureLabels = Session.Preferences.PlayerViewCreatureLabels,
+                    ShowGrid = (Session.Preferences.PlayerViewGrid ? MapGridMode.Overlay : MapGridMode.None),
+                    ShowGridLabels = Session.Preferences.PlayerViewGridLabels,
+                    ShowAuras = false,
+                    HideNonVisibleTokens = true,
+                    UseDarkScheme = true,
 				};
 				mapView.ShowGrid = MapGridMode.None;
 				foreach (MapSketch sketch in mapview.Sketches)

@@ -51,7 +51,11 @@ namespace Masterplan.UI
 
 		private CheckBox OpaqueBox;
 
-		private CheckBox DifficultBox;
+        private CheckBox TerrainLayerBox;
+
+        private CheckBox IsUnSelectableBox;
+
+        private CheckBox DifficultBox;
 
 		private TabPage TerrainPowerPage;
 
@@ -107,7 +111,9 @@ namespace Masterplan.UI
 			}
 			this.DifficultBox.Checked = this.fToken.DifficultTerrain;
 			this.OpaqueBox.Checked = this.fToken.Opaque;
-		}
+            this.TerrainLayerBox.Checked = this.fToken.IsTerrainLayer;
+            this.IsUnSelectableBox.Checked = this.fToken.IsUnSelectable;
+        }
 
 		private void Application_Idle(object sender, EventArgs e)
 		{
@@ -151,7 +157,9 @@ namespace Masterplan.UI
 			this.StyleBox = new ComboBox();
 			this.StyleLbl = new Label();
 			this.OpaqueBox = new CheckBox();
-			this.DifficultBox = new CheckBox();
+            this.TerrainLayerBox = new CheckBox();
+            this.IsUnSelectableBox = new CheckBox();
+            this.DifficultBox = new CheckBox();
 			this.TerrainPowerPage = new TabPage();
 			this.PowerBrowser = new WebBrowser();
 			this.TerrainPowerToolbar = new ToolStrip();
@@ -246,7 +254,9 @@ namespace Masterplan.UI
 			this.OptionsPage.Controls.Add(this.StyleBox);
 			this.OptionsPage.Controls.Add(this.StyleLbl);
 			this.OptionsPage.Controls.Add(this.OpaqueBox);
-			this.OptionsPage.Controls.Add(this.DifficultBox);
+            this.OptionsPage.Controls.Add(this.TerrainLayerBox);
+            this.OptionsPage.Controls.Add(this.IsUnSelectableBox);
+            this.OptionsPage.Controls.Add(this.DifficultBox);
 			this.OptionsPage.Location = new Point(4, 22);
 			this.OptionsPage.Name = "OptionsPage";
 			this.OptionsPage.Padding = new System.Windows.Forms.Padding(3);
@@ -274,7 +284,25 @@ namespace Masterplan.UI
 			this.OpaqueBox.TabIndex = 3;
 			this.OpaqueBox.Text = "This overlay blocks line of sight";
 			this.OpaqueBox.UseVisualStyleBackColor = true;
-			this.DifficultBox.AutoSize = true;
+
+            this.TerrainLayerBox.AutoSize = true;
+            this.TerrainLayerBox.Location = new Point(9, 94);
+            this.TerrainLayerBox.Name = "TerrainLayerBox";
+            this.TerrainLayerBox.Size = new System.Drawing.Size(173, 17);
+            this.TerrainLayerBox.TabIndex = 3;
+            this.TerrainLayerBox.Text = "This overlay is a terrain layer";
+            this.TerrainLayerBox.UseVisualStyleBackColor = true;
+
+            this.IsUnSelectableBox.AutoSize = true;
+            this.IsUnSelectableBox.Location = new Point(9, 117);
+            this.IsUnSelectableBox.Name = "IsUnSelectableBox";
+            this.IsUnSelectableBox.Size = new System.Drawing.Size(173, 17);
+            this.IsUnSelectableBox.TabIndex = 3;
+            this.IsUnSelectableBox.Text = "This overlay is not selectable in game window";
+            this.IsUnSelectableBox.UseVisualStyleBackColor = true;
+
+
+            this.DifficultBox.AutoSize = true;
 			this.DifficultBox.Location = new Point(9, 48);
 			this.DifficultBox.Name = "DifficultBox";
 			this.DifficultBox.Size = new System.Drawing.Size(153, 17);
@@ -403,7 +431,9 @@ namespace Masterplan.UI
 			this.fToken.Details = this.DetailsBox.Text;
 			this.fToken.DifficultTerrain = this.DifficultBox.Checked;
 			this.fToken.Opaque = this.OpaqueBox.Checked;
-			this.fToken.Image = this.TilePanel.Image;
+            this.fToken.IsTerrainLayer = this.TerrainLayerBox.Checked;
+            this.fToken.IsUnSelectable = this.IsUnSelectableBox.Checked;
+            this.fToken.Image = this.TilePanel.Image;
 			this.fToken.Colour = this.TilePanel.Colour;
 			this.fToken.OverlayStyle = (this.StyleBox.Text == "Rounded (translucent)" ? OverlayStyle.Rounded : OverlayStyle.Block);
 		}

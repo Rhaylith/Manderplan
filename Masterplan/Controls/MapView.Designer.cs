@@ -44,10 +44,26 @@ namespace Masterplan.Controls
         public bool ShouldRenderVisibility = true;
         public bool HideNonVisibleTokens = false;
         public bool ShowLabelsForNonVisibleTokens = true;
+
+        public bool UseDarkScheme = false;
+
         Color TokenInCoverColor = Color.DimGray;
         Color TokenNotVisibleColor = Color.Yellow;
-        Color SquareInCoverColor = Color.FromArgb(128, Color.Black);
-        Color SquareObscurredColor = Color.Black; //Color.FromArgb(128, Color.Black);
+        Color SquareInCoverColor
+        {
+            get
+            {
+                return this.UseDarkScheme ? Color.FromArgb(128, Color.Black) : Color.FromArgb(64, Color.Black);
+            }
+        }
+
+        Color SquareObscurredColor
+        {
+            get
+            {
+                return this.UseDarkScheme ? Color.Black : Color.FromArgb(128, Color.Black);
+            }
+        }
 
         private Masterplan.Data.Map fMap;
 
@@ -1456,6 +1472,13 @@ namespace Masterplan.Controls
                 {
                     continue;
                 }
+
+                if (customToken1.IsUnSelectable || customToken1.IsTerrainLayer)
+                {
+                    // Terrain layers aren't selectable, so don't even bother returning that they're in the square.
+                    continue;
+                }
+
                 System.Drawing.Size overlaySize1 = customToken1.OverlaySize;
                 if (customToken1.Type == CustomTokenType.Token)
                 {
@@ -2544,7 +2567,7 @@ namespace Masterplan.Controls
         private void AddAllEnemiesToOcclusion(bool isHero)
         {
             VisibilitySystem.GetInstance().Blockers.Clear();
-            VisibilitySystem.GetInstance().AddMapBlockers();
+            VisibilitySystem.GetInstance().AddMapBlockers(this.fEncounter);
 
             if (isHero)
             {
@@ -2792,6 +2815,19 @@ namespace Masterplan.Controls
                     this.draw_tile(drawingGraphics, item2, tileDatum1.Rotations, this.fDraggedTiles.Region, false);
                 }
             }
+
+            // Terrain Layers
+            foreach (CustomToken customToken in this.fEncounter.CustomTokens)
+            {
+                if (!customToken.IsTerrainLayer || customToken.Type != CustomTokenType.Overlay || !this.is_visible(customToken.Data) ||
+                    customToken.Data.Location == CombatData.NoPoint)
+                {
+                    continue;
+                }
+
+                this.draw_custom(drawingGraphics, customToken.Data.Location, customToken, false, false, false);
+            }
+
 
             return true;
         }
@@ -3130,7 +3166,8 @@ namespace Masterplan.Controls
             {
                 foreach (CustomToken customToken in this.fEncounter.CustomTokens)
                 {
-                    if (customToken.Type != CustomTokenType.Overlay || !this.is_visible(customToken.Data))
+                    if (customToken.Type != CustomTokenType.Overlay || !this.is_visible(customToken.Data) ||
+                        customToken.IsTerrainLayer)
                     {
                         continue;
                     }

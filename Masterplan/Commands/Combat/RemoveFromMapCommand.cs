@@ -12,6 +12,9 @@ namespace Masterplan.Commands.Combat
         protected CombatData _data;
         protected Point prevoiusLocation;
         
+        // HACK!
+        public bool RefreshTerrainLayers = false;
+
         public RemoveFromMapCommand(CombatData data)
         {
             _data = data;
@@ -34,6 +37,12 @@ namespace Masterplan.Commands.Combat
                 link.Do();
             }
 
+            // HACK!
+            if (this.RefreshTerrainLayers)
+            {
+                Masterplan.UI.CombatForm.TerrainLayersNeedRefresh = true;
+            }
+
         }
 
         public virtual void Undo()
@@ -50,6 +59,11 @@ namespace Masterplan.Commands.Combat
                 link.Undo();
             }
 
+            // HACK!
+            if (this.RefreshTerrainLayers)
+            {
+                Masterplan.UI.CombatForm.TerrainLayersNeedRefresh = true;
+            }
         }
     }
 }

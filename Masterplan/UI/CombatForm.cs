@@ -150,8 +150,9 @@ namespace Masterplan.UI
 		private ToolStripMenuItem PlayerLabels;
 
         private ToolStripMenuItem PlayerViewShowVisibility;
+        private ToolStripMenuItem PlayerViewUseDarkScheme;
 
-		private ToolStripMenuItem MapFog;
+        private ToolStripMenuItem MapFog;
 
 		private ToolStripMenuItem MapFogAllCreatures;
 
@@ -386,6 +387,9 @@ namespace Masterplan.UI
 		private ToolStripSeparator toolStripSeparator26;
 
 		private ToolStripMenuItem CombatantsWaves;
+
+        // HACK!
+        public static bool TerrainLayersNeedRefresh = false;
 
 		public WebBrowser PlayerInitiative
 		{
@@ -1671,6 +1675,7 @@ namespace Masterplan.UI
 						}
 						this.fLog.AddEffectEntry(combatDataForm.Data.ID, str1, true);
 					}
+
 					this.update_list();
 					this.update_log();
 					this.update_preview_panel();
@@ -1767,12 +1772,19 @@ namespace Masterplan.UI
 						}
 						case CustomTokenType.Overlay:
 						{
-							CustomOverlayForm customOverlayForm = new CustomOverlayForm(customToken);
-							if (customOverlayForm.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-							{
-								break;
-							}
-							this.fEncounter.CustomTokens[num1] = customOverlayForm.Token;
+                                bool refreshTerrain = customToken.IsTerrainLayer;
+                                CustomOverlayForm customOverlayForm = new CustomOverlayForm(customToken);
+                                if (customOverlayForm.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                                {
+                                    break;
+                                }
+                                this.fEncounter.CustomTokens[num1] = customOverlayForm.Token;
+                            refreshTerrain |= customOverlayForm.Token.IsTerrainLayer;
+                            if (refreshTerrain)
+                            {
+                                    CombatForm.TerrainLayersNeedRefresh = true;
+                                    this.RebuildTerrainLayersAllMaps();
+                            }
 							this.update_list();
 							this.update_preview_panel();
 							this.update_maps();
@@ -2823,7 +2835,8 @@ namespace Masterplan.UI
 			ListViewGroup listViewGroup7 = new ListViewGroup("Predefined", HorizontalAlignment.Left);
 			ListViewGroup listViewGroup8 = new ListViewGroup("Custom Tokens", HorizontalAlignment.Left);
 			ListViewGroup listViewGroup9 = new ListViewGroup("Custom Overlays", HorizontalAlignment.Left);
-			this.Toolbar = new ToolStrip();
+            ListViewGroup listViewGroup10 = new ListViewGroup("Terrain Layers", HorizontalAlignment.Left);
+            this.Toolbar = new ToolStrip();
 			this.DetailsBtn = new ToolStripButton();
 			this.DamageBtn = new ToolStripButton();
 			this.HealBtn = new ToolStripButton();
@@ -2888,7 +2901,8 @@ namespace Masterplan.UI
 			this.toolStripSeparator17 = new ToolStripSeparator();
 			this.PlayerLabels = new ToolStripMenuItem();
             this.PlayerViewShowVisibility = new ToolStripMenuItem();
-			this.PlayerViewNoMapMenu = new ToolStripDropDownButton();
+            this.PlayerViewUseDarkScheme = new ToolStripMenuItem();
+            this.PlayerViewNoMapMenu = new ToolStripDropDownButton();
 			this.PlayerViewNoMapShowInitiativeList = new ToolStripMenuItem();
 			this.PlayerViewNoMapShowLabels = new ToolStripMenuItem();
 			this.ToolsMenu = new ToolStripDropDownButton();
@@ -3230,7 +3244,7 @@ namespace Masterplan.UI
 			this.MapExport.Click += new EventHandler(this.MapExport_Click);
 			this.PlayerViewMapMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			ToolStripItemCollection toolStripItemCollections1 = this.PlayerViewMapMenu.DropDownItems;
-			ToolStripItem[] playerViewMap = new ToolStripItem[] { this.PlayerViewMap, this.PlayerViewInitList, this.toolStripSeparator9, this.PlayerViewFog, this.toolStripSeparator16, this.PlayerViewLOS, this.PlayerViewGrid, this.PlayerViewGridLabels, this.PlayerHealth, this.PlayerConditions, this.PlayerPictureTokens, this.toolStripSeparator17, this.PlayerLabels, this.PlayerViewShowVisibility};
+			ToolStripItem[] playerViewMap = new ToolStripItem[] { this.PlayerViewMap, this.PlayerViewInitList, this.toolStripSeparator9, this.PlayerViewFog, this.toolStripSeparator16, this.PlayerViewLOS, this.PlayerViewGrid, this.PlayerViewGridLabels, this.PlayerHealth, this.PlayerConditions, this.PlayerPictureTokens, this.toolStripSeparator17, this.PlayerLabels, this.PlayerViewShowVisibility, this.PlayerViewUseDarkScheme};
 			toolStripItemCollections1.AddRange(playerViewMap);
 			this.PlayerViewMapMenu.Image = (Image)componentResourceManager.GetObject("PlayerViewMapMenu.Image");
 			this.PlayerViewMapMenu.ImageTransparentColor = Color.Magenta;
@@ -3306,6 +3320,12 @@ namespace Masterplan.UI
             this.PlayerViewShowVisibility.Size = new System.Drawing.Size(215, 22);
             this.PlayerViewShowVisibility.Text = "Render Player Visibility";
             this.PlayerViewShowVisibility.Click += new EventHandler(this.PlayerViewVisibility_Click);
+
+            this.PlayerViewUseDarkScheme.Name = "PlayerViewUseDarkScheme";
+            this.PlayerViewUseDarkScheme.Size = new System.Drawing.Size(215, 22);
+            this.PlayerViewUseDarkScheme.Text = "Use Dark Scheme For Visibility";
+            this.PlayerViewUseDarkScheme.Click += new EventHandler(this.PlayerViewUseDarkScheme_Click);
+
 
             this.PlayerViewNoMapMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			ToolStripItemCollection toolStripItemCollections2 = this.PlayerViewNoMapMenu.DropDownItems;
@@ -3489,8 +3509,10 @@ namespace Masterplan.UI
 			listViewGroup5.Name = "listViewGroup2";
 			listViewGroup6.Header = "Defeated";
 			listViewGroup6.Name = "listViewGroup7";
-			ListViewGroupCollection groups = this.CombatList.Groups;
-			ListViewGroup[] listViewGroupArray = new ListViewGroup[] { listViewGroup, listViewGroup1, listViewGroup2, listViewGroup3, listViewGroup4, listViewGroup5, listViewGroup6 };
+            listViewGroup10.Header = "Terrain Layers";
+            listViewGroup10.Name = "listViewGroup10";
+            ListViewGroupCollection groups = this.CombatList.Groups;
+			ListViewGroup[] listViewGroupArray = new ListViewGroup[] { listViewGroup, listViewGroup1, listViewGroup2, listViewGroup3, listViewGroup4, listViewGroup5, listViewGroup6, listViewGroup10};
 			groups.AddRange(listViewGroupArray);
 			this.CombatList.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 			this.CombatList.HideSelection = false;
@@ -3619,7 +3641,7 @@ namespace Masterplan.UI
 			listViewGroup8.Name = "listViewGroup1";
 			listViewGroup9.Header = "Custom Overlays";
 			listViewGroup9.Name = "listViewGroup2";
-			this.TemplateList.Groups.AddRange(new ListViewGroup[] { listViewGroup7, listViewGroup8, listViewGroup9 });
+            this.TemplateList.Groups.AddRange(new ListViewGroup[] { listViewGroup7, listViewGroup8, listViewGroup9 });
 			this.TemplateList.HeaderStyle = ColumnHeaderStyle.Nonclickable;
 			this.TemplateList.HideSelection = false;
 			this.TemplateList.Location = new Point(3, 3);
@@ -4918,6 +4940,11 @@ namespace Masterplan.UI
         {
             this.update_list();
             this.update_preview_panel();
+            if (CombatForm.TerrainLayersNeedRefresh)
+            {
+                this.RebuildTerrainLayersAllMaps();
+            }
+            this.RecalculateVisibilityAllMaps();
             this.update_maps();
         }
 
@@ -5338,6 +5365,15 @@ namespace Masterplan.UI
 			}
 		}
 
+        private void PlayerViewUseDarkScheme_Click(object sender, EventArgs e)
+        {
+            if (this.PlayerMap != null)
+            {
+                this.PlayerMap.UseDarkScheme = !this.PlayerMap.UseDarkScheme;
+                this.PlayerMap.Redraw();
+            }
+        }
+
         private void PlayerViewVisibility_Click(object sender, EventArgs e)
         {
             if (this.PlayerMap != null)
@@ -5475,6 +5511,9 @@ namespace Masterplan.UI
 			this.PlayerLabels.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
             this.PlayerViewShowVisibility.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
             this.PlayerViewShowVisibility.Checked = (this.PlayerMap == null) ? false : this.PlayerMap.ShouldRenderVisibility;
+
+            this.PlayerViewUseDarkScheme.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
+            this.PlayerViewUseDarkScheme.Checked = (this.PlayerMap == null) ? false : this.PlayerMap.UseDarkScheme;
 
             ToolStripMenuItem playerLabels = this.PlayerLabels;
 			if (this.PlayerMap == null || !this.PlayerMap.ShowCreatureLabels)
@@ -6154,6 +6193,10 @@ namespace Masterplan.UI
                         {
                             command.LinksToRemove.AddRange(this.remove_links(token));
                         }
+                        else if (noPoint.Type == CustomTokenType.Overlay && noPoint.IsTerrainLayer)
+                        {
+                            command.RefreshTerrainLayers = true;
+                        }
                     }
                     
                     if (command != null)
@@ -6380,7 +6423,7 @@ namespace Masterplan.UI
 				this.TwoColumns_Click(null, null);
 			}
 
-            this.MapView.RebuildTerrainLayer();
+            this.RebuildTerrainLayersAllMaps();
 		}
 
 		private void set_tooltip(IToken token, Control ctrl)
@@ -6763,6 +6806,7 @@ namespace Masterplan.UI
 			int num4 = 4;
 			int num5 = 5;
 			int num6 = 6;
+            int num10 = 7;
 			List<IToken> selectedTokens = this.SelectedTokens;
 			Trap selectedTrap = this.SelectedTrap;
 			SkillChallenge selectedChallenge = this.SelectedChallenge;
@@ -7120,6 +7164,10 @@ namespace Masterplan.UI
 					num9 = num5;
 					grayText1.ForeColor = SystemColors.GrayText;
 				}
+                if (customToken.IsTerrainLayer)
+                {
+                    num9 = 7;
+                }
 				grayText1.Group = this.CombatList.Groups[num9];
 				if (!selectedTokens.Contains(customToken))
 				{
@@ -7147,6 +7195,15 @@ namespace Masterplan.UI
             this.MapView.RecalculateVisibility();
             this.PlayerMap?.RecalculateVisibility();
         }
+
+        private void RebuildTerrainLayersAllMaps()
+        {
+            this.MapView.RebuildTerrainLayer();
+            this.PlayerMap?.RebuildTerrainLayer();
+
+            CombatForm.TerrainLayersNeedRefresh = false;
+        }
+
 		private void update_maps()
 		{
             this.MapView.Redraw();
