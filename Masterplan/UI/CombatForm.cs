@@ -6379,6 +6379,8 @@ namespace Masterplan.UI
 			{
 				this.TwoColumns_Click(null, null);
 			}
+
+            this.MapView.RebuildTerrainLayer();
 		}
 
 		private void set_tooltip(IToken token, Control ctrl)

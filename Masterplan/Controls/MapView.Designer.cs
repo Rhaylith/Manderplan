@@ -154,6 +154,8 @@ namespace Masterplan.Controls
 
         private BufferedGraphicsContext backbufferContext;
 
+        private Bitmap terrainBitmap = null;
+
         private void RecreateBuffers()
         {
             // Check initialization has completed so we know backbufferContext has been assigned.
@@ -177,6 +179,14 @@ namespace Masterplan.Controls
             drawingGraphics = backbufferGraphics.Graphics;
 
             // This is a good place to assign drawingGraphics.SmoothingMode if you want a better anti-aliasing technique.
+
+            if (terrainBitmap != null)
+            {
+                terrainBitmap.Dispose();
+            }
+
+            terrainBitmap = new Bitmap(this.Width, this.Height);
+            RebuildTerrainLayer();
         }
 
         public bool AllowDrawing
@@ -2631,11 +2641,11 @@ namespace Masterplan.Controls
             }
         }
 
-        public void Redraw()
+        public bool RebuildTerrainLayer()
         {
-            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();           
+            Graphics drawingGraphics = Graphics.FromImage(this.terrainBitmap);
             Rectangle clientRectangle;
-            Point location;
+
             if (this.fLayoutData == null)
             {
                 this.fLayoutData = new MapData(this, this.fScalingFactor);
@@ -2644,37 +2654,6 @@ namespace Masterplan.Controls
             drawingGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
             drawingGraphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
 
-            switch (this.fMode)
-            {
-                case MapViewMode.Normal:
-                    {
-                        using (Brush solidBrush = new SolidBrush(Color.FromArgb(70, 100, 170)))
-                        {
-                            drawingGraphics.FillRectangle(solidBrush, base.ClientRectangle);
-                            break;
-                        }
-                    }
-                case MapViewMode.Plain:
-                    {
-                        drawingGraphics.FillRectangle(Brushes.White, base.ClientRectangle);
-                        break;
-                    }
-                case MapViewMode.Thumbnail:
-                    {
-                        Color color = Color.FromArgb(240, 240, 240);
-                        Color color1 = Color.FromArgb(170, 170, 170);
-                        using (Brush linearGradientBrush = new LinearGradientBrush(base.ClientRectangle, color, color1, LinearGradientMode.Vertical))
-                        {
-                            drawingGraphics.FillRectangle(linearGradientBrush, base.ClientRectangle);
-                            break;
-                        }
-                    }
-                case MapViewMode.PlayerView:
-                    {
-                        drawingGraphics.FillRectangle(Brushes.Black, base.ClientRectangle);
-                        break;
-                    }
-            }
             if (this.fMap == null)
             {
                 Brush windowText = SystemBrushes.WindowText;
@@ -2683,8 +2662,9 @@ namespace Masterplan.Controls
                     windowText = Brushes.White;
                 }
                 drawingGraphics.DrawString("(no map selected)", this.Font, windowText, base.ClientRectangle, this.fCentred);
-                return;
+                return false;
             }
+
             if (this.fShowGrid == MapGridMode.Behind && this.fLayoutData.SquareSize >= 10f)
             {
                 using (Pen pen = new Pen(Color.FromArgb(100, 140, 190)))
@@ -2727,24 +2707,6 @@ namespace Masterplan.Controls
                             single += this.fLayoutData.SquareSize;
                             num1++;
                         }
-                    }
-                }
-            }
-            if (this.fEncounter != null)
-            {
-                this.fSlotRegions.Clear();
-                foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
-                {
-                    this.fSlotRegions[allSlot.ID] = new List<Rectangle>();
-                    ICreature creature = Session.FindCreature(allSlot.Card.CreatureID, SearchType.Global);
-                    if (creature == null)
-                    {
-                        continue;
-                    }
-                    int size = Creature.GetSize(creature.Size);
-                    foreach (CombatData combatDatum in allSlot.CombatData)
-                    {
-                        this.fSlotRegions[allSlot.ID].Add(new Rectangle(combatDatum.Location, new System.Drawing.Size(size, size)));
                     }
                 }
             }
@@ -2829,6 +2791,89 @@ namespace Masterplan.Controls
                     Tile item2 = this.fLayoutData.Tiles[tileDatum1];
                     this.draw_tile(drawingGraphics, item2, tileDatum1.Rotations, this.fDraggedTiles.Region, false);
                 }
+            }
+
+            return true;
+        }
+
+        public void DrawTerrain(Graphics drawingGraphics)
+        {
+            if (this.terrainBitmap != null)
+            {
+                drawingGraphics.DrawImage(this.terrainBitmap, new Point(0, 0));
+            }
+        }
+
+        public void Redraw()
+        {
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
+            Rectangle clientRectangle;
+            Point location;
+            if (this.fLayoutData == null)
+            {
+                this.fLayoutData = new MapData(this, this.fScalingFactor);
+            }
+            drawingGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+            drawingGraphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            drawingGraphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            switch (this.fMode)
+            {
+                case MapViewMode.Normal:
+                    {
+                        using (Brush solidBrush = new SolidBrush(Color.FromArgb(70, 100, 170)))
+                        {
+                            drawingGraphics.FillRectangle(solidBrush, base.ClientRectangle);
+                            break;
+                        }
+                    }
+                case MapViewMode.Plain:
+                    {
+                        drawingGraphics.FillRectangle(Brushes.White, base.ClientRectangle);
+                        break;
+                    }
+                case MapViewMode.Thumbnail:
+                    {
+                        Color color = Color.FromArgb(240, 240, 240);
+                        Color color1 = Color.FromArgb(170, 170, 170);
+                        using (Brush linearGradientBrush = new LinearGradientBrush(base.ClientRectangle, color, color1, LinearGradientMode.Vertical))
+                        {
+                            drawingGraphics.FillRectangle(linearGradientBrush, base.ClientRectangle);
+                            break;
+                        }
+                    }
+                case MapViewMode.PlayerView:
+                    {
+                        drawingGraphics.FillRectangle(Brushes.Black, base.ClientRectangle);
+                        break;
+                    }
+            }
+
+            if (this.fEncounter != null)
+            {
+                this.fSlotRegions.Clear();
+                foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
+                {
+                    this.fSlotRegions[allSlot.ID] = new List<Rectangle>();
+                    ICreature creature = Session.FindCreature(allSlot.Card.CreatureID, SearchType.Global);
+                    if (creature == null)
+                    {
+                        continue;
+                    }
+                    int size = Creature.GetSize(creature.Size);
+                    foreach (CombatData combatDatum in allSlot.CombatData)
+                    {
+                        this.fSlotRegions[allSlot.ID].Add(new Rectangle(combatDatum.Location, new System.Drawing.Size(size, size)));
+                    }
+                }
+            }
+
+
+            DrawTerrain(drawingGraphics);
+
+            if (this.fMap == null)
+            {
+                return;
             }
 
             if (this.ShouldRenderVisibility)
@@ -3777,7 +3822,7 @@ namespace Masterplan.Controls
             }
         }
 
-        #region Component Designer generated code
+#region Component Designer generated code
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -3796,6 +3841,6 @@ namespace Masterplan.Controls
             base.ResumeLayout(false);
         }
 
-        #endregion
+#endregion
     }
 }
