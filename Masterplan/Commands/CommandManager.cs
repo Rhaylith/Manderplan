@@ -102,11 +102,12 @@ namespace Masterplan.Commands
         {
             if (this.currentCompoundCommand != null)
             {
-                if (this.currentCompoundCommand.SubCommandCount > 0)
-                {
-                    this.RunCommand(this.currentCompoundCommand);
-                }
+                var oldCompoundCommand = this.currentCompoundCommand;
                 this.currentCompoundCommand = null;
+                if (oldCompoundCommand.SubCommandCount > 0)
+                {
+                    this.RunCommand(oldCompoundCommand);
+                }
             }
         }
 

@@ -7,6 +7,11 @@ namespace Masterplan.MMath
         public PointF Start;
         public PointF End;
 
+        public LineSegment(float x1, float y1, float x2, float y2) : this(new PointF(x1, y1), new PointF(x2,y2))
+        {
+
+        }
+
         public LineSegment(PointF start, PointF end)
         {
             this.Start = start;

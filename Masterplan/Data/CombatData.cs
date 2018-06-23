@@ -27,6 +27,10 @@ namespace Masterplan.Data
 
 		private int fAltitude;
 
+        // HACK:  This is a hack since the CombatData doesn't store health (WHY?!) we can't tell
+        // if a unit is dead, so if something dies and is removed from the map then use this flag to tell initiative to skip it.
+        private bool skipInitiative;
+
 		private List<Guid> fUsedPowers = new List<Guid>();
 
 		private List<OngoingCondition> fConditions = new List<OngoingCondition>();
@@ -162,6 +166,18 @@ namespace Masterplan.Data
 				this.fVisible = value;
 			}
 		}
+
+        public bool SkipInitiative
+        {
+            get
+            {
+                return this.skipInitiative;
+            }
+            set
+            {
+                this.skipInitiative = value;
+            }
+        }
 
 		static CombatData()
 		{

@@ -9,6 +9,8 @@ namespace Masterplan.Commands.Combat
         public List<RemoveEffectCommand> EffectsToRemove = new List<RemoveEffectCommand>();
         public List<AddRemoveLinkCommand> LinksToRemove = new List<AddRemoveLinkCommand>();
 
+        public bool RemoveFromInitiative = false;
+
         protected CombatData _data;
         protected Point prevoiusLocation;
         
@@ -37,7 +39,13 @@ namespace Masterplan.Commands.Combat
                 link.Do();
             }
 
-            // HACK!
+            // HACK #1
+            if (this.RemoveFromInitiative)
+            {
+                _data.SkipInitiative = true;
+            }
+
+            // HACK! #2
             if (this.RefreshTerrainLayers)
             {
                 Masterplan.UI.CombatForm.TerrainLayersNeedRefresh = true;
@@ -57,6 +65,11 @@ namespace Masterplan.Commands.Combat
             foreach (var link in this.LinksToRemove)
             {
                 link.Undo();
+            }
+
+            if (this.RemoveFromInitiative)
+            {
+                _data.SkipInitiative = false;
             }
 
             // HACK!

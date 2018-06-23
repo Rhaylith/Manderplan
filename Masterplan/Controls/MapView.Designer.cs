@@ -2385,7 +2385,8 @@ namespace Masterplan.Controls
                         this.fViewpoint.X = this.fViewpoint.X + x1;
                         this.fViewpoint.Y = this.fViewpoint.Y + y2;
                         this.fLayoutData = null;
-                        this.Redraw();
+
+                        this.CompleteRefresh();
                     }
                 }
             }
@@ -2522,7 +2523,7 @@ namespace Masterplan.Controls
                                 this.fLayoutData = null;
                             }
                             this.fScrollingData = null;
-                            this.Redraw();
+                            this.CompleteRefresh();
                         }
                     }
                     else
@@ -2647,6 +2648,12 @@ namespace Masterplan.Controls
             {
                 for (int y = this.LayoutData.MinY; y < this.LayoutData.MaxY; ++y)
                 {
+                    if (x < 0 || x >= this.latestTurnVisMap.Width ||
+                        y < 0 || y >= this.latestTurnVisMap.Height)
+                    {
+                        continue;
+                    }
+
                     OcclusionLevel vis = this.latestTurnVisMap[x, y];
                     if (vis != OcclusionLevel.Visible)
                     {
@@ -3592,11 +3599,19 @@ namespace Masterplan.Controls
             }
         }
 
-        protected override void OnResize(EventArgs e)
+        public void CompleteRefresh()
         {
             this.fLayoutData = null;
             this.RecreateBuffers();
+            this.RebuildTerrainLayer();
+            this.RecalculateVisibility();
             this.Redraw();
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            this.RecreateBuffers();
+            this.CompleteRefresh();
         }
 
         protected void OnSelectedTokensChanged()

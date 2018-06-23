@@ -19,6 +19,25 @@ namespace Masterplan.Data.Combat.Visibility
             //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(31f, 6f, 1f, 8f)));
             //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(31f, 19f, 1f, 7f)));
 
+            // Market
+            {
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(6f, 31f, 15f, 31f)));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(16f, 31f, 18f, 31f)));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(6f, 31f, 6f, 36f)));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(4f, 36f, 6f, 36f)));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(18f, 31f, 18f, 41f)));
+
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(4f, 36f, 4f, 41f)));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(4f, 41f, 18f, 41f)));
+
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(10f, 24f, 0f, 28f)));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(0f, 11f, 5f, 10f)));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(26f, 7f, 34f, 4f)));
+
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(25f, 20f, 26f, 17f), OcclusionLevel.Cover));
+                //Blockers.Add(new LineVisibilityBlocker(new MMath.LineSegment(26f, 17f, 29f, 17f), OcclusionLevel.Cover));
+                //Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(17f, 16f, 4f, 3f), OcclusionLevel.Cover));
+            }
             // Forest map
             {
                 Blockers.Add(new RectangleVisibilityBlocker(new RectangleF(1f, 3f, 2f, 2f)));

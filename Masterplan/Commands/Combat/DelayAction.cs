@@ -31,7 +31,7 @@ namespace Masterplan.Commands.Combat
                 oldNextTurn = _initList.Remove(_data);
 
                 _data.Initiative = _initList.CurrentActor.Initiative;
-                _initList.AddBefore(_initList.CurrentActor, _data);  // Move to current
+                _initList.AddAfter(_initList.CurrentActor, _data);  // Move to current
             }
             else
             {

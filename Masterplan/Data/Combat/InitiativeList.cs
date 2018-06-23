@@ -33,17 +33,35 @@ namespace Masterplan.Data.Combat
 
         public void AdvanceToPrevTurn()
         {
-            this.CurrentPlayerNode = this.CurrentPlayerNode.Previous == null ? this.playerList.Last : this.CurrentPlayerNode.Previous;
+            var prevTurn = this.CurrentPlayerNode;
+            do
+            {
+                this.CurrentPlayerNode = this.CurrentPlayerNode.Previous == null ? this.playerList.Last : this.CurrentPlayerNode.Previous;
+            }
+            while (this.CurrentPlayerNode != prevTurn && this.CurrentPlayerNode.Value.SkipInitiative == true);
         }
 
         public void AdvanceNextTurn()
         {
-            this.CurrentPlayerNode = this.CurrentPlayerNode.Next == null ? this.playerList.First : this.CurrentPlayerNode.Next;
+            var prevTurn = this.CurrentPlayerNode;
+            do
+            {
+                this.CurrentPlayerNode = this.CurrentPlayerNode.Next == null ? this.playerList.First : this.CurrentPlayerNode.Next;
+            }
+            while (this.CurrentPlayerNode != prevTurn && this.CurrentPlayerNode.Value.SkipInitiative == true);
         }
 
         public CombatData PeekNextActor()
         {
-            return this.CurrentPlayerNode.Next == null ? this.playerList.First.Value : this.CurrentPlayerNode.Next.Value;
+            var prevTurn = this.CurrentPlayerNode;
+            var nextTurn = this.CurrentPlayerNode;
+            do
+            {
+                nextTurn = nextTurn.Next == null ? this.playerList.First : nextTurn.Next;
+            }
+            while (nextTurn != prevTurn && nextTurn.Value.SkipInitiative == true);
+
+            return nextTurn.Value;
         }
 
         public CombatData Remove(CombatData data)
@@ -71,6 +89,20 @@ namespace Masterplan.Data.Combat
                 this.playerList.AddLast(newData);
             }
         }
+
+        public void AddAfter(CombatData placement, CombatData newData)
+        {
+            LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
+            if (node != null)
+            {
+                this.playerList.AddAfter(node, newData);
+            }
+            else
+            {
+                this.playerList.AddLast(newData);
+            }
+        }
+
 
         public void ToggleDelay(CombatData entity)
         {

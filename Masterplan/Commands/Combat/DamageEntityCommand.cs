@@ -52,21 +52,6 @@ namespace Masterplan.Commands.Combat
                 //CreatureState creatureState = _encounter.GetState(data);
                 //this.fLog.AddStateEntry(pair2.First.ID, creatureState);
             }
-
-            if (Session.Preferences.CreatureAutoRemove)
-            {
-                foreach (EncounterSlot allSlot in _encounter.AllSlots)
-                {
-                    foreach (CombatData combatDatum in allSlot.CombatData)
-                    {
-                        if (allSlot.GetState(combatDatum) == CreatureState.Defeated)
-                        {
-                            CommandManager.GetInstance().ExecuteCommand(new RemoveFromMapCommand(combatDatum));
-                        }
-                    }
-                }
-            }
-
         }
 
         public void Undo()

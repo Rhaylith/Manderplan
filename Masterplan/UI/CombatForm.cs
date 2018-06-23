@@ -866,14 +866,18 @@ namespace Masterplan.UI
 						durationRound.DurationRound = durationRound.DurationRound + 1;
 					}
 				}
-				foreach (IToken token in tokens)
+
+                // Queue these up and run them seperately since the tokens list may be modified by the command
+                var commands = new List<AddEffectCommand>();
+
+                foreach (IToken token in tokens)
 				{
 					CreatureToken creatureToken = token as CreatureToken;
 					if (creatureToken != null)
 					{
 						CombatData data = creatureToken.Data;
                         // TODO:  Why does this need to be a copy?
-                        CommandManager.GetInstance().ExecuteCommand(new AddEffectCommand(data, oc.Copy()));
+                        commands.Add(new AddEffectCommand(data, oc.Copy()));
 					}
 					Hero hero = token as Hero;
 					if (hero == null)
@@ -881,8 +885,14 @@ namespace Masterplan.UI
 						continue;
 					}
 					CombatData combatData = hero.CombatData;
-                    CommandManager.GetInstance().ExecuteCommand(new AddEffectCommand(combatData, oc.Copy()));
+                    commands.Add(new AddEffectCommand(combatData, oc.Copy()));
 				}
+
+                foreach(var command in commands)
+                {
+                    CommandManager.GetInstance().ExecuteCommand(command);
+                }
+
 				if (add_to_quick_list)
 				{
 					bool flag = false;
@@ -1533,8 +1543,33 @@ namespace Masterplan.UI
 			}
 		}
 
+        private void RemoveDeadEnemies()
+        {
+            // THIS IS A PROBLEM!  If we already have a compound command open then this will add commands to it
+            if (Session.Preferences.CreatureAutoRemove)
+            {
+                foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
+                {
+                    foreach (CombatData combatDatum in allSlot.CombatData)
+                    {
+                        if (allSlot.GetState(combatDatum) == CreatureState.Defeated)
+                        {
+                            var command = new RemoveFromMapCommand(combatDatum);
+                            command.EffectsToRemove = remove_all_effects_caused_by(combatDatum.ID);
+                            command.LinksToRemove = remove_links(combatDatum.Location);
+                            command.RemoveFromInitiative = true;
+                            CommandManager.GetInstance().ExecuteCommand(command);
+                        }
+                    }
+                }
+            }
+        }
+
         private void DamageCommandCallback()
         {
+            // Check to see if anyone died.
+            this.RemoveDeadEnemies();
+
             // Callback of Damage Command
             this.update_list();
             this.update_log();
@@ -4777,8 +4812,8 @@ namespace Masterplan.UI
 				{
 					this.PlayerMap.Viewpoint = this.MapView.Viewpoint;
 				}
-				this.MapView.MapChanged();
-                this.update_maps();
+
+                this.RebuildAllViews();
 			}
 			catch (Exception exception)
 			{
@@ -5047,6 +5082,9 @@ namespace Masterplan.UI
 
         private void UpdateUIForNewTurn()
         {
+            // Check if anyone died from the previous turn (i.e. ongoing effects)
+            this.RemoveDeadEnemies();
+
             this.fCurrentActor = this.combatState.InitiativeList.CurrentActor;
             Hero hero = Session.Project.FindHero(this.fCurrentActor.ID);
             bool isHero = hero != null;
@@ -6079,29 +6117,34 @@ namespace Masterplan.UI
             CommandManager.GetInstance().ExecuteCommand(new RemoveEffectCommand(data, tag));
 		}
 
-		private List<RemoveEffectCommand> remove_effects(IToken token)
-		{
+        private List<RemoveEffectCommand> remove_effects(IToken token)
+        {          
+            Guid empty = Guid.Empty;
+            if (token is CreatureToken)
+            {
+                empty = (token as CreatureToken).Data.ID;
+            }
+            if (token is Hero)
+            {
+                empty = (token as Hero).ID;
+            }
+            return remove_all_effects_caused_by(empty);
+        }
+
+        private List<RemoveEffectCommand> remove_all_effects_caused_by(Guid id)
+        {
             List<RemoveEffectCommand> removeList = new List<RemoveEffectCommand>();
-			Guid empty = Guid.Empty;
-			if (token is CreatureToken)
-			{
-				empty = (token as CreatureToken).Data.ID;
-			}
-			if (token is Hero)
-			{
-				empty = (token as Hero).ID;
-			}
-            if (empty != Guid.Empty)
+            if (id != Guid.Empty)
             {
                 foreach (Hero hero in Session.Project.Heroes)
                 {
-                    removeList.AddRange(this.remove_effects(empty, hero.CombatData));
+                    removeList.AddRange(this.remove_effects_from_data_caused_by_token(id, hero.CombatData));
                 }
                 foreach (EncounterSlot allSlot in this.fEncounter.AllSlots)
                 {
                     foreach (CombatData combatDatum in allSlot.CombatData)
                     {
-                        removeList.AddRange(this.remove_effects(empty, combatDatum));
+                        removeList.AddRange(this.remove_effects_from_data_caused_by_token(id, combatDatum));
                     }
                 }
             }
@@ -6109,7 +6152,7 @@ namespace Masterplan.UI
             return removeList;
 		}
 
-		private List<RemoveEffectCommand> remove_effects(Guid token_id, CombatData data)
+		private List<RemoveEffectCommand> remove_effects_from_data_caused_by_token(Guid token_id, CombatData data)
 		{
             List<RemoveEffectCommand> removeList = new List<RemoveEffectCommand>();
 			List<OngoingCondition> ongoingConditions = new List<OngoingCondition>();
@@ -6128,8 +6171,10 @@ namespace Masterplan.UI
 		{
 			try
 			{
-				foreach (IToken token in tokens)
-				{
+                // Queue these up and run them seperately since the tokens list may be modified by the command
+                var commands = new List<RemoveFromCombatCommand>();
+                foreach (IToken token in tokens)
+                {
                     RemoveFromCombatCommand command = null;
                     if (token is CreatureToken)
                     {
@@ -6152,12 +6197,21 @@ namespace Masterplan.UI
                         {
                             command.LinksToRemove.AddRange(this.remove_links(token));
                         }
+                        else if (customToken.Type == CustomTokenType.Overlay && customToken.IsTerrainLayer)
+                        {
+                            command.RefreshTerrainLayers = true;
+                        }
                     }
 
                     if (command != null)
                     {
-                        CommandManager.GetInstance().ExecuteCommand(command);
+                        commands.Add(command);
                     }
+                }
+
+                foreach(var command in commands)
+                {
+                        CommandManager.GetInstance().ExecuteCommand(command);
 				}
 			}
 			catch (Exception exception)
@@ -6170,21 +6224,24 @@ namespace Masterplan.UI
 		{
 			try
 			{
-				foreach (IToken token in tokens)
-				{
+                // Queue these up and run them seperately since the tokens list may be modified by the command
+                var commands = new List<RemoveFromMapCommand>();
+
+                foreach (IToken token in tokens)
+                {
                     RemoveFromMapCommand command = null;
-					if (token is CreatureToken)
-					{
+                    if (token is CreatureToken)
+                    {
                         command = new RemoveFromMapCommand((token as CreatureToken).Data);
                         command.EffectsToRemove.AddRange(this.remove_effects(token));
                         command.LinksToRemove.AddRange(this.remove_links(token));
-					}
-					else if (token is Hero)
-					{
+                    }
+                    else if (token is Hero)
+                    {
                         command = new RemoveFromMapCommand((token as Hero).CombatData);
                         command.EffectsToRemove.AddRange(this.remove_effects(token));
                         command.LinksToRemove.AddRange(this.remove_links(token));
-					}
+                    }
                     else if (token is CustomToken)
                     {
                         CustomToken noPoint = token as CustomToken;
@@ -6198,11 +6255,15 @@ namespace Masterplan.UI
                             command.RefreshTerrainLayers = true;
                         }
                     }
-                    
+
                     if (command != null)
                     {
-                        CommandManager.GetInstance().ExecuteCommand(command);
+                        commands.Add(command);
                     }
+                }
+                foreach(var command in commands)
+                { 
+                        CommandManager.GetInstance().ExecuteCommand(command);
 				}
 			}
 			catch (Exception exception)
@@ -6211,16 +6272,20 @@ namespace Masterplan.UI
 			}
 		}
 
-		private List<AddRemoveLinkCommand> remove_links(IToken token)
-		{
+        private List<AddRemoveLinkCommand> remove_links(IToken token)
+        {
+            return remove_links(this.get_location(token));
+        }
+
+        private List<AddRemoveLinkCommand> remove_links(Point location)
+        {
             List<AddRemoveLinkCommand> linksToRemove = new List<AddRemoveLinkCommand>();
-			Point _location = this.get_location(token);
-			List<TokenLink> tokenLinks = new List<TokenLink>();
+            List<TokenLink> tokenLinks = new List<TokenLink>();
 			foreach (TokenLink tokenLink in this.MapView.TokenLinks)
 			{
 				foreach (IToken token1 in tokenLink.Tokens)
 				{
-					if (this.get_location(token1) != _location)
+					if (this.get_location(token1) != location)
 					{
 						continue;
 					}
@@ -7190,6 +7255,12 @@ namespace Masterplan.UI
 			//this.LogBrowser.Document.Write(str);
 		}
 
+        private void RebuildAllViews()
+        {
+            this.MapView.CompleteRefresh();
+            this.PlayerMap?.CompleteRefresh();
+        }
+
         private void RecalculateVisibilityAllMaps()
         {
             this.MapView.RecalculateVisibility();
@@ -7306,8 +7377,13 @@ namespace Masterplan.UI
 			}
 			str1 = string.Concat(str1, "</BODY>");
 			str1 = string.Concat(str1, "</HTML>");
-			this.Preview.Document.OpenNew(true);
-			this.Preview.Document.Write(str1);
+
+            // TODO:  Sometimes window can be disposed?!  Dunno what to do about that at this point, though, but might as well not take everything down with it.
+            if (!this.Preview.IsDisposed)
+            {
+                this.Preview.Document.OpenNew(true);
+                this.Preview.Document.Write(str1);
+            }
 		}
 
 		private void update_remove_effect_list(ToolStripDropDownItem tsddi, bool use_list_selection)
@@ -7416,9 +7492,7 @@ namespace Masterplan.UI
 					this.MapView.ScalingFactor = num1 + value * (num - num1);
 				}
 
-                this.MapView.MapChanged();
-                this.MapView.RecalculateVisibility();
-                this.MapView.Redraw();
+                this.RebuildAllViews();
 			}
 			catch (Exception exception)
 			{

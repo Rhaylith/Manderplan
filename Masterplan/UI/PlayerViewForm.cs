@@ -501,6 +501,7 @@ namespace Masterplan.UI
 				mapView.TokenDragged += new DraggedTokenEventHandler(this.token_dragged);
 				mapView.SketchCreated += new MapSketchEventHandler(this.sketch_created);
 				mapView.Dock = DockStyle.Fill;
+                mapView.RecalculateVisibility();
 			}
 			Button button = new Button()
 			{
