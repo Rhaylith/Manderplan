@@ -1243,6 +1243,10 @@ namespace Masterplan.Data
 				strs1.Add("<TR class=creature>");
 				strs1.Add("<TD colspan=2>");
 				strs1.Add(string.Concat("<B>", HTML.Process(str, true), "</B>"));
+                if (mode == CardMode.Combat)
+                {
+                    strs1.Add(string.Concat(" (<A href=learn:", combat_data.ID, ">Learn</A>)"));
+                }
 				strs1.Add("<BR>");
 				strs1.Add(creature.Phenotype);
 				strs1.Add("</TD>");

@@ -106,6 +106,7 @@ namespace Masterplan.Controls
         private CreatureViewMode fShowCreatures;
 
         private bool fShowCreatureLabels = true;
+        private bool fCreatureLabelsRequireKnowledge = false;
 
         private bool fShowHealthBars;
 
@@ -606,6 +607,20 @@ namespace Masterplan.Controls
             set
             {
                 this.fShowCreatureLabels = value;
+            }
+        }
+
+        [Category("Appearance")]
+        [Description("Whether creatures require knowledge checks to see information.")]
+        public bool CreatureLabelsRequireKnowledge
+        {
+            get
+            {
+                return this.fCreatureLabelsRequireKnowledge;
+            }
+            set
+            {
+                this.fCreatureLabelsRequireKnowledge = value;
             }
         }
 

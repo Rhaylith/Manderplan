@@ -15,6 +15,12 @@ namespace Masterplan.Data
 
 		private List<Masterplan.Data.CombatData> fCombatData = new List<Masterplan.Data.CombatData>();
 
+        public bool KnowledgeKnown
+        {
+            get;
+            set;
+        }
+
 		public EncounterCard Card
 		{
 			get

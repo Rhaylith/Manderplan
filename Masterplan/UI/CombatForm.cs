@@ -148,6 +148,7 @@ namespace Masterplan.UI
 		private ToolStripMenuItem PlayerViewMap;
 
 		private ToolStripMenuItem PlayerLabels;
+        private ToolStripMenuItem PlayerLabelsRequireKnowledge;
 
         private ToolStripMenuItem PlayerViewShowVisibility;
         private ToolStripMenuItem PlayerViewUseDarkScheme;
@@ -2935,6 +2936,7 @@ namespace Masterplan.UI
 			this.PlayerPictureTokens = new ToolStripMenuItem();
 			this.toolStripSeparator17 = new ToolStripSeparator();
 			this.PlayerLabels = new ToolStripMenuItem();
+            this.PlayerLabelsRequireKnowledge = new ToolStripMenuItem();
             this.PlayerViewShowVisibility = new ToolStripMenuItem();
             this.PlayerViewUseDarkScheme = new ToolStripMenuItem();
             this.PlayerViewNoMapMenu = new ToolStripDropDownButton();
@@ -3279,7 +3281,7 @@ namespace Masterplan.UI
 			this.MapExport.Click += new EventHandler(this.MapExport_Click);
 			this.PlayerViewMapMenu.DisplayStyle = ToolStripItemDisplayStyle.Text;
 			ToolStripItemCollection toolStripItemCollections1 = this.PlayerViewMapMenu.DropDownItems;
-			ToolStripItem[] playerViewMap = new ToolStripItem[] { this.PlayerViewMap, this.PlayerViewInitList, this.toolStripSeparator9, this.PlayerViewFog, this.toolStripSeparator16, this.PlayerViewLOS, this.PlayerViewGrid, this.PlayerViewGridLabels, this.PlayerHealth, this.PlayerConditions, this.PlayerPictureTokens, this.toolStripSeparator17, this.PlayerLabels, this.PlayerViewShowVisibility, this.PlayerViewUseDarkScheme};
+			ToolStripItem[] playerViewMap = new ToolStripItem[] { this.PlayerViewMap, this.PlayerViewInitList, this.toolStripSeparator9, this.PlayerViewFog, this.toolStripSeparator16, this.PlayerViewLOS, this.PlayerViewGrid, this.PlayerViewGridLabels, this.PlayerHealth, this.PlayerConditions, this.PlayerPictureTokens, this.toolStripSeparator17, this.PlayerLabels, this.PlayerLabelsRequireKnowledge, this.PlayerViewShowVisibility, this.PlayerViewUseDarkScheme};
 			toolStripItemCollections1.AddRange(playerViewMap);
 			this.PlayerViewMapMenu.Image = (Image)componentResourceManager.GetObject("PlayerViewMapMenu.Image");
 			this.PlayerViewMapMenu.ImageTransparentColor = Color.Magenta;
@@ -3350,6 +3352,10 @@ namespace Masterplan.UI
 			this.PlayerLabels.Size = new System.Drawing.Size(215, 22);
 			this.PlayerLabels.Text = "Show Detailed Information";
 			this.PlayerLabels.Click += new EventHandler(this.PlayerLabels_Click);
+            this.PlayerLabelsRequireKnowledge.Name = "PlayerLabelsRequireKnowledge";
+            this.PlayerLabelsRequireKnowledge.Size = new System.Drawing.Size(215, 22);
+            this.PlayerLabelsRequireKnowledge.Text = "Require Knowledge Checks For Info";
+            this.PlayerLabelsRequireKnowledge.Click += new EventHandler(this.PlayerLabelsRequireKnowledge_Click);
 
             this.PlayerViewShowVisibility.Name = "PlayerViewVisibility";
             this.PlayerViewShowVisibility.Size = new System.Drawing.Size(215, 22);
@@ -4022,53 +4028,64 @@ namespace Masterplan.UI
 			{
 				CombatData data = null;
 				string displayName = "";
-				if (listViewItem.Tag is CreatureToken)
-				{
-					CreatureToken tag = listViewItem.Tag as CreatureToken;
-					data = tag.Data;
-					displayName = data.DisplayName;
-					if (!Session.Preferences.PlayerViewCreatureLabels)
-					{
+                if (listViewItem.Tag is Hero)
+                {
+                    Hero hero = listViewItem.Tag as Hero;
+                    data = hero.CombatData;
+                    displayName = hero.Name;
+                }
+                else
+                {
+                    if (listViewItem.Tag is CreatureToken)
+                    {
+                        CreatureToken tag = listViewItem.Tag as CreatureToken;
+                        data = tag.Data;
 
-                        // TODO:  Why not just read the displayName from the combatData?  Why do this lookup?
-                        //EncounterSlot encounterSlot = this.fEncounter.FindSlot(tag.SlotID);
-                        //ICreature creature = Session.FindCreature(encounterSlot.Card.CreatureID, SearchType.Global);
+                        bool showLabel = Session.Preferences.PlayerViewCreatureLabels;
+                        
+                        if (showLabel && Session.Preferences.PlayerViewCreatureLabelsRequireKnowledge)
+                        {
+                            EncounterSlot encounterSlot = this.fEncounter.FindSlot(tag.SlotID);
+                            showLabel = encounterSlot.KnowledgeKnown;
+                        }
+
+                        if (showLabel)
+                        { 
+                            displayName = data.DisplayName;
+                        }
+
+                        if (displayName == "")
+                        {
+                            displayName = "Scary Monster";
+                        }
+
+                    }
+                    if (listViewItem.Tag is Trap)
+                    {
+                        Trap trap = listViewItem.Tag as Trap;
+                        if (trap.Initiative != Int32.MinValue)
+                        {
+                            data = trap.CombatData;
+                            displayName = data.DisplayName;
+                            if (!Session.Preferences.PlayerViewCreatureLabels)
+                            {
+                                displayName = trap.Type.ToString();
+                            }
+                        }
+                    }
+                    if (listViewItem.Tag is CustomToken)
+                    {
+                        data = (listViewItem.Tag as CustomToken).Data;
                         displayName = data.DisplayName;
-						if (displayName == "")
-						{
-							displayName = "Creature";
-						}
-					}
-				}
-				if (listViewItem.Tag is Trap)
-				{
-					Trap trap = listViewItem.Tag as Trap;
-					if (trap.Initiative != Int32.MinValue)
-					{
-                        data = trap.CombatData;
-						displayName = data.DisplayName;
-						if (!Session.Preferences.PlayerViewCreatureLabels)
-						{
-							displayName = trap.Type.ToString();
-						}
-					}
-				}
-				if (listViewItem.Tag is Hero)
-				{
-					Hero hero = listViewItem.Tag as Hero;
-					data = hero.CombatData;
-					displayName = hero.Name;
-				}
-				if (listViewItem.Tag is CustomToken)
-				{
-					data = (listViewItem.Tag as CustomToken).Data;
-					displayName = data.DisplayName;
-				}
+                    }
+                }
 				if (data == null || !data.Visible || data.Initiative == -2147483648)
 				{
 					continue;
 				}
-                displayName = string.Format("[{0}] {1}", TextHelper.Abbreviation(displayName), displayName);
+
+                string abbreviation = String.IsNullOrEmpty(data.DisplayName) ? TextHelper.Abbreviation(displayName) : TextHelper.Abbreviation(data.DisplayName);
+                displayName = string.Format("{0} - {1}", abbreviation, displayName);
 
                 string str = "white";
 				if (data == this.fCurrentActor)
@@ -5442,7 +5459,27 @@ namespace Masterplan.UI
 			}
 		}
 
-		private void PlayerPictureTokens_Click(object sender, EventArgs e)
+        private void PlayerLabelsRequireKnowledge_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Session.Preferences.PlayerViewCreatureLabelsRequireKnowledge = !Session.Preferences.PlayerViewCreatureLabelsRequireKnowledge;
+                if (this.PlayerMap != null)
+                {
+                    this.PlayerMap.CreatureLabelsRequireKnowledge = !this.PlayerMap.CreatureLabelsRequireKnowledge;
+                }
+                if (this.PlayerInitiative != null)
+                {
+                    this.PlayerInitiative.DocumentText = this.InitiativeView();
+                }
+            }
+            catch (Exception exception)
+            {
+                LogSystem.Trace(exception);
+            }
+        }
+
+        private void PlayerPictureTokens_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -5547,6 +5584,8 @@ namespace Masterplan.UI
 			this.PlayerPictureTokens.Enabled = this.PlayerMap != null;
 			this.PlayerPictureTokens.Checked = (this.PlayerMap == null ? false : this.PlayerMap.ShowPictureTokens);
 			this.PlayerLabels.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
+            this.PlayerLabelsRequireKnowledge.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
+
             this.PlayerViewShowVisibility.Enabled = (this.PlayerMap != null ? true : this.PlayerInitiative != null);
             this.PlayerViewShowVisibility.Checked = (this.PlayerMap == null) ? false : this.PlayerMap.ShouldRenderVisibility;
 
@@ -5563,7 +5602,7 @@ namespace Masterplan.UI
 				flag = true;
 			}
 			playerLabels.Checked = flag;
-
+            this.PlayerLabelsRequireKnowledge.Checked = Session.Preferences.PlayerViewCreatureLabelsRequireKnowledge;
 			this.PlayerViewFog.Enabled = this.PlayerMap != null;
 			this.PlayerFogAll.Checked = (this.PlayerMap == null ? false : this.PlayerMap.ShowCreatures == CreatureViewMode.All);
 			this.PlayerFogVisible.Checked = (this.PlayerMap == null ? false : this.PlayerMap.ShowCreatures == CreatureViewMode.Visible);
@@ -6052,8 +6091,26 @@ namespace Masterplan.UI
 						this.start_combat();
 					}
 				}
-			}
-			catch (Exception exception)
+                if (e.Url.Scheme == "learn")
+                {
+                    e.Cancel = true;
+                    Guid guid = new Guid(e.Url.LocalPath);
+                    CombatData combatDatum = this.fEncounter.FindCombatData(guid);
+                    if (combatDatum != null)
+                    {
+                        EncounterSlot encounterSlot = this.fEncounter.FindSlot(combatDatum);
+                        encounterSlot.KnowledgeKnown = !encounterSlot.KnowledgeKnown;
+                        //tokens1.Add(new CreatureToken(encounterSlot3.ID, combatDatum5));
+                    }
+
+                    if (this.PlayerInitiative != null)
+                    {
+                        this.PlayerInitiative.DocumentText = this.InitiativeView();
+                    }
+
+                }
+            }
+            catch (Exception exception)
 			{
 				LogSystem.Trace(exception);
 			}

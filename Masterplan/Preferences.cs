@@ -62,8 +62,9 @@ namespace Masterplan
 		private bool fPlayerViewHealthBars;
 
 		private bool fCreatureLabels;
+        private bool fCreatureLabelsRequireKnowledge = false;
 
-		private bool fCombatPictureTokens = true;
+        private bool fCombatPictureTokens = true;
 
 		private bool fPlayerViewPictureTokens = true;
 
@@ -375,7 +376,19 @@ namespace Masterplan
 			}
 		}
 
-		public CreatureViewMode PlayerViewFog
+        public bool PlayerViewCreatureLabelsRequireKnowledge
+        {
+            get
+            {
+                return this.fCreatureLabelsRequireKnowledge;
+            }
+            set
+            {
+                this.fCreatureLabelsRequireKnowledge = value;
+            }
+        }
+
+        public CreatureViewMode PlayerViewFog
 		{
 			get
 			{
