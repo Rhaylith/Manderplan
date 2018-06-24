@@ -21,14 +21,14 @@ namespace Masterplan.Data.Combat
     [Serializable]
     public class InitiativeList
     {
-        LinkedList<CombatData> playerList = new LinkedList<CombatData>();
+        List<CombatData> playerList = new List<CombatData>();
 
-        private LinkedListNode<CombatData> CurrentPlayerNode;
+        private int CurrentPlayerNode;
         public Dictionary<string, List<CombatData>> ManualInitiativeDictionary = new Dictionary<string, List<CombatData>>();
 
         public CombatData CurrentActor
         {
-            get { return this.CurrentPlayerNode.Value; }
+            get { return this.playerList[CurrentPlayerNode]; }
         }
 
         public void AdvanceToPrevTurn()
@@ -36,9 +36,9 @@ namespace Masterplan.Data.Combat
             var prevTurn = this.CurrentPlayerNode;
             do
             {
-                this.CurrentPlayerNode = this.CurrentPlayerNode.Previous == null ? this.playerList.Last : this.CurrentPlayerNode.Previous;
+                this.CurrentPlayerNode = this.CurrentPlayerNode == 0 ? this.playerList.Count-1: this.CurrentPlayerNode-1;
             }
-            while (this.CurrentPlayerNode != prevTurn && this.CurrentPlayerNode.Value.SkipInitiative == true);
+            while (this.CurrentPlayerNode != prevTurn && this.playerList[CurrentPlayerNode].SkipInitiative == true);
         }
 
         public void AdvanceNextTurn()
@@ -46,9 +46,9 @@ namespace Masterplan.Data.Combat
             var prevTurn = this.CurrentPlayerNode;
             do
             {
-                this.CurrentPlayerNode = this.CurrentPlayerNode.Next == null ? this.playerList.First : this.CurrentPlayerNode.Next;
+                this.CurrentPlayerNode = this.CurrentPlayerNode == this.playerList.Count-1 ? 0 : this.CurrentPlayerNode+1;
             }
-            while (this.CurrentPlayerNode != prevTurn && this.CurrentPlayerNode.Value.SkipInitiative == true);
+            while (this.CurrentPlayerNode != prevTurn && this.playerList[CurrentPlayerNode].SkipInitiative == true);
         }
 
         public CombatData PeekNextActor()
@@ -57,50 +57,54 @@ namespace Masterplan.Data.Combat
             var nextTurn = this.CurrentPlayerNode;
             do
             {
-                nextTurn = nextTurn.Next == null ? this.playerList.First : nextTurn.Next;
+                nextTurn = nextTurn == this.playerList.Count-1 ? 0 : nextTurn+1;
             }
-            while (nextTurn != prevTurn && nextTurn.Value.SkipInitiative == true);
+            while (nextTurn != prevTurn && this.playerList[nextTurn].SkipInitiative == true);
 
-            return nextTurn.Value;
+            return this.playerList[nextTurn];
         }
 
-        public CombatData Remove(CombatData data)
+        public void Remove(CombatData data)
         {
-            var node = this.playerList.Find(data);
-            CombatData returnVal = null;
-            if (node != null)
-            {
-                returnVal = node.Next?.Value;
-                this.playerList.Remove(node);
-            }
+            //int index = this.playerList.FindIndex(x => x == data);
+            this.playerList.Remove(data);
+            //var node = this.playerList.Find(x => x == data);
+            //CombatData returnVal = null;
+            //if (node != null)
+            //{
+            //    returnVal = node.Next?.Value;
+            //    this.playerList.Remove(node);
+            //}
 
-            return returnVal;
+            //return this.playerList[index];
         }
 
         public void AddBefore(CombatData placement, CombatData newData)
         {
-            LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
-            if (node != null)
-            {
-                this.playerList.AddBefore(node, newData);
-            }
-            else
-            {
-                this.playerList.AddLast(newData);
-            }
+            this.playerList.Insert(this.playerList.FindIndex(x => x == placement), newData);
+            //LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
+            //if (node != null)
+            //{
+            //    this.playerList.AddBefore(node, newData);
+            //}
+            //else
+            //{
+            //    this.playerList.AddLast(newData);
+            //}
         }
 
         public void AddAfter(CombatData placement, CombatData newData)
         {
-            LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
-            if (node != null)
-            {
-                this.playerList.AddAfter(node, newData);
-            }
-            else
-            {
-                this.playerList.AddLast(newData);
-            }
+            this.playerList.Insert(this.playerList.FindIndex(x => x == placement)+1, newData);
+            //LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
+            //if (node != null)
+            //{
+            //    this.playerList.AddAfter(node, newData);
+            //}
+            //else
+            //{
+            //    this.playerList.AddLast(newData);
+            //}
         }
 
 
@@ -112,7 +116,7 @@ namespace Masterplan.Data.Combat
                 //Undelay
                 entity.Initiative = this.CurrentActor.Initiative;
                 this.playerList.Remove(entity);
-                this.CurrentPlayerNode = this.playerList.AddBefore(this.CurrentPlayerNode, entity);
+                this.playerList.Insert(this.CurrentPlayerNode, entity);
             }
         }
 
@@ -137,7 +141,7 @@ namespace Masterplan.Data.Combat
                     {
                         continue;
                     }
-                    playerList.AddLast(combatDatum);
+                    playerList.Add(combatDatum);
                 }
             }
             foreach (Hero hero in Session.Project.Heroes)
@@ -147,7 +151,7 @@ namespace Masterplan.Data.Combat
                 {
                     continue;
                 }
-                playerList.AddLast(hero.CombatData);
+                playerList.Add(hero.CombatData);
             }
             foreach (Trap trap in encounter.Traps)
             {
@@ -161,11 +165,11 @@ namespace Masterplan.Data.Combat
                 {
                     continue;
                 }
-                playerList.AddLast(value);
+                playerList.Add(value);
             }
 
             this.SortList();
-            this.CurrentPlayerNode = this.playerList.First;
+            this.CurrentPlayerNode = 0;
         }
 
         public void RollInitiative(Encounter encounter)
@@ -348,31 +352,20 @@ namespace Masterplan.Data.Combat
 
         public void StartEncounter()
         {
-            this.CurrentPlayerNode = this.playerList.First;
+            this.CurrentPlayerNode = 0;
         }
 
         public void UpdateInitiative(CombatData entity, int newInitiative)
         {
-            LinkedListNode<CombatData> node = this.playerList.Find(entity);
-            if (node != null)
+            if (playerList.Contains(entity))
             {
-                this.playerList.Remove(node);
-            }
-            else
-            {
-                node = new LinkedListNode<CombatData>(entity);
+                this.playerList.Remove(entity);
             }
 
-            node.Value.Initiative = newInitiative;
-            LinkedListNode<CombatData> addNode = this.playerList.Nodes().FirstOrDefault(x => x.Value.Initiative < node.Value.Initiative);
-            if (addNode != null)
-            {
-                this.playerList.AddBefore(addNode, node);
-            }
-            else
-            {
-                this.playerList.AddLast(node.Value);
-            }
+            entity.Initiative = newInitiative;
+
+            // Todo:  this should handle matching modifiers for same initiatives!
+            this.playerList.Insert(this.playerList.FindIndex(x => x.Initiative < entity.Initiative), entity);
         }
 
         private void SortList()
@@ -381,7 +374,7 @@ namespace Masterplan.Data.Combat
             LinkedList<CombatData> tempPlayerList = new LinkedList<CombatData>(this.playerList);
             this.playerList.Clear();
             IEnumerable<CombatData> orderedPlayerEnumerable = tempPlayerList.OrderByDescending(player => player.Initiative).AsEnumerable();
-            orderedPlayerEnumerable.ToList().ForEach(value => this.playerList.AddLast(value));
+            orderedPlayerEnumerable.ToList().ForEach(value => this.playerList.Add(value));
         }
     }
 }

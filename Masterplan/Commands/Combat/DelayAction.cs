@@ -28,7 +28,8 @@ namespace Masterplan.Commands.Combat
             {
                 //Undelay
                 oldInitiative = _data.Initiative;
-                oldNextTurn = _initList.Remove(_data);
+                oldNextTurn = _initList.PeekNextActor();
+                _initList.Remove(_data);
 
                 _data.Initiative = _initList.CurrentActor.Initiative;
                 _initList.AddAfter(_initList.CurrentActor, _data);  // Move to current
