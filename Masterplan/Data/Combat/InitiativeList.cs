@@ -7,20 +7,10 @@ using Utils;
 
 namespace Masterplan.Data.Combat
 {
-    public static class ExtensionMethods
-    {
-        public static IEnumerable<LinkedListNode<T>> Nodes<T>(this LinkedList<T> list)
-        {
-            for (var node = list.First; node != null; node = node.Next)
-            {
-                yield return node;
-            }
-        }
-    }
-
     [Serializable]
     public class InitiativeList
     {
+        // Had to convert this back to a list from a linkedlist so that it's serializable
         List<CombatData> playerList = new List<CombatData>();
 
         private int CurrentPlayerNode;
@@ -66,45 +56,17 @@ namespace Masterplan.Data.Combat
 
         public void Remove(CombatData data)
         {
-            //int index = this.playerList.FindIndex(x => x == data);
             this.playerList.Remove(data);
-            //var node = this.playerList.Find(x => x == data);
-            //CombatData returnVal = null;
-            //if (node != null)
-            //{
-            //    returnVal = node.Next?.Value;
-            //    this.playerList.Remove(node);
-            //}
-
-            //return this.playerList[index];
         }
 
         public void AddBefore(CombatData placement, CombatData newData)
         {
             this.playerList.Insert(this.playerList.FindIndex(x => x == placement), newData);
-            //LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
-            //if (node != null)
-            //{
-            //    this.playerList.AddBefore(node, newData);
-            //}
-            //else
-            //{
-            //    this.playerList.AddLast(newData);
-            //}
         }
 
         public void AddAfter(CombatData placement, CombatData newData)
         {
             this.playerList.Insert(this.playerList.FindIndex(x => x == placement)+1, newData);
-            //LinkedListNode<CombatData> node = placement == this.CurrentActor ? this.CurrentPlayerNode : this.playerList.Find(placement);
-            //if (node != null)
-            //{
-            //    this.playerList.AddAfter(node, newData);
-            //}
-            //else
-            //{
-            //    this.playerList.AddLast(newData);
-            //}
         }
 
 
