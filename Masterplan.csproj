@@ -185,6 +185,13 @@
     </Compile>
     <Compile Include="Masterplan\Data\Combat\InitiativeList.cs" />
     <Compile Include="Masterplan\Data\Combat\InitiativeMode.cs" />
+    <Compile Include="Masterplan\Data\Combat\Visibility\VisibilitySystem.cs" />
+    <Compile Include="Masterplan\Data\Combat\Visibility\VisibilityBlocker.cs" />
+    <Compile Include="Masterplan\Data\Combat\Visibility\VisibilityMap.cs" />
+    <Compile Include="Masterplan\Data\Combat\Visibility\OcclusionLevel.cs" />
+    <Compile Include="Masterplan\MMath\LineSegment.cs" />
+    <Compile Include="Masterplan\MMath\Point2F.cs" />
+    <Compile Include="Masterplan\MMath\Rectangle.cs" />
     <Compile Include="Masterplan\Wizards\EncounterSelectionPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -2909,5 +2916,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

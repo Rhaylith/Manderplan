@@ -21,7 +21,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.Layout;
 using Utils;
 
-using Microsoft.VisualStudio.Profiler;
+//using Microsoft.VisualStudio.Profiler;
 
 namespace Masterplan.UI
 {
@@ -5155,7 +5155,7 @@ namespace Masterplan.UI
 
         private void NextInitBtn_Click(object sender, EventArgs e)
 		{
-            DataCollection.StartProfile(ProfileLevel.Global, DataCollection.CurrentId);
+            //DataCollection.StartProfile(ProfileLevel.Global, DataCollection.CurrentId);
             try
             {
 				if (!this.fCombatStarted)

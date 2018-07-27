@@ -17,7 +17,7 @@ using System.Windows.Forms;
 using Utils;
 using Utils.Graphics;
 
-using Microsoft.VisualStudio.Profiler;
+//using Microsoft.VisualStudio.Profiler;
 
 namespace Masterplan.Controls
 {
@@ -3603,7 +3603,7 @@ namespace Masterplan.Controls
 
             base.Invalidate();
 
-            DataCollection.StopProfile(ProfileLevel.Global, DataCollection.CurrentId);
+            //DataCollection.StopProfile(ProfileLevel.Global, DataCollection.CurrentId);
         }
 
         protected void OnRegionSelected()
